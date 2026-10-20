@@ -17,43 +17,43 @@ const CATEGORY_ITEMS: CategoryItem[] = [
   {
     id: 'all',
     label: 'All Designs',
-    image: '/src/assets/images/assiano_hero_editorial_1792505196532.jpg',
+    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
     tag: 'Full Catalog'
   },
   {
     id: 'abaya',
     label: 'Abaya & Borka',
-    image: '/src/assets/images/assiano_luxury_abaya_1792505197814.jpg',
+    image: '/assets/images/assiano_luxury_abaya_1792505197814.jpg',
     tag: 'Modest Wear'
   },
   {
     id: 'three-piece',
     label: 'Three-Piece Sets',
-    image: '/src/assets/images/assiano_three_piece_suit_1792505198277.jpg',
+    image: '/assets/images/assiano_three_piece_suit_1792505198277.jpg',
     tag: 'Unstitched Cotton'
   },
   {
     id: 'kurti',
     label: 'Designer Kurtis',
-    image: '/src/assets/images/assiano_designer_kurti_1792505198620.jpg',
+    image: '/assets/images/assiano_designer_kurti_1792505198620.jpg',
     tag: 'Artisanal Tunics'
   },
   {
     id: 'gown',
     label: 'Evening Gowns',
-    image: '/src/assets/images/assiano_evening_gown_1792505198775.jpg',
+    image: '/assets/images/assiano_evening_gown_1792505198775.jpg',
     tag: 'Shimmer Georgette'
   },
   {
     id: 'shirt',
     label: 'Cuban Shirts',
-    image: '/src/assets/images/assiano_hero_editorial_1792505196532.jpg',
+    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
     tag: 'Linen Blend'
   },
   {
     id: 'footwear',
     label: 'Footwear & Heels',
-    image: '/src/assets/images/assiano_hero_editorial_1792505196532.jpg',
+    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
     tag: 'Party Stilettos'
   }
 ];

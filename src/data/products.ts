@@ -1,7 +1,7 @@
 import { Product, Review } from '../types';
 
 export const ASSIANO_LOGO = '/assets/aistudio/702904207_122102589927317919_5654627499859237181_n_19dcbf1c.jpg';
-export const HERO_IMAGE = '/src/assets/images/assiano_hero_editorial_1792505196532.jpg';
+export const HERO_IMAGE = '/assets/images/assiano_hero_editorial_1792505196532.jpg';
 
 export const PRODUCTS: Product[] = [
   {
@@ -16,7 +16,7 @@ export const PRODUCTS: Product[] = [
     soldCount: 78,
     rating: 4.9,
     reviewCount: 42,
-    image: '/src/assets/images/assiano_luxury_abaya_1792505197814.jpg',
+    image: '/assets/images/assiano_luxury_abaya_1792505197814.jpg',
     fabric: 'Premium Korean Nida & Cherry Crepe',
     colors: ['Obsidian Black', 'Midnight Navy', 'Dusty Rose'],
     sizes: ['52 (Height 5\'0"-5\'2")', '54 (Height 5\'3"-5\'5")', '56 (Height 5\'6"-5\'8")'],
@@ -44,7 +44,7 @@ export const PRODUCTS: Product[] = [
     soldCount: 94,
     rating: 5.0,
     reviewCount: 56,
-    image: '/src/assets/images/assiano_three_piece_suit_1792505198277.jpg',
+    image: '/assets/images/assiano_three_piece_suit_1792505198277.jpg',
     fabric: '100% Combed Slub Cotton & Pure Organza',
     colors: ['Pastel Lilac', 'Blush Pink', 'Mint Dew'],
     sizes: ['Unstitched (Free Size for custom tailoring)'],
@@ -72,7 +72,7 @@ export const PRODUCTS: Product[] = [
     soldCount: 112,
     rating: 4.8,
     reviewCount: 39,
-    image: '/src/assets/images/assiano_designer_kurti_1792505198620.jpg',
+    image: '/assets/images/assiano_designer_kurti_1792505198620.jpg',
     fabric: 'Cotton Silk Blend with Zari Detailing',
     colors: ['Marigold Amber', 'Rosewood Crimson', 'Forest Olive'],
     sizes: ['36 (S)', '38 (M)', '40 (L)', '42 (XL)', '44 (XXL)'],
@@ -100,7 +100,7 @@ export const PRODUCTS: Product[] = [
     soldCount: 45,
     rating: 4.9,
     reviewCount: 28,
-    image: '/src/assets/images/assiano_evening_gown_1792505198775.jpg',
+    image: '/assets/images/assiano_evening_gown_1792505198775.jpg',
     fabric: 'High-Twist Micro Georgette with Shimmer Thread',
     colors: ['Pearl Champagne', 'Blush Mauve', 'Burgundy Wine'],
     sizes: ['38 (Chest 38", Length 52")', '40 (Chest 40", Length 54")', '42 (Chest 42", Length 54")'],
@@ -128,7 +128,7 @@ export const PRODUCTS: Product[] = [
     soldCount: 88,
     rating: 4.7,
     reviewCount: 31,
-    image: '/src/assets/images/assiano_designer_kurti_1792505198620.jpg',
+    image: '/assets/images/assiano_designer_kurti_1792505198620.jpg',
     fabric: '100% Breathable Combed Cotton',
     colors: ['Crimson Floral', 'Teal Botanic', 'Black Monochrome'],
     sizes: ['36 (S)', '38 (M)', '40 (L)', '42 (XL)'],
@@ -156,7 +156,7 @@ export const PRODUCTS: Product[] = [
     soldCount: 63,
     rating: 4.9,
     reviewCount: 24,
-    image: '/src/assets/images/assiano_three_piece_suit_1792505198277.jpg',
+    image: '/assets/images/assiano_three_piece_suit_1792505198277.jpg',
     fabric: 'Chanderi Silk Blend with Metallic Zari Weft',
     colors: ['Deep Emerald', 'Imperial Maroon', 'Royal Sapphire'],
     sizes: ['Unstitched (Free Size for custom tailoring)'],
@@ -184,7 +184,7 @@ export const PRODUCTS: Product[] = [
     soldCount: 71,
     rating: 4.8,
     reviewCount: 22,
-    image: '/src/assets/images/assiano_hero_editorial_1792505196532.jpg',
+    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
     fabric: 'Pure Flax Linen & Fine Cotton Blend',
     colors: ['Muted Olive', 'Iced Espresso', 'Marshmallow White'],
     sizes: ['M (Chest 40")', 'L (Chest 42")', 'XL (Chest 44")', 'XXL (Chest 46")'],
@@ -212,7 +212,7 @@ export const PRODUCTS: Product[] = [
     soldCount: 52,
     rating: 4.8,
     reviewCount: 19,
-    image: '/src/assets/images/assiano_hero_editorial_1792505196532.jpg',
+    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
     fabric: 'Vegan Patent Leather & Crystal Embellishments',
     colors: ['Champagne Gold', 'Silver Shimmer', 'Crimson Red'],
     sizes: ['36 (EU)', '37 (EU)', '38 (EU)', '39 (EU)', '40 (EU)'],
