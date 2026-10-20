@@ -1,0 +1,6 @@
+{
+  "name": "Assiano | Contemporary & Modest Fashion",
+  "description": "Assiano official luxury fashion brand storefront. High-end kurtis, abayas, three-piece sets, and evening attire in BDT.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
