@@ -29,7 +29,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   const faqs = [
     {
       q: 'What are the delivery charges inside and outside Dhaka?',
-      a: 'We deliver nationwide across all 64 districts in Bangladesh. Home delivery inside Dhaka City is ৳ 60 (takes 24 to 48 hours). Delivery outside Dhaka is ৳ 120 (takes 2 to 3 business days via Steadfast or Pathao Express).'
+      a: 'We deliver nationwide across all 64 districts in Bangladesh. Home delivery inside Dhaka City is Tk 60 (takes 24 to 48 hours). Delivery outside Dhaka is Tk 120 (takes 2 to 3 business days via Steadfast or Pathao Express).'
     },
     {
       q: 'How does Cash on Delivery (COD) work?',
@@ -283,8 +283,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 Nationwide Delivery Partners
               </span>
               <div className="p-3 bg-neutral-50 rounded-xs border border-neutral-200 space-y-1 text-[11px] text-neutral-600">
-                <p>• <strong>Dhaka City:</strong> Delivered within 24-48 hours (৳ 60)</p>
-                <p>• <strong>Outside Dhaka:</strong> Dispatched via Steadfast / Pathao within 48-72 hours (৳ 120)</p>
+                <p>• <strong>Dhaka City:</strong> Delivered within 24-48 hours (Tk 60)</p>
+                <p>• <strong>Outside Dhaka:</strong> Dispatched via Steadfast / Pathao within 48-72 hours (Tk 120)</p>
                 <p>• <strong>Cash on Delivery:</strong> Available across all 64 districts</p>
               </div>
             </div>

@@ -109,7 +109,7 @@ export const CartPage: React.FC<CartPageProps> = ({
                         <span>Color: <strong className="text-neutral-800">{item.selectedColor}</strong></span>
                       </div>
                       <div className="text-xs font-mono font-semibold text-neutral-800 mt-1 sm:hidden">
-                        ৳ {item.product.price.toLocaleString()} each
+                        Tk {item.product.price.toLocaleString()} each
                       </div>
                     </div>
                   </div>
@@ -140,10 +140,10 @@ export const CartPage: React.FC<CartPageProps> = ({
                     {/* Line total */}
                     <div className="text-right min-w-[90px]">
                       <span className="text-base font-bold font-mono text-neutral-900 tabular-nums block">
-                        ৳ {(item.product.price * item.quantity).toLocaleString()}
+                        Tk {(item.product.price * item.quantity).toLocaleString()}
                       </span>
                       <span className="text-[11px] text-neutral-400 font-mono hidden sm:block">
-                        ৳ {item.product.price.toLocaleString()} / pc
+                        Tk {item.product.price.toLocaleString()} / pc
                       </span>
                     </div>
 
@@ -204,7 +204,7 @@ export const CartPage: React.FC<CartPageProps> = ({
                 )}
                 {discountAmount > 0 && (
                   <p className="text-[11px] text-emerald-700 font-medium mt-1.5">
-                    ✓ Promo applied: Saved ৳ {discountAmount.toLocaleString()}
+                    ✓ Promo applied: Saved Tk {discountAmount.toLocaleString()}
                   </p>
                 )}
               </div>
@@ -224,7 +224,7 @@ export const CartPage: React.FC<CartPageProps> = ({
                     }`}
                   >
                     <span className="block text-[11px]">Inside Dhaka City</span>
-                    <span className="font-mono tabular-nums text-xs font-bold text-neutral-900">৳ 60</span>
+                    <span className="font-mono tabular-nums text-xs font-bold text-neutral-900">Tk 60</span>
                   </button>
                   <button
                     onClick={() => setDeliveryArea('outside_dhaka')}
@@ -235,7 +235,7 @@ export const CartPage: React.FC<CartPageProps> = ({
                     }`}
                   >
                     <span className="block text-[11px]">Outside Dhaka</span>
-                    <span className="font-mono tabular-nums text-xs font-bold text-neutral-900">৳ 120</span>
+                    <span className="font-mono tabular-nums text-xs font-bold text-neutral-900">Tk 120</span>
                   </button>
                 </div>
               </div>
@@ -245,27 +245,27 @@ export const CartPage: React.FC<CartPageProps> = ({
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span className="font-mono tabular-nums text-neutral-900 font-medium">
-                    ৳ {subtotal.toLocaleString()}
+                    Tk {subtotal.toLocaleString()}
                   </span>
                 </div>
                 {discountAmount > 0 && (
                   <div className="flex justify-between text-emerald-700">
                     <span>Voucher Discount</span>
                     <span className="font-mono tabular-nums font-medium">
-                      - ৳ {discountAmount.toLocaleString()}
+                      - Tk {discountAmount.toLocaleString()}
                     </span>
                   </div>
                 )}
                 <div className="flex justify-between">
                   <span>Courier Shipping ({deliveryArea === 'dhaka' ? 'Inside Dhaka' : 'Outside Dhaka'})</span>
                   <span className="font-mono tabular-nums text-neutral-900 font-medium">
-                    ৳ {shippingFee}
+                    Tk {shippingFee}
                   </span>
                 </div>
                 <div className="flex justify-between pt-3 border-t border-neutral-200 text-sm font-bold text-neutral-900">
                   <span>Total Amount</span>
                   <span className="font-mono tabular-nums text-lg text-[#141416]">
-                    ৳ {grandTotal.toLocaleString()}
+                    Tk {grandTotal.toLocaleString()}
                   </span>
                 </div>
               </div>

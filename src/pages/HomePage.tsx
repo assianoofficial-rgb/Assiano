@@ -6,16 +6,10 @@ import {
   Sparkles,
   Phone,
   MessageCircle,
-  Truck,
-  ShieldCheck,
   RotateCcw,
   Search,
   X,
   ArrowRight,
-  Zap,
-  Tag,
-  Gift,
-  Clock,
 } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
 import { CategoryType, Product } from '../types';
@@ -50,7 +44,7 @@ const CIRCLE_CATEGORIES: CircleCategory[] = [
     id: 'abaya',
     labelEn: 'Abayas',
     labelBn: 'আবায়া ও বোরকা',
-    image: '/assets/images/assiano_luxury_abaya_1792505197814.jpg',
+    image: '/assets/aistudio/image_78204c97.png',
   },
   {
     id: 'three-piece',
@@ -142,201 +136,115 @@ export const HomePage: React.FC<HomePageProps> = ({
   return (
     <div className="bg-[#FAF9F6] text-[#141416] pb-16">
       
-      {/* 1. MAIN FRONT PAGE BANNER SECTION: 2/3 LARGE BANNER + 1/3 TWO STACKED SMALL BANNERS */}
+      {/* 1. MAIN FRONT PAGE BANNER SECTION (Clean, Light, Simple 2/3 + 1/3 layout) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4">
           
-          {/* --- 2/3 LARGE BANNER (col-span-8) --- */}
-          <div className="lg:col-span-8 relative rounded-lg overflow-hidden group shadow-md border border-neutral-200/80 bg-neutral-900 min-h-[380px] sm:min-h-[440px] lg:min-h-[470px] flex flex-col justify-between p-5 sm:p-7 md:p-9 text-white">
-            {/* Background Image with smooth zoom on hover */}
+          {/* --- 2/3 LARGE BANNER (Lighter, simple, elegant) --- */}
+          <div className="lg:col-span-8 relative rounded-lg overflow-hidden group shadow-xs border border-neutral-200 bg-neutral-900 min-h-[300px] sm:min-h-[360px] lg:min-h-[380px] flex flex-col justify-end p-5 sm:p-7 md:p-8 text-white">
+            {/* Background Image */}
             <img
               src={HERO_IMAGE}
-              alt="ঈদ ও স্পেশাল মোডেস্ট কালেকশন"
-              className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+              alt="ঈদ স্পেশাল কালেকশন"
+              className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-700 ease-out"
             />
-            {/* Gradient Dark Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/30 md:bg-gradient-to-r md:from-black/90 md:via-black/60 md:to-transparent" />
-            <div className="absolute inset-0 bg-[#E10613]/10 mix-blend-multiply pointer-events-none" />
+            {/* Soft, lighter gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
-            {/* Top Advertisement & Discount Badges */}
-            <div className="relative z-10 flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#E10613] text-white text-[11px] sm:text-xs font-bold uppercase tracking-wider rounded-full shadow-md animate-pulse">
-                <Sparkles className="w-3.5 h-3.5" />
-                মেগা ডিসকাউন্ট অফার · ঈদ স্পেশাল
+            {/* Simple Light Content */}
+            <div className="relative z-10 space-y-2 max-w-lg">
+              <span className="inline-block text-[11px] font-semibold tracking-wider uppercase text-amber-300">
+                ঈদ স্পেশাল কালেকশন
               </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-amber-400 text-neutral-900 text-[11px] sm:text-xs font-black uppercase tracking-wider rounded-full shadow-sm">
-                <Tag className="w-3 h-3" />
-                UP TO 50% OFF
-              </span>
-            </div>
 
-            {/* Main Content Info */}
-            <div className="relative z-10 space-y-2.5 sm:space-y-3.5 mt-8 sm:mt-12 max-w-xl">
-              <div className="inline-block">
-                <span className="text-[11px] sm:text-xs tracking-[0.2em] uppercase font-bold text-amber-300">
-                  EID & FESTIVE MODEST LUXURY
-                </span>
-              </div>
-
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4.5xl font-serif font-black tracking-tight text-white leading-tight drop-shadow-md">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-white leading-tight">
                 ঈদ ও স্পেশাল মোডেস্ট কালেকশন
               </h1>
 
-              <p className="text-xs sm:text-sm text-neutral-200 font-light leading-relaxed drop-shadow-sm max-w-lg">
-                ১০০% প্রিমিয়াম কোরিয়ান নিদা ও পিউর কটন ফেব্রিক · সারাদেশে <strong>ক্যাশ অন ডেলিভারি (Cash on Delivery)</strong> · ঘরে বসে পণ্য খুলে দেখে মূল্য পরিশোধ করুন।
+              <p className="text-xs sm:text-sm text-neutral-200 font-light leading-relaxed">
+                প্রিমিয়াম আবায়া ও থ্রি-পিস কালেকশন · সারাদেশে ক্যাশ অন ডেলিভারি
               </p>
 
-              {/* Promo Coupon Strip */}
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/15 backdrop-blur-md rounded border border-white/25 text-xs text-neutral-100">
-                  <Gift className="w-3.5 h-3.5 text-amber-300" />
-                  <span>১০% অতিরিক্ত ছাড়ের কুপন:</span>
-                  <span className="font-mono font-bold text-amber-300 tracking-wider bg-black/40 px-1.5 py-0.5 rounded text-[11px]">
-                    EID2026
-                  </span>
-                </div>
-              </div>
-
-              {/* CTA Action Buttons */}
-              <div className="pt-2 flex flex-wrap items-center gap-3">
+              <div className="pt-2 flex items-center gap-3">
                 <button
                   type="button"
                   onClick={() => {
                     handleCategorySelect('all');
                     scrollToProducts();
                   }}
-                  className="px-6 py-3 bg-[#E10613] hover:bg-[#b8000b] active:scale-95 text-white text-xs sm:text-sm font-bold uppercase tracking-wider rounded-xs shadow-lg flex items-center gap-2 transition-all cursor-pointer"
+                  className="px-5 py-2.5 bg-[#E10613] hover:bg-[#b8000b] active:scale-95 text-white text-xs font-bold uppercase tracking-wider rounded-xs shadow-sm flex items-center gap-1.5 transition-all cursor-pointer"
                 >
-                  <span>অর্ডার করুন (SHOP NOW)</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>অর্ডার করুন (Shop Now)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-
-                <a
-                  href="https://wa.me/8801712345678?text=Hello%20Assiano,%20I%20would%20like%20to%20order%20from%20the%20Eid%20Special%20Collection."
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-4 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white text-xs sm:text-sm font-semibold rounded-xs flex items-center gap-2 border border-white/30 transition-colors"
-                >
-                  <MessageCircle className="w-4 h-4 fill-white" />
-                  <span>হোয়াটসঅ্যাপে সরাসরি অর্ডার</span>
-                </a>
               </div>
-            </div>
-
-            {/* Bottom Assurance Strip inside large banner */}
-            <div className="relative z-10 mt-6 pt-3 border-t border-white/20 flex flex-wrap items-center justify-between gap-3 text-[11px] sm:text-xs text-neutral-200">
-              <span className="flex items-center gap-1.5">
-                <Truck className="w-3.5 h-3.5 text-amber-400" />
-                ক্যাশ অন ডেলিভারি (COD)
-              </span>
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-                ১০০% অরিজিনাল কোয়ালিটি
-              </span>
-              <span className="flex items-center gap-1.5">
-                <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
-                ৭ দিনের সহজ রিটার্ন পলিসি
-              </span>
             </div>
           </div>
 
-          {/* --- 1/3 TWO SMALLER BANNERS PLACED ONE BELOW THE OTHER (col-span-4) --- */}
-          <div className="lg:col-span-4 flex flex-col gap-4">
+          {/* --- 1/3 TWO LIGHTER & SIMPLER SMALL BANNERS --- */}
+          <div className="lg:col-span-4 flex flex-col gap-3 sm:gap-4">
             
-            {/* 1/3 Smaller Banner 1 (Top): Luxury Abaya & Borka Deal */}
+            {/* 1/3 Smaller Banner 1 (Top) */}
             <div
               onClick={() => {
                 handleCategorySelect('abaya');
                 scrollToProducts();
               }}
-              className="relative rounded-lg overflow-hidden group shadow-md border border-neutral-200/80 bg-neutral-900 h-[200px] sm:h-[215px] lg:h-[225px] flex flex-col justify-between p-4 sm:p-5 text-white cursor-pointer"
+              className="relative rounded-lg overflow-hidden group shadow-xs border border-neutral-200 bg-neutral-900 h-[145px] sm:h-[175px] lg:h-[185px] flex flex-col justify-end p-4 text-white cursor-pointer"
             >
               <img
-                src="/assets/images/assiano_luxury_abaya_1792505197814.jpg"
-                alt="লাক্সারি আবায়া ও বোরকা অফার"
-                className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+                src="/assets/aistudio/image_78204c97.png"
+                alt="দুবাই চেরি বোরকা"
+                className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/25" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
-              {/* Top Tag */}
-              <div className="relative z-10 flex items-center justify-between">
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-[#E10613] text-white text-[10px] sm:text-[11px] font-bold uppercase rounded-full shadow-xs">
-                  <Zap className="w-3 h-3" />
-                  ফ্ল্যাট ৩৫% অফার
+              <div className="relative z-10 space-y-0.5">
+                <span className="text-[10px] uppercase tracking-wider text-amber-300 font-medium block">
+                  আবায়া কালেকশন
                 </span>
-                <span className="text-[11px] font-medium text-amber-300">
-                  নতুন ডিজাইন
-                </span>
-              </div>
-
-              {/* Bottom Info */}
-              <div className="relative z-10 space-y-1">
-                <span className="text-[10px] uppercase tracking-wider text-neutral-300 font-medium">
-                  PREMIUM KOREAN NIDA
-                </span>
-                <h2 className="text-base sm:text-lg lg:text-xl font-serif font-bold text-white group-hover:text-amber-300 transition-colors leading-snug">
-                  লাক্সারি আবায়া ও বোরকা কালেকশন
+                <h2 className="text-base sm:text-lg font-serif font-bold text-white group-hover:text-amber-300 transition-colors">
+                  দুবাই চেরি বোরকা
                 </h2>
-                <p className="text-[11px] text-neutral-200 font-light line-clamp-1">
-                  ফ্রি ম্যাচিং শিফন হিজাব সহ বিশেষ ছাড়
-                </p>
-
-                <div className="flex items-center justify-between pt-1.5">
-                  <span className="text-xs font-bold text-amber-300">
-                    শুরু মাত্র ১,৪৫০৳ থেকে
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-xs text-neutral-200">
+                    শুরু মাত্র Tk 1,450 থেকে
                   </span>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-white group-hover:translate-x-1 transition-transform">
-                    কালেকশন দেখুন <ArrowRight className="w-3.5 h-3.5 text-[#E10613]" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-white group-hover:text-amber-300 transition-colors">
+                    দেখুন <ArrowRight className="w-3 h-3 text-[#E10613]" />
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* 1/3 Smaller Banner 2 (Bottom): Cotton 3-Piece & Kurti Combo Deal */}
+            {/* 1/3 Smaller Banner 2 (Bottom) */}
             <div
               onClick={() => {
                 handleCategorySelect('three-piece');
                 scrollToProducts();
               }}
-              className="relative rounded-lg overflow-hidden group shadow-md border border-neutral-200/80 bg-neutral-900 h-[200px] sm:h-[215px] lg:h-[225px] flex flex-col justify-between p-4 sm:p-5 text-white cursor-pointer"
+              className="relative rounded-lg overflow-hidden group shadow-xs border border-neutral-200 bg-neutral-900 h-[145px] sm:h-[175px] lg:h-[185px] flex flex-col justify-end p-4 text-white cursor-pointer"
             >
               <img
                 src="/assets/images/assiano_three_piece_suit_1792505198277.jpg"
-                alt="কটন থ্রি-পিস ও ডিজাইনার কুর্তি"
-                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                alt="কটন থ্রি-পিস"
+                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/25" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
-              {/* Top Tag */}
-              <div className="relative z-10 flex items-center justify-between">
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-emerald-600 text-white text-[10px] sm:text-[11px] font-bold uppercase rounded-full shadow-xs">
-                  <Truck className="w-3 h-3" />
-                  ফ্রি ডেলিভারি অফার
+              <div className="relative z-10 space-y-0.5">
+                <span className="text-[10px] uppercase tracking-wider text-emerald-300 font-medium block">
+                  থ্রি-পিস কালেকশন
                 </span>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-300">
-                  <Clock className="w-3 h-3" />
-                  সীমিত অফার
-                </span>
-              </div>
-
-              {/* Bottom Info */}
-              <div className="relative z-10 space-y-1">
-                <span className="text-[10px] uppercase tracking-wider text-neutral-300 font-medium">
-                  COTTON 3-PIECE & KURTIS
-                </span>
-                <h2 className="text-base sm:text-lg lg:text-xl font-serif font-bold text-white group-hover:text-amber-300 transition-colors leading-snug">
-                  কটন থ্রি-পিস ও ডিজাইনার কুর্তি
+                <h2 className="text-base sm:text-lg font-serif font-bold text-white group-hover:text-amber-300 transition-colors">
+                  কটন থ্রি-পিস ও কুর্তি
                 </h2>
-                <p className="text-[11px] text-neutral-200 font-light line-clamp-1">
-                  যেকোনো ২টি পোশাক অর্ডারে সারাদেশে ফ্রি হোম ডেলিভারি!
-                </p>
-
-                <div className="flex items-center justify-between pt-1.5">
-                  <span className="text-xs font-bold text-amber-300">
-                    কম্বো ডিল · বিশেষ অফার
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-xs text-neutral-200">
+                    ২টি অর্ডারে ফ্রি ডেলিভারি
                   </span>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-white group-hover:translate-x-1 transition-transform">
-                    অফারটি নিন <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-white group-hover:text-amber-300 transition-colors">
+                    দেখুন <ArrowRight className="w-3 h-3 text-emerald-400" />
                   </span>
                 </div>
               </div>
@@ -347,7 +255,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 2. CIRCULAR-STYLE CATEGORY ICONS (Generous padding so top of circle is never cut off on click) */}
+      {/* 2. CIRCULAR-STYLE CATEGORY ICONS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 sm:pt-6 pb-2">
         <div className="flex items-start justify-start sm:justify-center gap-3 sm:gap-6 lg:gap-8 overflow-x-auto pt-4 pb-4 px-3 no-scrollbar">
           {CIRCLE_CATEGORIES.map((cat) => {
@@ -359,7 +267,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 onClick={() => handleCategorySelect(cat.id)}
                 className="group flex flex-col items-center text-center shrink-0 w-20 sm:w-24 cursor-pointer focus:outline-none py-1"
               >
-                {/* Circular Image Container with soft ring & breathing room to prevent cutting off */}
+                {/* Circular Image Container */}
                 <div
                   className={`relative w-18 h-18 sm:w-22 sm:h-22 rounded-full p-1 m-1.5 transition-all duration-200 ${
                     isSelected
@@ -377,7 +285,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   </div>
                 </div>
 
-                {/* Category Labels in Bengali and English */}
+                {/* Category Labels */}
                 <span
                   className={`mt-1.5 text-xs font-bold leading-tight transition-colors ${
                     isSelected ? 'text-[#E10613]' : 'text-neutral-800 group-hover:text-[#E10613]'
@@ -428,7 +336,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </div>
 
-      {/* 4. SHOPPING TOOLBAR & PRODUCT GRID (Directly on Homepage) */}
+      {/* 4. SHOPPING TOOLBAR & PRODUCT GRID */}
       <section ref={productsSectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-3 scroll-mt-24">
         
         {/* Toolbar Header (Layout switch, Sort Dropdown, Count & Quick Search) */}
@@ -507,7 +415,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
 
-        {/* 5. PRODUCT GRID / LIST (2-col on mobile like Othoba) */}
+        {/* 5. PRODUCT GRID / LIST (Clean, user-friendly 2-col on mobile) */}
         {filteredProducts.length === 0 ? (
           <div className="bg-white border border-neutral-200 rounded-sm p-12 text-center my-8">
             <p className="text-base text-neutral-700 font-semibold mb-2">
@@ -549,7 +457,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         )}
       </section>
 
-      {/* 6. HELP & CALL-TO-ORDER SECTION (Direct support for Bangladeshi users) */}
+      {/* 6. HELP & CALL-TO-ORDER SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14">
         <div className="bg-white border border-neutral-200 rounded-sm p-6 sm:p-8 shadow-xs">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
@@ -593,8 +501,6 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-
     </div>
   );
 };
-

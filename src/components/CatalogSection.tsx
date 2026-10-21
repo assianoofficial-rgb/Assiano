@@ -77,7 +77,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
         {/* Filter Controls Row */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-neutral-200">
           <div className="text-xs text-neutral-500 font-medium">
-            Showing <strong className="font-semibold text-neutral-900 font-mono tabular-nums">{filteredProducts.length}</strong> items in BDT (৳)
+            Showing <strong className="font-semibold text-neutral-900 font-mono tabular-nums">{filteredProducts.length}</strong> items (Tk)
           </div>
 
           <div className="flex flex-wrap items-center gap-3">

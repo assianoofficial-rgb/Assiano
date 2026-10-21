@@ -103,15 +103,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <div className="mt-4 flex items-baseline justify-between pb-4 border-b border-neutral-200">
                 <div className="flex items-baseline gap-3">
                   <span className="text-2xl font-bold font-mono text-[#141416] tabular-nums">
-                    ৳ {product.price.toLocaleString()}
+                    Tk {product.price.toLocaleString()}
                   </span>
                   {product.originalPrice > product.price && (
                     <span className="text-sm text-neutral-400 line-through font-mono tabular-nums">
-                      ৳ {product.originalPrice.toLocaleString()}
+                      Tk {product.originalPrice.toLocaleString()}
                     </span>
                   )}
                   <span className="text-xs text-emerald-700 font-medium">
-                    Save ৳ {(product.originalPrice - product.price).toLocaleString()}
+                    Save Tk {(product.originalPrice - product.price).toLocaleString()}
                   </span>
                 </div>
 
@@ -259,7 +259,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               )}
 
               <p className="text-[11px] text-center text-neutral-500">
-                ৳60 inside Dhaka · ৳120 outside Dhaka · No Advance Payment Required
+                Tk 60 inside Dhaka · Tk 120 outside Dhaka · No Advance Payment Required
               </p>
             </div>
           </div>

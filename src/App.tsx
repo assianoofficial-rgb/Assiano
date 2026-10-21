@@ -168,7 +168,7 @@ export default function App() {
       const discount = Math.round(subtotal * 0.1);
       setDiscountAmount(discount);
       setPromoCode(cleanCode);
-      addToast('info', '10% Voucher Applied', `You saved ৳ ${discount.toLocaleString()}`);
+      addToast('info', '10% Voucher Applied', `You saved Tk ${discount.toLocaleString()}`);
     } else if (cleanCode === '') {
       setDiscountAmount(0);
       setPromoCode('');

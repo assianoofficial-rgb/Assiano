@@ -205,10 +205,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                         </h4>
                         <div className="flex items-baseline gap-2 mt-0.5">
                           <span className="font-mono font-bold text-xs text-[#141416]">
-                            ৳ {featuredProduct.price.toLocaleString()}
+                            Tk {featuredProduct.price.toLocaleString()}
                           </span>
                           <span className="font-mono text-[11px] text-neutral-400 line-through">
-                            ৳ {featuredProduct.originalPrice.toLocaleString()}
+                            Tk {featuredProduct.originalPrice.toLocaleString()}
                           </span>
                         </div>
                       </div>

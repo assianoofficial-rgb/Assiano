@@ -60,7 +60,7 @@ export const LookbookSection: React.FC<LookbookSectionProps> = ({
 
                 <div className="mt-4 pt-3 border-t border-white/20 flex items-center justify-between">
                   <span className="text-sm font-bold font-mono text-white tabular-nums">
-                    ৳ {item.price.toLocaleString()}
+                    Tk {item.price.toLocaleString()}
                   </span>
                   <div className="flex items-center gap-1 text-xs text-neutral-300 group-hover:text-white transition-colors">
                     <span>Inspect Design</span>

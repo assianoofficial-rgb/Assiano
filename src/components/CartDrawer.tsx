@@ -136,7 +136,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     </div>
 
                     <span className="text-xs font-bold font-mono text-neutral-900 tabular-nums">
-                      ৳ {(item.product.price * item.quantity).toLocaleString()}
+                      Tk {(item.product.price * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             )}
             {discountAmount > 0 && (
               <p className="text-[11px] text-emerald-700 font-medium">
-                ✓ Promo code applied! Saved ৳ {discountAmount.toLocaleString()}
+                ✓ Promo code applied! Saved Tk {discountAmount.toLocaleString()}
               </p>
             )}
 
@@ -191,7 +191,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   }`}
                 >
                   <span className="block text-[11px]">Inside Dhaka</span>
-                  <span className="font-mono tabular-nums text-xs">৳ 60</span>
+                  <span className="font-mono tabular-nums text-xs">Tk 60</span>
                 </button>
                 <button
                   onClick={() => setDeliveryArea('outside_dhaka')}
@@ -202,7 +202,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   }`}
                 >
                   <span className="block text-[11px]">Outside Dhaka</span>
-                  <span className="font-mono tabular-nums text-xs">৳ 120</span>
+                  <span className="font-mono tabular-nums text-xs">Tk 120</span>
                 </button>
               </div>
             </div>
@@ -212,27 +212,27 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span className="font-mono tabular-nums text-neutral-900 font-medium">
-                  ৳ {subtotal.toLocaleString()}
+                  Tk {subtotal.toLocaleString()}
                 </span>
               </div>
               {discountAmount > 0 && (
                 <div className="flex justify-between text-emerald-700">
                   <span>Voucher Discount</span>
                   <span className="font-mono tabular-nums font-medium">
-                    - ৳ {discountAmount.toLocaleString()}
+                    - Tk {discountAmount.toLocaleString()}
                   </span>
                 </div>
               )}
               <div className="flex justify-between">
                 <span>Courier Shipping</span>
                 <span className="font-mono tabular-nums text-neutral-900 font-medium">
-                  {shippingFee === 0 ? <strong className="text-emerald-700">FREE</strong> : `৳ ${shippingFee}`}
+                  {shippingFee === 0 ? <strong className="text-emerald-700">FREE</strong> : `Tk ${shippingFee}`}
                 </span>
               </div>
               <div className="flex justify-between pt-2 border-t border-neutral-300 text-sm font-bold text-neutral-900">
                 <span>Total Amount</span>
                 <span className="font-mono tabular-nums text-base text-[#141416]">
-                  ৳ {grandTotal.toLocaleString()}
+                  Tk {grandTotal.toLocaleString()}
                 </span>
               </div>
             </div>

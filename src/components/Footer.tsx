@@ -90,7 +90,7 @@ export const Footer: React.FC<FooterProps> = ({
               <button onClick={() => onNavigate('contact')} className="text-left hover:text-white transition-colors cursor-pointer">
                 Contact Concierge
               </button>
-              <span className="text-neutral-500">Dhaka: ৳60 · Nationwide: ৳120</span>
+              <span className="text-neutral-500">Dhaka: Tk 60 · Nationwide: Tk 120</span>
               <span className="text-neutral-500">Cash on Delivery Available</span>
             </div>
           </div>

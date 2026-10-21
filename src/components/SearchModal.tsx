@@ -107,7 +107,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                       <p className="text-[11px] text-neutral-500 truncate">{item.fabric}</p>
                     </div>
                     <span className="text-xs font-bold font-mono text-neutral-900 tabular-nums">
-                      ৳ {item.price.toLocaleString()}
+                      Tk {item.price.toLocaleString()}
                     </span>
                   </div>
                 ))}

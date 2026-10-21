@@ -48,7 +48,7 @@ export const Hero: React.FC<HeroProps> = ({ onShopClick, onExploreAbayas }) => {
             {/* Micro value props strip */}
             <div className="pt-6 border-t border-neutral-300/70 grid grid-cols-3 gap-4 text-neutral-700">
               <div className="flex flex-col">
-                <span className="text-sm font-semibold font-serif text-[#141416]">৳ BDT Currency</span>
+                <span className="text-sm font-semibold font-serif text-[#141416]">Tk Currency</span>
                 <span className="text-xs text-neutral-500">Transparent pricing</span>
               </div>
               <div className="flex flex-col">
@@ -79,7 +79,7 @@ export const Hero: React.FC<HeroProps> = ({ onShopClick, onExploreAbayas }) => {
                   <span className="font-serif text-lg text-white">The Artisan Modest Line</span>
                 </div>
                 <span className="text-xs font-mono bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-sm">
-                  Starting at ৳ 750
+                  Starting at Tk 750
                 </span>
               </div>
             </div>

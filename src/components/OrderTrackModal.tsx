@@ -194,7 +194,7 @@ export const OrderTrackModal: React.FC<OrderTrackModalProps> = ({
                   <strong>Destination:</strong> {matchedOrder.deliveryAddress}, {matchedOrder.district}
                 </div>
                 <div>
-                  <strong>Payable Amount:</strong> <span className="font-mono font-bold text-neutral-900">৳ {matchedOrder.total.toLocaleString()}</span> ({matchedOrder.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Paid Online'})
+                  <strong>Payable Amount:</strong> <span className="font-mono font-bold text-neutral-900">Tk {matchedOrder.total.toLocaleString()}</span> ({matchedOrder.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Paid Online'})
                 </div>
               </div>
             </div>

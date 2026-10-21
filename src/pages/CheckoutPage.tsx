@@ -179,7 +179,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                       </span>
                     </div>
                     <span className="font-mono tabular-nums font-bold text-neutral-900">
-                      ৳ {(item.product.price * item.quantity).toLocaleString()}
+                      Tk {(item.product.price * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 ))}
@@ -201,7 +201,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 <div className="flex justify-between font-bold text-sm text-neutral-900 pt-3 border-t border-neutral-200">
                   <span>Payable at Doorstep:</span>
                   <span className="font-mono tabular-nums text-lg text-[#141416]">
-                    ৳ {confirmedOrder.total.toLocaleString()}
+                    Tk {confirmedOrder.total.toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -324,7 +324,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     >
                       {BANGLADESH_DISTRICTS.map((d) => (
                         <option key={d} value={d}>
-                          {d} {d === 'Dhaka' ? '— Inside Dhaka (৳ 60)' : '— Outside Dhaka (৳ 120)'}
+                          {d} {d === 'Dhaka' ? '— Inside Dhaka (Tk 60)' : '— Outside Dhaka (Tk 120)'}
                         </option>
                       ))}
                     </select>
@@ -336,7 +336,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     </label>
                     <div className="text-xs p-2.5 bg-neutral-100 border border-neutral-200 rounded-xs flex items-center justify-between text-neutral-800">
                       <span>{district === 'Dhaka' ? 'Inside Dhaka (24-48 hrs)' : 'Outside Dhaka (48-72 hrs)'}</span>
-                      <strong className="font-mono tabular-nums text-neutral-900">৳ {shippingFee}</strong>
+                      <strong className="font-mono tabular-nums text-neutral-900">Tk {shippingFee}</strong>
                     </div>
                   </div>
                 </div>
@@ -427,7 +427,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 {(paymentMethod === 'bkash' || paymentMethod === 'nagad') && (
                   <div className="p-4 bg-neutral-100 border border-neutral-300 rounded-xs space-y-2 text-xs">
                     <p className="text-neutral-700">
-                      Please send <strong className="font-mono text-neutral-900">৳ {total.toLocaleString()}</strong> to our official Assiano {paymentMethod === 'bkash' ? 'bKash' : 'Nagad'} Merchant number: <strong className="font-mono text-[#E10613]">01712-345678</strong>.
+                      Please send <strong className="font-mono text-neutral-900">Tk {total.toLocaleString()}</strong> to our official Assiano {paymentMethod === 'bkash' ? 'bKash' : 'Nagad'} Merchant number: <strong className="font-mono text-[#E10613]">01712-345678</strong>.
                     </p>
                     <div>
                       <label className="block text-[11px] font-semibold text-neutral-800 mb-1">
@@ -485,7 +485,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                         Size: {item.selectedSize} · Qty: {item.quantity}
                       </span>
                       <span className="font-mono tabular-nums font-bold text-neutral-900 block mt-1">
-                        ৳ {(item.product.price * item.quantity).toLocaleString()}
+                        Tk {(item.product.price * item.quantity).toLocaleString()}
                       </span>
                     </div>
                   </div>
@@ -496,22 +496,22 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
               <div className="space-y-2 text-xs text-neutral-600 pt-3 border-t border-neutral-200">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>
-                  <span className="font-mono tabular-nums text-neutral-900 font-medium">৳ {subtotal.toLocaleString()}</span>
+                  <span className="font-mono tabular-nums text-neutral-900 font-medium">Tk {subtotal.toLocaleString()}</span>
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between text-emerald-700">
                     <span>Discount:</span>
-                    <span className="font-mono tabular-nums font-medium">- ৳ {discount.toLocaleString()}</span>
+                    <span className="font-mono tabular-nums font-medium">- Tk {discount.toLocaleString()}</span>
                   </div>
                 )}
                 <div className="flex justify-between">
                   <span>Courier Shipping ({deliveryArea === 'dhaka' ? 'Dhaka' : 'Outside Dhaka'}):</span>
-                  <span className="font-mono tabular-nums text-neutral-900 font-medium">৳ {shippingFee}</span>
+                  <span className="font-mono tabular-nums text-neutral-900 font-medium">Tk {shippingFee}</span>
                 </div>
                 <div className="flex justify-between pt-3 border-t border-neutral-200 text-sm font-bold text-neutral-900">
                   <span>Payable at Doorstep:</span>
                   <span className="font-mono tabular-nums text-lg text-[#141416]">
-                    ৳ {total.toLocaleString()}
+                    Tk {total.toLocaleString()}
                   </span>
                 </div>
               </div>

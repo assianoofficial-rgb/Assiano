@@ -16,7 +16,7 @@ export const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onOpenTrack })
           </span>
           <span className="hidden sm:inline text-white/30">|</span>
           <span className="hidden sm:inline text-white/80">
-            Free Shipping inside Bangladesh on orders above <span className="font-semibold text-white">৳ 3,000</span>
+            Free Shipping inside Bangladesh on orders above <span className="font-semibold text-white">Tk 3,000</span>
           </span>
         </div>
 

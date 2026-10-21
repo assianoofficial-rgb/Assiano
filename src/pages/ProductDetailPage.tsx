@@ -124,15 +124,15 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <div className="mt-5 flex items-baseline justify-between pb-5 border-b border-neutral-200">
                 <div className="flex items-baseline gap-3">
                   <span className="text-3xl font-bold font-mono text-[#141416] tabular-nums">
-                    ৳ {product.price.toLocaleString()}
+                    Tk {product.price.toLocaleString()}
                   </span>
                   {product.originalPrice > product.price && (
                     <span className="text-base text-neutral-400 line-through font-mono tabular-nums">
-                      ৳ {product.originalPrice.toLocaleString()}
+                      Tk {product.originalPrice.toLocaleString()}
                     </span>
                   )}
                   <span className="text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-xs border border-emerald-200/60">
-                    Save ৳ {(product.originalPrice - product.price).toLocaleString()}
+                    Save Tk {(product.originalPrice - product.price).toLocaleString()}
                   </span>
                 </div>
 
@@ -261,7 +261,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </button>
 
               <div className="text-[11px] text-center text-neutral-500 space-y-0.5 pt-1">
-                <p>Delivery: Dhaka ৳ 60 (24-48 hrs) · Outside Dhaka ৳ 120 (48-72 hrs)</p>
+                <p>Delivery: Dhaka Tk 60 (24-48 hrs) · Outside Dhaka Tk 120 (48-72 hrs)</p>
                 <p className="text-neutral-400">Doorstep inspection permitted upon courier arrival</p>
               </div>
             </div>

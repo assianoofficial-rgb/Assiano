@@ -200,7 +200,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       </span>
                     </div>
                     <span className="font-mono tabular-nums font-semibold text-neutral-900">
-                      ৳ {(item.product.price * item.quantity).toLocaleString()}
+                      Tk {(item.product.price * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 ))}
@@ -222,7 +222,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 <div className="flex justify-between font-bold text-sm text-neutral-900 pt-2 border-t border-neutral-200">
                   <span>Payable at Doorstep</span>
                   <span className="font-mono tabular-nums text-base text-[#141416]">
-                    ৳ {confirmedOrder.total.toLocaleString()}
+                    Tk {confirmedOrder.total.toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -314,7 +314,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   >
                     {BANGLADESH_DISTRICTS.map((d) => (
                       <option key={d} value={d}>
-                        {d} {d === 'Dhaka' ? '— Inside Dhaka (৳ 60)' : '— Outside Dhaka (৳ 120)'}
+                        {d} {d === 'Dhaka' ? '— Inside Dhaka (Tk 60)' : '— Outside Dhaka (Tk 120)'}
                       </option>
                     ))}
                   </select>
@@ -326,7 +326,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   </label>
                   <div className="text-xs p-2.5 bg-neutral-100 border border-neutral-200 rounded-xs flex items-center justify-between text-neutral-800">
                     <span>{district === 'Dhaka' ? 'Inside Dhaka City' : 'Outside Dhaka (Nationwide)'}</span>
-                    <strong className="font-mono">{shippingFee === 0 ? 'FREE' : `৳ ${shippingFee}`}</strong>
+                    <strong className="font-mono">{shippingFee === 0 ? 'FREE' : `Tk ${shippingFee}`}</strong>
                   </div>
                 </div>
               </div>
@@ -417,7 +417,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               {(paymentMethod === 'bkash' || paymentMethod === 'nagad') && (
                 <div className="p-3 bg-neutral-100 border border-neutral-300 rounded-xs space-y-2 text-xs">
                   <p className="text-neutral-700">
-                    Please send <strong className="font-mono text-neutral-900">৳ {total.toLocaleString()}</strong> to our official Assiano {paymentMethod === 'bkash' ? 'bKash' : 'Nagad'} Merchant number: <strong className="font-mono text-[#E10613]">01712-345678</strong>.
+                    Please send <strong className="font-mono text-neutral-900">Tk {total.toLocaleString()}</strong> to our official Assiano {paymentMethod === 'bkash' ? 'bKash' : 'Nagad'} Merchant number: <strong className="font-mono text-[#E10613]">01712-345678</strong>.
                   </p>
                   <div>
                     <label className="block text-[11px] font-semibold text-neutral-800 mb-1">
@@ -441,10 +441,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <div className="text-left w-full sm:w-auto">
                 <span className="text-[11px] text-neutral-500 block">Total Payable at Doorstep</span>
                 <span className="text-2xl font-bold font-mono text-[#141416] tabular-nums">
-                  ৳ {total.toLocaleString()}
+                  Tk {total.toLocaleString()}
                 </span>
                 <span className="text-[10px] text-neutral-500 block">
-                  {items.length} items · {shippingFee === 0 ? 'Free Shipping' : `Includes ৳${shippingFee} shipping`}
+                  {items.length} items · {shippingFee === 0 ? 'Free Shipping' : `Includes Tk ${shippingFee} shipping`}
                 </span>
               </div>
 
