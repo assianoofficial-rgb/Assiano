@@ -218,6 +218,7 @@ export default function App() {
             onOpenProduct={handleOpenProduct}
             onQuickView={(p) => setQuickViewProduct(p)}
             onAddToCart={(p, s, c) => handleAddToCart(p, s, c, 1)}
+            onInstantBuy={(p, s, c) => handleInstantBuy(p, s, c, 1)}
           />
         )}
 
@@ -231,6 +232,7 @@ export default function App() {
             onOpenProduct={handleOpenProduct}
             onQuickView={(p) => setQuickViewProduct(p)}
             onAddToCart={(p, s, c) => handleAddToCart(p, s, c, 1)}
+            onInstantBuy={(p, s, c) => handleInstantBuy(p, s, c, 1)}
           />
         )}
 
@@ -305,17 +307,21 @@ export default function App() {
         onOpenSizeGuide={() => setIsSizeGuideOpen(true)}
       />
 
-      {/* Floating WhatsApp Chat Button - Placed at Right Bottom Corner */}
+      {/* Single Global Floating WhatsApp Order & Chat Button */}
       <div className="fixed bottom-6 right-6 z-40">
         <a
           href={`https://wa.me/${ASSIANO_WHATSAPP.replace(/[^0-9]/g, '')}?text=Hello%20Assiano,%20I%20would%20like%20to%20order`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
-          className="flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20BA5A] text-white text-xs font-semibold py-3 px-4 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 cursor-pointer ring-4 ring-black/5"
+          className="flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20BA5A] text-white text-xs font-bold py-2.5 sm:py-3 px-3.5 sm:px-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer ring-4 ring-black/5"
         >
-          <MessageCircle className="w-5 h-5 fill-white" />
-          <span className="font-medium tracking-wide">WhatsApp Chat</span>
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+          </span>
+          <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-white shrink-0" />
+          <span className="tracking-wide">হোয়াটসঅ্যাপে অর্ডার দিন</span>
         </a>
       </div>
 

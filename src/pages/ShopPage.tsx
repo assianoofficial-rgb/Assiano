@@ -12,6 +12,7 @@ interface ShopPageProps {
   onOpenProduct: (product: Product) => void;
   onQuickView: (product: Product) => void;
   onAddToCart: (product: Product, size: string, color: string) => void;
+  onInstantBuy?: (product: Product, size: string, color: string) => void;
 }
 
 export const ShopPage: React.FC<ShopPageProps> = ({
@@ -23,6 +24,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
   onOpenProduct,
   onQuickView,
   onAddToCart,
+  onInstantBuy,
 }) => {
   const [sortBy, setSortBy] = React.useState<'featured' | 'price-asc' | 'price-desc' | 'bestseller'>('featured');
   const [selectedFabric, setSelectedFabric] = React.useState<string>('all');
@@ -213,6 +215,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                 onOpenProduct={onOpenProduct}
                 onQuickView={onQuickView}
                 onAddToCart={onAddToCart}
+                onInstantBuy={onInstantBuy}
               />
             ))}
           </div>
