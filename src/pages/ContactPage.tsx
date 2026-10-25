@@ -8,8 +8,8 @@ interface ContactPageProps {
 }
 
 export const ContactPage: React.FC<ContactPageProps> = ({
-  phoneHotline = '+880 1712-345678',
-  whatsappNumber = '+880 1712-345678',
+  phoneHotline = '+880 1758-976677',
+  whatsappNumber = '+880 1758-976677',
 }) => {
   const [name, setName] = React.useState('');
   const [phone, setPhone] = React.useState('');
@@ -191,7 +191,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                     <input
                       type="tel"
                       required
-                      placeholder="e.g. 01712345678"
+                      placeholder=""
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       className="w-full text-xs px-3.5 py-2.5 bg-neutral-50 border border-neutral-300 rounded-xs focus:bg-white focus:outline-none focus:border-black font-mono"

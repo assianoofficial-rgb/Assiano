@@ -274,7 +274,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Farhana Yasmin"
+                      placeholder=""
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                       className="w-full text-xs pl-9 pr-3 py-2.5 bg-neutral-50 border border-neutral-300 rounded-xs focus:bg-white focus:outline-none focus:border-black"
@@ -291,7 +291,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <input
                       type="tel"
                       required
-                      placeholder="e.g. 01712345678"
+                      placeholder=""
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                       className="w-full text-xs pl-9 pr-3 py-2.5 bg-neutral-50 border border-neutral-300 rounded-xs focus:bg-white focus:outline-none focus:border-black font-mono"
@@ -314,7 +314,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   >
                     {BANGLADESH_DISTRICTS.map((d) => (
                       <option key={d} value={d}>
-                        {d} {d === 'Dhaka' ? '— Inside Dhaka (Tk 60)' : '— Outside Dhaka (Tk 120)'}
+                        {d}
                       </option>
                     ))}
                   </select>
@@ -322,11 +322,48 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-medium text-neutral-700 mb-1">
-                    Delivery Region & Shipping Rate
+                    Delivery Area & Charge *
                   </label>
-                  <div className="text-xs p-2.5 bg-neutral-100 border border-neutral-200 rounded-xs flex items-center justify-between text-neutral-800">
-                    <span>{district === 'Dhaka' ? 'Inside Dhaka City' : 'Outside Dhaka (Nationwide)'}</span>
-                    <strong className="font-mono">{shippingFee === 0 ? 'FREE' : `Tk ${shippingFee}`}</strong>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setDeliveryArea('dhaka')}
+                      className={`p-2 rounded-xs border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                        deliveryArea === 'dhaka'
+                          ? 'border-[#E10613] bg-red-50/30 ring-1 ring-[#E10613]'
+                          : 'border-neutral-300 bg-neutral-50 hover:bg-white hover:border-neutral-400'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-[11px] font-bold text-neutral-900 block">Inside Dhaka</span>
+                        <span className={`w-3 h-3 rounded-full border flex items-center justify-center ${
+                          deliveryArea === 'dhaka' ? 'border-[#E10613] bg-[#E10613]' : 'border-neutral-300'
+                        }`}>
+                          {deliveryArea === 'dhaka' && <span className="w-1 h-1 rounded-full bg-white"></span>}
+                        </span>
+                      </div>
+                      <span className="text-xs font-bold text-[#E10613] font-mono mt-1">Tk 60</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setDeliveryArea('outside_dhaka')}
+                      className={`p-2 rounded-xs border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                        deliveryArea === 'outside_dhaka'
+                          ? 'border-[#E10613] bg-red-50/30 ring-1 ring-[#E10613]'
+                          : 'border-neutral-300 bg-neutral-50 hover:bg-white hover:border-neutral-400'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-[11px] font-bold text-neutral-900 block">Outside Dhaka</span>
+                        <span className={`w-3 h-3 rounded-full border flex items-center justify-center ${
+                          deliveryArea === 'outside_dhaka' ? 'border-[#E10613] bg-[#E10613]' : 'border-neutral-300'
+                        }`}>
+                          {deliveryArea === 'outside_dhaka' && <span className="w-1 h-1 rounded-full bg-white"></span>}
+                        </span>
+                      </div>
+                      <span className="text-xs font-bold text-[#E10613] font-mono mt-1">Tk 120</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -341,7 +378,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   <textarea
                     required
                     rows={2}
-                    placeholder="e.g. Flat 4B, House 12, Road 7, Sector 3, Uttara, Dhaka-1230"
+                    placeholder=""
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     className="w-full text-xs pl-9 pr-3 py-2.5 bg-neutral-50 border border-neutral-300 rounded-xs focus:bg-white focus:outline-none focus:border-black"
@@ -355,7 +392,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Call before coming or leave with building reception"
+                  placeholder=""
                   value={deliveryNote}
                   onChange={(e) => setDeliveryNote(e.target.value)}
                   className="w-full text-xs px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-xs focus:bg-white focus:outline-none"
@@ -417,7 +454,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               {(paymentMethod === 'bkash' || paymentMethod === 'nagad') && (
                 <div className="p-3 bg-neutral-100 border border-neutral-300 rounded-xs space-y-2 text-xs">
                   <p className="text-neutral-700">
-                    Please send <strong className="font-mono text-neutral-900">Tk {total.toLocaleString()}</strong> to our official Assiano {paymentMethod === 'bkash' ? 'bKash' : 'Nagad'} Merchant number: <strong className="font-mono text-[#E10613]">01712-345678</strong>.
+                    Please send <strong className="font-mono text-neutral-900">Tk {total.toLocaleString()}</strong> to our official Assiano {paymentMethod === 'bkash' ? 'bKash' : 'Nagad'} Merchant number: <strong className="font-mono text-[#E10613]">01758-976677</strong>.
                   </p>
                   <div>
                     <label className="block text-[11px] font-semibold text-neutral-800 mb-1">
@@ -426,7 +463,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <input
                       type="text"
                       required
-                      placeholder="e.g. 9J8B7G6F5"
+                      placeholder=""
                       value={bkashTrxId}
                       onChange={(e) => setBkashTrxId(e.target.value.toUpperCase())}
                       className="w-full text-xs px-3 py-2 bg-white border border-neutral-300 rounded-xs uppercase font-mono tracking-wider focus:outline-none focus:border-black"

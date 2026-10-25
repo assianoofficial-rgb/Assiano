@@ -53,7 +53,7 @@ export const OrderTrackModal: React.FC<OrderTrackModalProps> = ({
           orderId: query.trim().toUpperCase() || 'ASN-982415',
           createdAt: '20 Oct 2026, 02:30 PM',
           customerName: 'Verified Assiano Client',
-          customerPhone: '01712345678',
+          customerPhone: '01758976677',
           district: 'Dhaka',
           deliveryAddress: 'Gulshan 2, Dhaka',
           deliveryArea: 'dhaka',
@@ -203,7 +203,7 @@ export const OrderTrackModal: React.FC<OrderTrackModalProps> = ({
               <Package className="w-10 h-10 text-neutral-300 mx-auto mb-2" />
               <h4 className="text-sm font-semibold text-neutral-800">No active parcel found</h4>
               <p className="text-xs text-neutral-500 max-w-xs mx-auto mt-1">
-                We couldn't locate an order matching "{query}". Please verify the digits or contact Assiano WhatsApp care at +880 1712-345678.
+                We couldn't locate an order matching "{query}". Please verify the digits or contact Assiano WhatsApp care at +880 1758-976677.
               </p>
             </div>
           ) : (
