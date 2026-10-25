@@ -57,7 +57,7 @@ export const FloatingContactSpeedDial: React.FC<FloatingContactSpeedDialProps> =
       ref={containerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="fixed bottom-26 lg:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end select-none pointer-events-auto"
+      className="fixed bottom-18 lg:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end select-none pointer-events-auto"
       aria-label="Contact options"
     >
       {/* 3 Rising Speed-Dial Circular Option Buttons */}

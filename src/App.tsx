@@ -303,7 +303,7 @@ export default function App() {
       />
 
       {/* Specific Pages View (Padding bottom for mobile bottom navigation bar) */}
-      <main className="flex-grow pb-28 lg:pb-0">
+      <main className="flex-grow pb-16 lg:pb-0">
         {activePage === 'home' && (
           <HomePage
             products={PRODUCTS}
@@ -408,7 +408,7 @@ export default function App() {
         whatsappNumber={ASSIANO_WHATSAPP}
       />
 
-      {/* Mobile Sticky Bottom Bar (Exact screenshot: Profile, WhatsApp + Small Icon revealing WhatsApp/Messenger/Call) */}
+      {/* Mobile Bottom Navigation Tabs (Home, Category, Search, Cart, Wishlist) */}
       <MobileBottomBar
         activePage={activePage}
         onNavigate={handleNavigate}
@@ -418,8 +418,6 @@ export default function App() {
           setActiveTrackingId('');
           setIsTrackOpen(true);
         }}
-        phoneHotline={ASSIANO_HOTLINE}
-        whatsappNumber={ASSIANO_WHATSAPP}
       />
 
       {/* Modals: Quick View, Order Tracking, Sizing & Search */}
