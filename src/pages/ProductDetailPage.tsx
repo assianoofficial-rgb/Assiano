@@ -47,20 +47,54 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs text-neutral-500 mb-8 font-medium">
-          <button onClick={onBackToShop} className="hover:text-black transition-colors cursor-pointer flex items-center gap-1">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Shop</span>
-          </button>
-          <span>/</span>
+        {/* Breadcrumb Navigation & Share Button */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-2 text-xs text-neutral-500 font-medium">
+            <a
+              href="/shop"
+              onClick={(e) => {
+                e.preventDefault();
+                onBackToShop();
+              }}
+              className="hover:text-black transition-colors cursor-pointer flex items-center gap-1"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Shop</span>
+            </a>
+            <span>/</span>
+            <a
+              href={`/shop/${product.category}`}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigateCategory(product.category);
+              }}
+              className="hover:text-black transition-colors cursor-pointer"
+            >
+              {product.categoryLabel}
+            </a>
+            <span>/</span>
+            <span className="text-neutral-900 font-semibold truncate max-w-xs">{product.name}</span>
+          </div>
+
           <button
-            onClick={() => onNavigateCategory(product.category)}
-            className="hover:text-black transition-colors cursor-pointer"
+            type="button"
+            onClick={() => {
+              const fullUrl = window.location.origin + '/product/' + product.id;
+              navigator.clipboard?.writeText(fullUrl);
+              const el = document.getElementById('copied-badge');
+              if (el) {
+                el.classList.remove('opacity-0');
+                setTimeout(() => el.classList.add('opacity-0'), 2500);
+              }
+            }}
+            className="flex items-center gap-2 text-xs font-semibold text-neutral-700 hover:text-[#E10613] bg-white border border-neutral-200 px-3 py-1.5 rounded-xs transition-colors cursor-pointer shadow-xs"
+            title="Copy direct product link"
           >
-            {product.categoryLabel}
+            <span className="text-[11px]">🔗 কপি লিংক (Copy Link)</span>
+            <span id="copied-badge" className="text-[10px] text-emerald-600 font-bold opacity-0 transition-opacity">
+              ✓ Copied!
+            </span>
           </button>
-          <span>/</span>
-          <span className="text-neutral-900 font-semibold truncate max-w-xs">{product.name}</span>
         </div>
 
         {/* Product Purchase Section Grid */}
@@ -294,6 +328,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 <ProductCard
                   key={item.id}
                   product={item}
+                  onOpenProduct={onSelectProduct}
                   onQuickView={(p) => onSelectProduct(p)}
                   onAddToCart={(p, s, c) => onAddToCart(p, s, c, 1)}
                 />

@@ -1,7 +1,8 @@
 import React from 'react';
-import { ShoppingBag, Search, Menu, X, ChevronDown, Sparkles, ArrowRight, Ruler, Check } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, ChevronDown, ArrowRight, Ruler } from 'lucide-react';
 import { ASSIANO_LOGO, PRODUCTS } from '../data/products';
 import { CategoryType, PageType, Product } from '../types';
+import { getProductUrl } from '../utils/navigation';
 
 interface NavbarProps {
   activePage: PageType;
@@ -27,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isMegaMenuOpen, setIsMegaMenuOpen] = React.useState(false);
   const megaMenuTimeout = React.useRef<NodeJS.Timeout | null>(null);
 
-  const featuredProduct = PRODUCTS[0]; // Shahajadi Midnight Abaya
+  const featuredProduct = PRODUCTS[0]; // Dubai Cherry Borka
 
   const handleMouseEnter = () => {
     if (megaMenuTimeout.current) clearTimeout(megaMenuTimeout.current);
@@ -38,6 +39,19 @@ export const Navbar: React.FC<NavbarProps> = ({
     megaMenuTimeout.current = setTimeout(() => {
       setIsMegaMenuOpen(false);
     }, 200);
+  };
+
+  const handleLink = (
+    e: React.MouseEvent,
+    page: PageType,
+    category?: CategoryType
+  ) => {
+    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+      e.preventDefault();
+      onNavigate(page, category);
+      setIsMegaMenuOpen(false);
+      setMobileMenuOpen(false);
+    }
   };
 
   const categories: { id: CategoryType; label: string; desc: string }[] = [
@@ -56,11 +70,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center justify-between gap-8 h-20">
           
           {/* Zone 1: Brand Wordmark & Emblem */}
-          <button
-            onClick={() => {
-              onNavigate('home');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+          <a
+            href="/"
+            onClick={(e) => handleLink(e, 'home')}
             className="flex items-center gap-3 shrink-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E10613] cursor-pointer text-left"
           >
             <img
@@ -71,13 +83,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="text-2xl font-bold tracking-[0.22em] text-[#141416] font-serif uppercase">
               Assiano
             </span>
-          </button>
+          </a>
 
           {/* Zone 2: Navigation Links: Home, Shop (Mega Hover), About, Contact */}
           <nav className="hidden lg:flex items-center gap-8 text-[13px] tracking-wider uppercase font-medium text-neutral-700 h-full">
             {/* Home Link */}
-            <button
-              onClick={() => onNavigate('home')}
+            <a
+              href="/"
+              onClick={(e) => handleLink(e, 'home')}
               className={`hover:text-[#E10613] transition-colors whitespace-nowrap shrink-0 relative py-2 cursor-pointer ${
                 activePage === 'home'
                   ? 'text-[#E10613] font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#E10613]'
@@ -85,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               Home
-            </button>
+            </a>
 
             {/* Shop Link with Mega Hover Menu */}
             <div
@@ -93,8 +106,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <button
-                onClick={() => onNavigate('shop', 'all')}
+              <a
+                href="/shop"
+                onClick={(e) => handleLink(e, 'shop', 'all')}
                 className={`hover:text-[#E10613] transition-colors whitespace-nowrap shrink-0 relative py-2 flex items-center gap-1 cursor-pointer ${
                   activePage === 'shop'
                     ? 'text-[#E10613] font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#E10613]'
@@ -103,7 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <span>Shop</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isMegaMenuOpen ? 'rotate-180 text-[#E10613]' : 'text-neutral-400'}`} />
-              </button>
+              </a>
 
               {/* MEGA HOVER DROPDOWN MENU */}
               {isMegaMenuOpen && (
@@ -123,13 +137,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                       </div>
                       <div className="space-y-1">
                         {categories.map((cat) => (
-                          <button
+                          <a
                             key={cat.id}
-                            onClick={() => {
-                              onNavigate('shop', cat.id);
-                              setIsMegaMenuOpen(false);
-                            }}
-                            className="w-full text-left p-2 rounded-xs hover:bg-neutral-50 group transition-colors flex items-center justify-between cursor-pointer"
+                            href={cat.id === 'all' ? '/shop' : `/shop/${cat.id}`}
+                            onClick={(e) => handleLink(e, 'shop', cat.id)}
+                            className="w-full text-left p-2 rounded-xs hover:bg-neutral-50 group transition-colors flex items-center justify-between cursor-pointer block"
                           >
                             <div>
                               <span className="text-xs font-semibold text-neutral-900 group-hover:text-[#E10613] block">
@@ -140,7 +152,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                               </span>
                             </div>
                             <ArrowRight className="w-3.5 h-3.5 text-neutral-300 group-hover:text-[#E10613] group-hover:translate-x-0.5 transition-all opacity-0 group-hover:opacity-100" />
-                          </button>
+                          </a>
                         ))}
                       </div>
                     </div>
@@ -154,19 +166,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                       </div>
                       <div className="space-y-2.5 text-xs text-neutral-600">
                         <div className="p-2 bg-neutral-50 rounded-xs">
+                          <strong className="text-neutral-900 block text-[11px] font-sans">Dubai Cherry Georgette</strong>
+                          <span className="text-[10px] text-neutral-500">Breathable fall, wrinkle-free</span>
+                        </div>
+                        <div className="p-2 bg-neutral-50 rounded-xs">
                           <strong className="text-neutral-900 block text-[11px] font-sans">Korean Nida Crepe</strong>
-                          <span className="text-[10px] text-neutral-500">Breathable, non-static fall</span>
+                          <span className="text-[10px] text-neutral-500">Ultra-luxurious modest drape</span>
                         </div>
                         <div className="p-2 bg-neutral-50 rounded-xs">
                           <strong className="text-neutral-900 block text-[11px] font-sans">100% Combed Cotton</strong>
-                          <span className="text-[10px] text-neutral-500">Natural summer handloom</span>
-                        </div>
-                        <div className="p-2 bg-neutral-50 rounded-xs">
-                          <strong className="text-neutral-900 block text-[11px] font-sans">Micro Georgette</strong>
-                          <span className="text-[10px] text-neutral-500">Diamond shimmer sequin work</span>
+                          <span className="text-[10px] text-neutral-500">Premium festival comfort</span>
                         </div>
                         
                         <button
+                          type="button"
                           onClick={() => {
                             onOpenSizeGuide();
                             setIsMegaMenuOpen(false);
@@ -187,18 +200,28 @@ export const Navbar: React.FC<NavbarProps> = ({
                             Bestseller Spotlight
                           </span>
                           <span className="text-[10px] bg-[#E10613] text-white px-2 py-0.5 rounded-xs font-bold uppercase">
-                            -34% OFF
+                            -32% OFF
                           </span>
                         </div>
 
-                        <div className="aspect-[4/3] rounded-xs overflow-hidden bg-neutral-100 border border-neutral-200 relative group">
+                        <a
+                          href={getProductUrl(featuredProduct.id)}
+                          onClick={(e) => {
+                            if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+                              e.preventDefault();
+                              onQuickView(featuredProduct);
+                              setIsMegaMenuOpen(false);
+                            }
+                          }}
+                          className="block aspect-[4/3] rounded-xs overflow-hidden bg-neutral-100 border border-neutral-200 relative group cursor-pointer"
+                        >
                           <img
                             src={featuredProduct.image}
                             alt={featuredProduct.name}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             referrerPolicy="no-referrer"
                           />
-                        </div>
+                        </a>
 
                         <h4 className="font-serif text-xs font-bold text-neutral-900 mt-2.5 truncate">
                           {featuredProduct.name}
@@ -214,24 +237,26 @@ export const Navbar: React.FC<NavbarProps> = ({
                       </div>
 
                       <div className="pt-3 border-t border-neutral-100 flex gap-2">
-                        <button
-                          onClick={() => {
-                            onQuickView(featuredProduct);
-                            setIsMegaMenuOpen(false);
+                        <a
+                          href={getProductUrl(featuredProduct.id)}
+                          onClick={(e) => {
+                            if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+                              e.preventDefault();
+                              onQuickView(featuredProduct);
+                              setIsMegaMenuOpen(false);
+                            }
                           }}
-                          className="flex-1 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-900 text-[11px] font-semibold uppercase tracking-wider rounded-xs transition-colors cursor-pointer text-center"
+                          className="flex-1 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-900 text-[11px] font-semibold uppercase tracking-wider rounded-xs transition-colors cursor-pointer text-center block"
                         >
-                          Quick View
-                        </button>
-                        <button
-                          onClick={() => {
-                            onNavigate('shop', 'abaya');
-                            setIsMegaMenuOpen(false);
-                          }}
-                          className="flex-1 py-2 bg-[#141416] hover:bg-[#E10613] text-white text-[11px] font-semibold uppercase tracking-wider rounded-xs transition-colors cursor-pointer text-center"
+                          View Details
+                        </a>
+                        <a
+                          href="/shop/abaya"
+                          onClick={(e) => handleLink(e, 'shop', 'abaya')}
+                          className="flex-1 py-2 bg-[#141416] hover:bg-[#E10613] text-white text-[11px] font-semibold uppercase tracking-wider rounded-xs transition-colors cursor-pointer text-center block"
                         >
                           Shop Abayas
-                        </button>
+                        </a>
                       </div>
                     </div>
 
@@ -241,8 +266,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             {/* About Link */}
-            <button
-              onClick={() => onNavigate('about')}
+            <a
+              href="/about"
+              onClick={(e) => handleLink(e, 'about')}
               className={`hover:text-[#E10613] transition-colors whitespace-nowrap shrink-0 relative py-2 cursor-pointer ${
                 activePage === 'about'
                   ? 'text-[#E10613] font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#E10613]'
@@ -250,11 +276,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               About
-            </button>
+            </a>
 
             {/* Contact Link */}
-            <button
-              onClick={() => onNavigate('contact')}
+            <a
+              href="/contact"
+              onClick={(e) => handleLink(e, 'contact')}
               className={`hover:text-[#E10613] transition-colors whitespace-nowrap shrink-0 relative py-2 cursor-pointer ${
                 activePage === 'contact'
                   ? 'text-[#E10613] font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#E10613]'
@@ -262,7 +289,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               Contact
-            </button>
+            </a>
           </nav>
 
           {/* Zone 3: Interactive Affordances & Bag */}
@@ -276,8 +303,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             {/* Shopping Bag Primary Action */}
-            <button
-              onClick={onOpenCart}
+            <a
+              href="/cart"
+              onClick={(e) => {
+                if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+                  e.preventDefault();
+                  onOpenCart();
+                }
+              }}
               className={`flex items-center gap-2.5 px-3.5 sm:px-4 py-2 text-white text-xs font-semibold tracking-wider uppercase rounded-xs transition-all duration-200 cursor-pointer shadow-sm active:scale-95 whitespace-nowrap shrink-0 ${
                 activePage === 'cart' ? 'bg-[#E10613] ring-2 ring-red-300' : 'bg-[#141416] hover:bg-[#E10613]'
               }`}
@@ -287,7 +320,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="bg-white/20 px-1.5 py-0.5 rounded text-[11px] font-mono tabular-nums">
                 {cartCount}
               </span>
-            </button>
+            </a>
 
             {/* Mobile Hamburger toggle */}
             <button
@@ -305,71 +338,72 @@ export const Navbar: React.FC<NavbarProps> = ({
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-neutral-200 px-6 py-4 animate-in fade-in slide-in-from-top duration-200">
           <div className="flex flex-col gap-2">
-            <button
-              onClick={() => {
-                onNavigate('home');
-                setMobileMenuOpen(false);
-              }}
-              className={`text-left text-sm tracking-wider uppercase font-medium py-2 border-b border-neutral-100 ${
+            <a
+              href="/"
+              onClick={(e) => handleLink(e, 'home')}
+              className={`text-left text-sm tracking-wider uppercase font-medium py-2 border-b border-neutral-100 block ${
                 activePage === 'home' ? 'text-[#E10613] font-bold' : 'text-neutral-800 hover:text-[#E10613]'
               }`}
             >
               Home
-            </button>
+            </a>
 
             {/* Mobile Shop with Expandable Categories */}
             <div>
-              <button
-                onClick={() => setMobileShopOpen(!mobileShopOpen)}
-                className={`w-full text-left text-sm tracking-wider uppercase font-medium py-2 border-b border-neutral-100 flex items-center justify-between ${
-                  activePage === 'shop' ? 'text-[#E10613] font-bold' : 'text-neutral-800'
-                }`}
-              >
-                <span>Shop Catalog</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${mobileShopOpen ? 'rotate-180 text-[#E10613]' : ''}`} />
-              </button>
+              <div className="flex items-center justify-between border-b border-neutral-100 py-2">
+                <a
+                  href="/shop"
+                  onClick={(e) => handleLink(e, 'shop', 'all')}
+                  className={`text-sm tracking-wider uppercase font-medium ${
+                    activePage === 'shop' ? 'text-[#E10613] font-bold' : 'text-neutral-800'
+                  }`}
+                >
+                  Shop Catalog
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setMobileShopOpen(!mobileShopOpen)}
+                  className="p-1 text-neutral-400 hover:text-black"
+                >
+                  <ChevronDown className={`w-4 h-4 transition-transform ${mobileShopOpen ? 'rotate-180 text-[#E10613]' : ''}`} />
+                </button>
+              </div>
 
               {mobileShopOpen && (
                 <div className="pl-4 py-2 space-y-2 bg-neutral-50/70 border-b border-neutral-100">
                   {categories.map((c) => (
-                    <button
+                    <a
                       key={c.id}
-                      onClick={() => {
-                        onNavigate('shop', c.id);
-                        setMobileMenuOpen(false);
-                      }}
+                      href={c.id === 'all' ? '/shop' : `/shop/${c.id}`}
+                      onClick={(e) => handleLink(e, 'shop', c.id)}
                       className="block text-left text-xs text-neutral-600 hover:text-[#E10613] py-1"
                     >
                       • {c.label}
-                    </button>
+                    </a>
                   ))}
                 </div>
               )}
             </div>
 
-            <button
-              onClick={() => {
-                onNavigate('about');
-                setMobileMenuOpen(false);
-              }}
-              className={`text-left text-sm tracking-wider uppercase font-medium py-2 border-b border-neutral-100 ${
+            <a
+              href="/about"
+              onClick={(e) => handleLink(e, 'about')}
+              className={`text-left text-sm tracking-wider uppercase font-medium py-2 border-b border-neutral-100 block ${
                 activePage === 'about' ? 'text-[#E10613] font-bold' : 'text-neutral-800 hover:text-[#E10613]'
               }`}
             >
               About
-            </button>
+            </a>
 
-            <button
-              onClick={() => {
-                onNavigate('contact');
-                setMobileMenuOpen(false);
-              }}
-              className={`text-left text-sm tracking-wider uppercase font-medium py-2 border-b border-neutral-100 ${
+            <a
+              href="/contact"
+              onClick={(e) => handleLink(e, 'contact')}
+              className={`text-left text-sm tracking-wider uppercase font-medium py-2 border-b border-neutral-100 block ${
                 activePage === 'contact' ? 'text-[#E10613] font-bold' : 'text-neutral-800 hover:text-[#E10613]'
               }`}
             >
               Contact
-            </button>
+            </a>
 
             <div className="pt-3 flex items-center justify-between text-xs text-neutral-500">
               <a href="tel:+8801712345678" className="font-mono text-neutral-700">

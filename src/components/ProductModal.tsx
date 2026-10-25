@@ -246,16 +246,19 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               </button>
 
               {onViewFullPage && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onViewFullPage(product);
-                    onClose();
+                <a
+                  href={`/product/${product.id}`}
+                  onClick={(e) => {
+                    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+                      e.preventDefault();
+                      onViewFullPage(product);
+                      onClose();
+                    }
                   }}
-                  className="w-full text-center text-xs text-neutral-800 hover:text-[#E10613] font-semibold underline underline-offset-4 py-1 cursor-pointer transition-colors"
+                  className="w-full text-center text-xs text-neutral-800 hover:text-[#E10613] font-semibold underline underline-offset-4 py-1 cursor-pointer transition-colors block"
                 >
                   View Full Separate Product Page →
-                </button>
+                </a>
               )}
 
               <p className="text-[11px] text-center text-neutral-500">

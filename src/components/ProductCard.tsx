@@ -1,6 +1,7 @@
 import React from 'react';
-import { ShoppingBag, Zap } from 'lucide-react';
+import { Star, ShoppingBag } from 'lucide-react';
 import { Product } from '../types';
+import { getProductUrl } from '../utils/navigation';
 
 interface ProductCardProps {
   product: Product;
@@ -21,35 +22,35 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [selectedSize] = React.useState(product.sizes[0] || 'Free Size');
   const [selectedColor] = React.useState(product.colors[0] || 'Default');
+  const [isAdded, setIsAdded] = React.useState(false);
+  const productUrl = getProductUrl(product.id);
 
-  const handleCardClick = () => {
-    if (onOpenProduct) {
-      onOpenProduct(product);
-    } else {
-      onQuickView(product);
-    }
-  };
-
-  const handleBuyNow = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onInstantBuy) {
-      onInstantBuy(product, selectedSize, selectedColor);
-    } else {
-      onAddToCart(product, selectedSize, selectedColor);
+  const handleProductNavigation = (e: React.MouseEvent) => {
+    // Only intercept regular primary button clicks without modifiers
+    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+      e.preventDefault();
+      if (onOpenProduct) {
+        onOpenProduct(product);
+      } else {
+        onQuickView(product);
+      }
     }
   };
 
   const handleAddToCartClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onAddToCart(product, selectedSize, selectedColor);
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 1800);
   };
 
   if (viewMode === 'list') {
     return (
-      <article className="group bg-white border border-neutral-200 rounded-sm overflow-hidden flex flex-col sm:flex-row transition-all duration-200 hover:shadow-md hover:border-neutral-300">
-        <div
-          className="relative w-full sm:w-48 sm:min-w-[192px] aspect-[4/3] sm:aspect-[3/4] bg-neutral-100 overflow-hidden cursor-pointer"
-          onClick={handleCardClick}
+      <article className="group bg-white border border-neutral-200/80 rounded-xl overflow-hidden flex flex-col sm:flex-row transition-all duration-200 hover:shadow-md hover:border-neutral-300">
+        <a
+          href={productUrl}
+          onClick={handleProductNavigation}
+          className="relative w-full sm:w-48 sm:min-w-[192px] aspect-[3/4] bg-neutral-100 overflow-hidden cursor-pointer block"
         >
           <img
             src={product.image}
@@ -58,23 +59,31 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             loading="lazy"
             referrerPolicy="no-referrer"
           />
+          {/* Frosted rating badge */}
+          <div className="absolute bottom-2 left-2 bg-white/85 backdrop-blur-xs text-neutral-800 text-[10px] font-semibold px-2 py-0.5 rounded-sm shadow-xs flex items-center gap-1">
+            <span className="text-amber-500 font-bold">★</span>
+            <span>{product.rating > 0 ? product.rating.toFixed(1) : '5.0'}</span>
+            <span className="text-neutral-400">|</span>
+            <span className="text-neutral-600">{product.soldCount} Sold</span>
+          </div>
+
           {product.discountPercent > 0 && (
             <div className="absolute top-2 left-2 bg-[#E10613] text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 uppercase rounded-xs shadow-sm">
               {product.discountPercent}% OFF
             </div>
           )}
-        </div>
+        </a>
 
         <div className="p-4 sm:p-5 flex flex-col justify-between flex-grow">
           <div>
-            <h3
-              onClick={handleCardClick}
-              className="text-base sm:text-lg font-bold text-neutral-900 hover:text-[#E10613] transition-colors cursor-pointer"
+            <a
+              href={productUrl}
+              onClick={handleProductNavigation}
+              className="text-base sm:text-lg font-bold text-neutral-900 hover:text-[#E10613] transition-colors cursor-pointer block"
             >
               {product.name}
-            </h3>
-            
-            {/* Sold Count directly under Title */}
+            </a>
+
             <p className="text-xs text-neutral-500 font-medium mt-1">
               {product.soldCount} Sold
             </p>
@@ -86,44 +95,42 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           <div className="mt-4 pt-3 border-t border-neutral-100 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-baseline gap-2">
-              <span className="text-xl sm:text-2xl font-bold text-[#141416] tabular-nums">
-                Tk {product.price.toLocaleString()}
+              <span className="text-lg sm:text-xl font-bold text-neutral-900 tabular-nums">
+                TK. {product.price.toLocaleString()}
               </span>
               {product.originalPrice > product.price && (
-                <span className="text-sm text-neutral-400 line-through tabular-nums">
-                  Tk {product.originalPrice.toLocaleString()}
+                <span className="text-xs text-neutral-400 line-through tabular-nums">
+                  TK. {product.originalPrice.toLocaleString()}
                 </span>
               )}
             </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={handleBuyNow}
-                className="px-4 py-2 bg-[#E10613] hover:bg-[#b8000b] text-white text-xs font-bold uppercase tracking-wider rounded-xs shadow-sm flex items-center gap-1.5 cursor-pointer active:scale-95 transition-all"
-              >
-                <Zap className="w-3.5 h-3.5 fill-current" />
-                <span>অর্ডার করুন</span>
-              </button>
-              <button
-                type="button"
-                onClick={handleAddToCartClick}
-                className="p-2 border border-neutral-300 hover:border-black text-neutral-800 rounded-xs hover:bg-neutral-50 cursor-pointer"
-                title="Add to Bag"
-              >
-                <ShoppingBag className="w-4 h-4" />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={handleAddToCartClick}
+              className={`px-5 py-2.5 rounded-md text-xs font-semibold transition-all shadow-xs cursor-pointer ${
+                isAdded
+                  ? 'bg-emerald-600 text-white border border-emerald-600'
+                  : 'bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-300 hover:border-neutral-400'
+              }`}
+            >
+              {isAdded ? 'Added to Cart ✓' : 'Add To Cart'}
+            </button>
           </div>
         </div>
       </article>
     );
   }
 
+  // Exact mobile-first design matching Glam Touch screenshot:
   return (
-    <article className="group relative bg-white border border-neutral-200/90 rounded-sm overflow-hidden flex flex-col transition-all duration-300 hover:shadow-md hover:border-neutral-300">
+    <article className="group relative bg-white border border-neutral-200/80 rounded-xl overflow-hidden flex flex-col shadow-xs transition-all duration-300 hover:shadow-md hover:border-neutral-300">
       {/* Product Image Slot */}
-      <div className="relative aspect-[3/4] bg-neutral-100 overflow-hidden cursor-pointer" onClick={handleCardClick}>
+      <a
+        href={productUrl}
+        onClick={handleProductNavigation}
+        className="relative aspect-[3/4] bg-neutral-100 overflow-hidden cursor-pointer block"
+      >
         <img
           src={product.image}
           alt={product.name}
@@ -132,77 +139,62 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           referrerPolicy="no-referrer"
         />
 
-        {/* Clean Discount Badge */}
-        {product.discountPercent > 0 ? (
-          <div className="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 z-10">
-            <div className="bg-[#E10613] text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-xs shadow-sm">
-              {product.discountPercent}% OFF
-            </div>
-          </div>
-        ) : product.isBestSeller ? (
-          <div className="absolute top-2 left-2 bg-[#141416] text-white text-[10px] font-bold tracking-wider px-2 py-0.5 uppercase rounded-xs shadow-sm">
-            Bestseller
-          </div>
-        ) : null}
-
-        {/* Cash on Delivery guarantee tag on bottom of image */}
-        <div className="absolute bottom-2 left-2 bg-black/75 backdrop-blur-xs text-white text-[9px] sm:text-[10px] px-2 py-0.5 rounded-xs font-medium tracking-tight">
-          ক্যাশ অন ডেলিভারি
+        {/* Translucent Rating / Sold Badge in Bottom-Left of Image (exact screenshot style) */}
+        <div className="absolute bottom-2.5 left-2.5 bg-white/90 backdrop-blur-xs text-neutral-800 text-[10.5px] font-medium px-2 py-0.5 rounded-sm shadow-xs flex items-center gap-1 tracking-tight">
+          <span>{product.rating > 0 ? product.rating.toFixed(1) : '5.0'}</span>
+          <span className="text-amber-500 text-[11px] leading-none">★</span>
+          <span className="text-neutral-300">|</span>
+          <span className="text-neutral-600">{product.soldCount} Sold</span>
         </div>
-      </div>
 
-      {/* Card Content & Metadata */}
-      <div className="p-3 sm:p-3.5 flex flex-col flex-grow justify-between bg-white">
+        {/* Subtle Discount Tag if on sale */}
+        {product.discountPercent > 0 && (
+          <div className="absolute top-2 right-2 bg-[#E10613] text-white text-[9.5px] font-bold px-1.5 py-0.5 rounded-xs shadow-xs">
+            {product.discountPercent}% OFF
+          </div>
+        )}
+      </a>
+
+      {/* Card Content (Clean Title, Price, Add To Cart button) */}
+      <div className="p-3 sm:p-3.5 flex flex-col flex-grow justify-between bg-white text-left">
         <div>
-          {/* Product Name */}
-          <h3
-            onClick={handleCardClick}
-            className="text-[13px] sm:text-[14px] font-bold text-neutral-900 line-clamp-1 hover:text-[#E10613] transition-colors cursor-pointer leading-snug"
+          {/* Product Title */}
+          <a
+            href={productUrl}
+            onClick={handleProductNavigation}
+            className="text-[13px] sm:text-[14px] font-medium text-neutral-800 line-clamp-1 hover:text-[#E10613] transition-colors cursor-pointer leading-snug block"
+            title={product.name}
           >
             {product.name}
-          </h3>
+          </a>
 
-          {/* Sold Count directly under Title */}
-          <p className="text-[11px] sm:text-xs text-neutral-500 font-medium mt-0.5">
-            {product.soldCount} Sold
-          </p>
-        </div>
-
-        {/* Pricing Row */}
-        <div className="pt-2 mt-2 border-t border-neutral-100">
-          <div className="flex items-baseline gap-2 mb-2">
-            <span className="text-base sm:text-lg font-bold text-[#141416] tabular-nums">
-              Tk {product.price.toLocaleString()}
+          {/* Clean Price Display: TK. 3300 */}
+          <div className="mt-1 flex items-baseline gap-1.5">
+            <span className="text-[14px] sm:text-[15px] font-bold text-neutral-900 tabular-nums">
+              TK. {product.price.toLocaleString()}
             </span>
             {product.originalPrice > product.price && (
-              <span className="text-xs text-neutral-400 line-through tabular-nums">
-                Tk {product.originalPrice.toLocaleString()}
+              <span className="text-[11px] text-neutral-400 line-through tabular-nums">
+                TK. {product.originalPrice.toLocaleString()}
               </span>
             )}
           </div>
+        </div>
 
-          {/* Action Buttons */}
-          <div className="grid grid-cols-12 gap-1.5 sm:gap-2">
-            {/* Direct Order Now button in prominent red */}
-            <button
-              type="button"
-              onClick={handleBuyNow}
-              className="col-span-8 sm:col-span-9 py-2 px-2 bg-[#E10613] hover:bg-[#b8000b] active:bg-[#910009] text-white text-[11px] sm:text-xs font-bold tracking-tight uppercase rounded-xs transition-colors flex items-center justify-center gap-1 shadow-xs cursor-pointer"
-            >
-              <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current shrink-0" />
-              <span className="truncate">অর্ডার করুন</span>
-            </button>
-
-            {/* Add to Bag button */}
-            <button
-              type="button"
-              onClick={handleAddToCartClick}
-              title="Add to Bag (ব্যাগে রাখুন)"
-              className="col-span-4 sm:col-span-3 py-2 bg-neutral-100 hover:bg-neutral-900 hover:text-white text-neutral-800 text-xs font-semibold rounded-xs transition-colors flex items-center justify-center cursor-pointer"
-            >
-              <ShoppingBag className="w-3.5 h-3.5" />
-            </button>
-          </div>
+        {/* Clean Rounded "Add To Cart" button (identical to user screenshot) */}
+        <div className="mt-2.5">
+          <button
+            type="button"
+            onClick={handleAddToCartClick}
+            className={`w-full py-2 px-3 rounded-md text-xs font-semibold transition-all duration-200 shadow-xs flex items-center justify-center gap-1.5 cursor-pointer active:scale-98 ${
+              isAdded
+                ? 'bg-emerald-600 text-white border border-emerald-600'
+                : 'bg-white hover:bg-neutral-50 active:bg-neutral-100 text-neutral-800 border border-neutral-300/90 hover:border-neutral-400'
+            }`}
+          >
+            <ShoppingBag className="w-3.5 h-3.5 text-neutral-500" />
+            <span>{isAdded ? 'Added to Cart ✓' : 'Add To Cart'}</span>
+          </button>
         </div>
       </div>
     </article>

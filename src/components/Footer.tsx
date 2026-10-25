@@ -42,36 +42,66 @@ export const Footer: React.FC<FooterProps> = ({
               Menu & Boutique
             </h4>
             <div className="flex flex-col space-y-1.5 text-xs text-neutral-400">
-              <button
-                onClick={() => onNavigate('home')}
+              <a
+                href="/"
+                onClick={(e) => {
+                  if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+                    e.preventDefault();
+                    onNavigate('home');
+                  }
+                }}
                 className="text-left hover:text-white transition-colors cursor-pointer"
               >
                 Home
-              </button>
-              <button
-                onClick={() => onNavigate('shop', 'all')}
+              </a>
+              <a
+                href="/shop"
+                onClick={(e) => {
+                  if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+                    e.preventDefault();
+                    onNavigate('shop', 'all');
+                  }
+                }}
                 className="text-left hover:text-white transition-colors cursor-pointer"
               >
                 Shop All Designs
-              </button>
-              <button
-                onClick={() => onNavigate('about')}
+              </a>
+              <a
+                href="/about"
+                onClick={(e) => {
+                  if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+                    e.preventDefault();
+                    onNavigate('about');
+                  }
+                }}
                 className="text-left hover:text-white transition-colors cursor-pointer"
               >
                 About Assiano
-              </button>
-              <button
-                onClick={() => onNavigate('contact')}
+              </a>
+              <a
+                href="/contact"
+                onClick={(e) => {
+                  if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+                    e.preventDefault();
+                    onNavigate('contact');
+                  }
+                }}
                 className="text-left hover:text-white transition-colors cursor-pointer"
               >
                 Contact & Studio
-              </button>
-              <button
-                onClick={() => onNavigate('shop', 'abaya')}
+              </a>
+              <a
+                href="/shop/abaya"
+                onClick={(e) => {
+                  if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+                    e.preventDefault();
+                    onNavigate('shop', 'abaya');
+                  }
+                }}
                 className="text-left hover:text-white transition-colors cursor-pointer"
               >
                 Abayas & Borkas
-              </button>
+              </a>
             </div>
           </div>
 

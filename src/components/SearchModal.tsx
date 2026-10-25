@@ -87,13 +87,17 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   Matching Products ({matches.length})
                 </div>
                 {matches.map((item) => (
-                  <div
+                  <a
                     key={item.id}
-                    onClick={() => {
-                      onSelectProduct(item);
-                      onClose();
+                    href={`/product/${item.id}`}
+                    onClick={(e) => {
+                      if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+                        e.preventDefault();
+                        onSelectProduct(item);
+                        onClose();
+                      }
                     }}
-                    className="p-2.5 rounded-xs hover:bg-neutral-100/80 flex items-center gap-3 transition-colors cursor-pointer group"
+                    className="p-2.5 rounded-xs hover:bg-neutral-100/80 flex items-center gap-3 transition-colors cursor-pointer group block"
                   >
                     <img
                       src={item.image}
@@ -109,7 +113,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                     <span className="text-xs font-bold font-mono text-neutral-900 tabular-nums">
                       Tk {item.price.toLocaleString()}
                     </span>
-                  </div>
+                  </a>
                 ))}
               </div>
             ) : (

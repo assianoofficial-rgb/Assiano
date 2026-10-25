@@ -1,6 +1,8 @@
 import React from 'react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { MobileBottomBar } from './components/MobileBottomBar';
+import { FloatingContactSpeedDial } from './components/FloatingContactSpeedDial';
 import { HomePage } from './pages/HomePage';
 import { ShopPage } from './pages/ShopPage';
 import { AboutPage } from './pages/AboutPage';
@@ -15,18 +17,34 @@ import { SearchModal } from './components/SearchModal';
 import { ToastContainer, ToastMessage } from './components/Toast';
 import { PRODUCTS } from './data/products';
 import { CartItem, CategoryType, OrderDetails, PageType, Product } from './types';
+import { parseCurrentUrl, navigateTo, updatePageTitle, getProductUrl } from './utils/navigation';
 import { MessageCircle } from 'lucide-react';
 
-// Contact hotline constants (user can update their mobile and WhatsApp numbers here)
+// Contact hotline constants
 const ASSIANO_HOTLINE = '+880 1712-345678';
 const ASSIANO_WHATSAPP = '+880 1712-345678';
 
 export default function App() {
+  // Initialize route from current browser URL
+  const initialRoute = React.useMemo(() => parseCurrentUrl(), []);
+
   // Navigation State
-  const [activePage, setActivePage] = React.useState<PageType>('home');
-  const [selectedCategory, setSelectedCategory] = React.useState<CategoryType>('all');
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [selectedProduct, setSelectedProduct] = React.useState<Product>(PRODUCTS[0]);
+  const [activePage, setActivePage] = React.useState<PageType>(initialRoute.page);
+  const [selectedCategory, setSelectedCategory] = React.useState<CategoryType>(initialRoute.category || 'all');
+  const [searchQuery, setSearchQuery] = React.useState(initialRoute.searchQuery || '');
+  
+  // Find initial product if URL is /product/:id
+  const [selectedProduct, setSelectedProduct] = React.useState<Product>(() => {
+    if (initialRoute.productId) {
+      const found = PRODUCTS.find(
+        (p) =>
+          p.id.toLowerCase() === initialRoute.productId?.toLowerCase() ||
+          p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') === initialRoute.productId?.toLowerCase()
+      );
+      if (found) return found;
+    }
+    return PRODUCTS[0];
+  });
 
   // Cart State with LocalStorage persistence
   const [cartItems, setCartItems] = React.useState<CartItem[]>(() => {
@@ -65,6 +83,61 @@ export default function App() {
   // Toast Notification State
   const [toasts, setToasts] = React.useState<ToastMessage[]>([]);
 
+  // Sync routing on browser Back / Forward buttons and URL changes
+  React.useEffect(() => {
+    const handlePopState = () => {
+      const route = parseCurrentUrl();
+      setActivePage(route.page);
+      if (route.category) {
+        setSelectedCategory(route.category);
+      }
+      if (route.searchQuery !== undefined) {
+        setSearchQuery(route.searchQuery);
+      }
+      if (route.page === 'product' && route.productId) {
+        const found = PRODUCTS.find(
+          (p) =>
+            p.id.toLowerCase() === route.productId?.toLowerCase() ||
+            p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') === route.productId?.toLowerCase()
+        );
+        if (found) {
+          setSelectedProduct(found);
+        }
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Sync Document Title based on active page
+  React.useEffect(() => {
+    switch (activePage) {
+      case 'home':
+        updatePageTitle('');
+        break;
+      case 'about':
+        updatePageTitle('About Assiano Atelier');
+        break;
+      case 'contact':
+        updatePageTitle('Contact & Concierge');
+        break;
+      case 'shop':
+        updatePageTitle(selectedCategory !== 'all' ? `${selectedCategory.toUpperCase()} Collection` : 'Shop All Designs');
+        break;
+      case 'product':
+        updatePageTitle(`${selectedProduct.name} (TK. ${selectedProduct.price.toLocaleString()})`);
+        break;
+      case 'cart':
+        updatePageTitle('Shopping Bag');
+        break;
+      case 'checkout':
+        updatePageTitle('Express Checkout');
+        break;
+    }
+  }, [activePage, selectedCategory, selectedProduct]);
+
   // Persist cart
   React.useEffect(() => {
     try {
@@ -95,18 +168,40 @@ export default function App() {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
+  // URL-driven navigation handler without hash (#)
   const handleNavigate = (page: PageType, category?: CategoryType) => {
     setActivePage(page);
     if (category) {
       setSelectedCategory(category);
     }
+
+    let targetPath = '/';
+    if (page === 'home') {
+      targetPath = '/';
+    } else if (page === 'about') {
+      targetPath = '/about';
+    } else if (page === 'contact') {
+      targetPath = '/contact';
+    } else if (page === 'cart') {
+      targetPath = '/cart';
+    } else if (page === 'checkout') {
+      targetPath = '/checkout';
+    } else if (page === 'shop') {
+      targetPath = category && category !== 'all' ? `/shop/${category}` : '/shop';
+    } else if (page === 'product') {
+      targetPath = getProductUrl(selectedProduct.id);
+    }
+
+    navigateTo(targetPath);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Open separate product page
+  // Open separate product page with direct URL (/product/:id)
   const handleOpenProduct = (product: Product) => {
     setSelectedProduct(product);
-    handleNavigate('product');
+    setActivePage('product');
+    navigateTo(getProductUrl(product.id));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Add to Bag handler
@@ -131,7 +226,7 @@ export default function App() {
     addToast(
       'cart',
       `Added to Bag (${qty})`,
-      `${product.name} · Size: ${size}`
+      `${product.name} · TK. ${product.price.toLocaleString()}`
     );
   };
 
@@ -168,7 +263,7 @@ export default function App() {
       const discount = Math.round(subtotal * 0.1);
       setDiscountAmount(discount);
       setPromoCode(cleanCode);
-      addToast('info', '10% Voucher Applied', `You saved Tk ${discount.toLocaleString()}`);
+      addToast('info', '10% Voucher Applied', `You saved TK. ${discount.toLocaleString()}`);
     } else if (cleanCode === '') {
       setDiscountAmount(0);
       setPromoCode('');
@@ -207,8 +302,8 @@ export default function App() {
         onQuickView={(p) => handleOpenProduct(p)}
       />
 
-      {/* Specific Pages View */}
-      <main className="flex-grow">
+      {/* Specific Pages View (Padding bottom for mobile bottom navigation bar) */}
+      <main className="flex-grow pb-28 lg:pb-0">
         {activePage === 'home' && (
           <HomePage
             products={PRODUCTS}
@@ -307,23 +402,25 @@ export default function App() {
         onOpenSizeGuide={() => setIsSizeGuideOpen(true)}
       />
 
-      {/* Single Global Floating WhatsApp Order & Chat Button */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <a
-          href={`https://wa.me/${ASSIANO_WHATSAPP.replace(/[^0-9]/g, '')}?text=Hello%20Assiano,%20I%20would%20like%20to%20order`}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Chat on WhatsApp"
-          className="flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20BA5A] text-white text-xs font-bold py-2.5 sm:py-3 px-3.5 sm:px-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer ring-4 ring-black/5"
-        >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
-          </span>
-          <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-white shrink-0" />
-          <span className="tracking-wide">হোয়াটসঅ্যাপে অর্ডার দিন</span>
-        </a>
-      </div>
+      {/* Speed Dial Floating Contact: On hover (desktop) or click (mobile), 3 circular buttons rise up: WhatsApp, Messenger, Call */}
+      <FloatingContactSpeedDial
+        phoneHotline={ASSIANO_HOTLINE}
+        whatsappNumber={ASSIANO_WHATSAPP}
+      />
+
+      {/* Mobile Sticky Bottom Bar (Exact screenshot: Profile, WhatsApp + Small Icon revealing WhatsApp/Messenger/Call) */}
+      <MobileBottomBar
+        activePage={activePage}
+        onNavigate={handleNavigate}
+        cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+        onOpenSearch={() => setIsSearchOpen(true)}
+        onOpenTrack={() => {
+          setActiveTrackingId('');
+          setIsTrackOpen(true);
+        }}
+        phoneHotline={ASSIANO_HOTLINE}
+        whatsappNumber={ASSIANO_WHATSAPP}
+      />
 
       {/* Modals: Quick View, Order Tracking, Sizing & Search */}
       <ProductModal
