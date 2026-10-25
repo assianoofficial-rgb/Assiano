@@ -239,7 +239,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   onInstantBuy(product, selectedSize, selectedColor, quantity);
                   onClose();
                 }}
-                className="w-full py-3.5 px-4 bg-[#E10613] hover:bg-[#C80511] text-white text-xs font-bold tracking-widest uppercase rounded-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                className="w-full py-3.5 px-4 bg-[#E10613] hover:bg-[#C80511] text-white text-xs font-bold tracking-widest uppercase rounded-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 animate-order-glow hover:scale-[1.01]"
               >
                 <Zap className="w-4 h-4 fill-white" />
                 <span>Order Now (Cash on Delivery)</span>

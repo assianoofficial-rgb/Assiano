@@ -112,13 +112,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <button
               type="button"
               onClick={handleOrderNowClick}
-              className={`px-5 py-2.5 rounded-md text-xs font-semibold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 ${
+              className={`px-5 py-2.5 rounded-md text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 active:scale-95 animate-order-glow ${
                 isOrdered
                   ? 'bg-emerald-600 text-white border border-emerald-600'
-                  : 'bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-300 hover:border-neutral-400'
+                  : 'bg-[#E10613] hover:bg-[#c40510] text-white border border-[#E10613]'
               }`}
             >
-              <Zap className="w-3.5 h-3.5 fill-current text-amber-500" />
+              <Zap className="w-3.5 h-3.5 fill-white text-white" />
               <span>{isOrdered ? 'Processing...' : 'Order Now'}</span>
             </button>
           </div>
@@ -186,18 +186,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
 
-        {/* Clean Rounded "Order Now" button */}
+        {/* Red Animated "Order Now" button */}
         <div className="mt-2.5">
           <button
             type="button"
             onClick={handleOrderNowClick}
-            className={`w-full py-2 px-3 rounded-md text-xs font-semibold transition-all duration-200 shadow-xs flex items-center justify-center gap-1.5 cursor-pointer active:scale-98 ${
+            className={`w-full py-2 px-3 rounded-md text-xs font-bold transition-all duration-200 shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 animate-order-glow ${
               isOrdered
                 ? 'bg-emerald-600 text-white border border-emerald-600'
-                : 'bg-white hover:bg-neutral-50 active:bg-neutral-100 text-neutral-800 border border-neutral-300/90 hover:border-neutral-400'
+                : 'bg-[#E10613] hover:bg-[#c40510] text-white border border-[#E10613]'
             }`}
           >
-            <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+            <Zap className="w-3.5 h-3.5 text-white fill-white" />
             <span>{isOrdered ? 'Processing...' : 'Order Now'}</span>
           </button>
         </div>

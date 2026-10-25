@@ -64,6 +64,12 @@ const CIRCLE_CATEGORIES: CircleCategory[] = [
     image: '/assets/images/assiano_evening_gown_1792505198775.jpg',
   },
   {
+    id: 'hijab',
+    labelEn: 'Hijabs',
+    labelBn: 'হিজাব ও স্কার্ফ',
+    image: '/assets/images/assiano_luxury_abaya_1792505197814.jpg',
+  },
+  {
     id: 'shirt',
     labelEn: 'Shirts',
     labelBn: 'কিউবান শার্ট',
@@ -73,7 +79,7 @@ const CIRCLE_CATEGORIES: CircleCategory[] = [
     id: 'footwear',
     labelEn: 'Footwear',
     labelBn: 'জুতো ও হিল',
-    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
+    image: '/assets/aistudio/image_fdd18a03.png',
   },
 ];
 
@@ -253,9 +259,9 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 2. CIRCULAR-STYLE CATEGORY ICONS (No horizontal scroll: fits on single screen in neat rows) */}
+      {/* 2. CIRCULAR-STYLE CATEGORY ICONS (8 items: 4 on row 1, 4 on row 2 on mobile, no horizontal scroll) */}
       <section className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-3">
-        <div className="flex flex-wrap items-start justify-center gap-x-2 sm:gap-x-6 gap-y-3 sm:gap-y-5 px-1">
+        <div className="grid grid-cols-4 sm:flex sm:flex-wrap sm:items-start sm:justify-center gap-x-2 sm:gap-x-6 gap-y-3 sm:gap-y-5 px-1 max-w-lg sm:max-w-none mx-auto">
           {CIRCLE_CATEGORIES.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             return (
@@ -263,7 +269,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 key={cat.id}
                 type="button"
                 onClick={() => handleCategorySelect(cat.id)}
-                className="group flex flex-col items-center text-center w-[74px] sm:w-22 cursor-pointer focus:outline-none py-0.5"
+                className="group flex flex-col items-center text-center w-full sm:w-22 cursor-pointer focus:outline-none py-0.5"
               >
                 {/* Circular Image Container */}
                 <div

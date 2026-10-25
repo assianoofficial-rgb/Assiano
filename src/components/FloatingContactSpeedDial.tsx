@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Headphones, Sparkles } from 'lucide-react';
+import { X, Phone, Sparkles } from 'lucide-react';
 
 interface FloatingContactSpeedDialProps {
   phoneHotline?: string;
@@ -152,8 +152,8 @@ export const FloatingContactSpeedDial: React.FC<FloatingContactSpeedDialProps> =
                 <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white shadow-xs"></span>
               </span>
 
-              {/* Headset / Concierge Support Icon */}
-              <Headphones className="w-6 h-6 sm:w-6.5 sm:h-6.5 stroke-[2.2] text-white transition-transform group-hover:scale-110" />
+              {/* Call Support Icon */}
+              <Phone className="w-6 h-6 sm:w-6.5 sm:h-6.5 stroke-[2.2] text-white transition-transform group-hover:scale-110" />
             </div>
           )}
         </button>

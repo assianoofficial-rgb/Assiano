@@ -39,6 +39,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
     { id: 'three-piece', label: 'Three-Piece Sets' },
     { id: 'kurti', label: 'Designer Kurtis' },
     { id: 'gown', label: 'Occasion Gowns' },
+    { id: 'hijab', label: 'Hijabs & Scarves' },
     { id: 'shirt', label: 'Cuban Shirts' },
     { id: 'footwear', label: 'Footwear & Heels' },
   ];

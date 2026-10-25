@@ -67,6 +67,61 @@ export const PRODUCTS: Product[] = [
     isBestSeller: true,
     inStock: true
   },
+  // --- HIJABS & SCARVES ---
+  {
+    id: 'asn-hijab-01',
+    name: 'Turkish Silk Chiffon Hijab',
+    subtitle: 'Ultra-Breathable Turkish Chiffon with Micro Laser Hemming',
+    category: 'hijab',
+    categoryLabel: 'Hijabs & Scarves',
+    price: 650,
+    originalPrice: 950,
+    discountPercent: 31,
+    soldCount: 92,
+    rating: 5.0,
+    reviewCount: 64,
+    image: '/assets/images/assiano_luxury_abaya_1792505197814.jpg',
+    fabric: 'Original Turkish Silk Chiffon',
+    colors: ['Jet Black', 'Dusty Rose', 'Champagne Mocha', 'Emerald Green'],
+    sizes: ['Free Size (75" × 32")'],
+    description: 'An essential luxury hijab crafted from featherlight Turkish silk chiffon. Non-slippery, effortlessly drapeable, and soft against the skin. Finished with handcrafted laser-cut micro edges.',
+    features: [
+      'Original Turkish imported silk chiffon fabric',
+      'Ultra breathable, zero-opacity non-see-through weave',
+      'Does not require excessive pins for styling',
+      'Fade-resistant and gentle machine washable'
+    ],
+    isNewArrival: true,
+    isBestSeller: true,
+    inStock: true
+  },
+  {
+    id: 'asn-hijab-02',
+    name: 'Crinkle Georgette Stole Hijab',
+    subtitle: 'Non-Slip Textured Finish with Handcrafted Gold Tassels',
+    category: 'hijab',
+    categoryLabel: 'Hijabs & Scarves',
+    price: 750,
+    originalPrice: 1100,
+    discountPercent: 32,
+    soldCount: 78,
+    rating: 4.9,
+    reviewCount: 51,
+    image: '/assets/aistudio/image_78204c97.png',
+    fabric: 'Textured Crinkle Georgette with Handcrafted Tassels',
+    colors: ['Obsidian Black', 'Midnight Navy', 'Pecan Brown', 'Pearl White'],
+    sizes: ['Standard Full Coverage (80" × 34")'],
+    description: 'Designed for daily modesty and festive styling alike. The gentle crinkled texture ensures zero slip without pinning, while hand-finished fringe tassels add a regal silhouette touch.',
+    features: [
+      'Crinkle texture holds shape all day without slipping',
+      'Maximum chest and back coverage dimensions',
+      'Premium breathable lightweight georgette',
+      'Handcrafted corner tassels with antique gold beads'
+    ],
+    isNewArrival: true,
+    isBestSeller: true,
+    inStock: true
+  },
   {
     id: 'asn-001',
     name: 'Shahajadi Midnight Embroidered Abaya',
