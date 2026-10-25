@@ -35,3 +35,17 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #999;
 }
+
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-float-gentle {
+  animation: float-gentle 2.4s ease-in-out infinite;
+}
+

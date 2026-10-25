@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Zap } from 'lucide-react';
 import { Product } from '../types';
 import { getProductUrl } from '../utils/navigation';
 
@@ -22,7 +22,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [selectedSize] = React.useState(product.sizes[0] || 'Free Size');
   const [selectedColor] = React.useState(product.colors[0] || 'Default');
-  const [isAdded, setIsAdded] = React.useState(false);
+  const [isOrdered, setIsOrdered] = React.useState(false);
   const productUrl = getProductUrl(product.id);
 
   const handleProductNavigation = (e: React.MouseEvent) => {
@@ -37,11 +37,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     }
   };
 
-  const handleAddToCartClick = (e: React.MouseEvent) => {
+  const handleOrderNowClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onAddToCart(product, selectedSize, selectedColor);
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 1800);
+    if (onInstantBuy) {
+      onInstantBuy(product, selectedSize, selectedColor);
+    } else {
+      onAddToCart(product, selectedSize, selectedColor);
+    }
+    setIsOrdered(true);
+    setTimeout(() => setIsOrdered(false), 1800);
   };
 
   if (viewMode === 'list') {
@@ -50,12 +54,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <a
           href={productUrl}
           onClick={handleProductNavigation}
-          className="relative w-full sm:w-48 sm:min-w-[192px] aspect-[3/4] bg-neutral-100 overflow-hidden cursor-pointer block"
+          className="relative w-full sm:w-48 sm:min-w-[192px] aspect-[9/13] sm:aspect-[3/4] bg-neutral-100 overflow-hidden cursor-pointer block"
         >
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ease-out"
             loading="lazy"
             referrerPolicy="no-referrer"
           />
@@ -107,14 +111,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
             <button
               type="button"
-              onClick={handleAddToCartClick}
-              className={`px-5 py-2.5 rounded-md text-xs font-semibold transition-all shadow-xs cursor-pointer ${
-                isAdded
+              onClick={handleOrderNowClick}
+              className={`px-5 py-2.5 rounded-md text-xs font-semibold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 ${
+                isOrdered
                   ? 'bg-emerald-600 text-white border border-emerald-600'
                   : 'bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-300 hover:border-neutral-400'
               }`}
             >
-              {isAdded ? 'Added to Cart ✓' : 'Add To Cart'}
+              <Zap className="w-3.5 h-3.5 fill-current text-amber-500" />
+              <span>{isOrdered ? 'Processing...' : 'Order Now'}</span>
             </button>
           </div>
         </div>
@@ -125,16 +130,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   // Exact mobile-first design matching Glam Touch screenshot:
   return (
     <article className="group relative bg-white border border-neutral-200/80 rounded-xl overflow-hidden flex flex-col shadow-xs transition-all duration-300 hover:shadow-md hover:border-neutral-300">
-      {/* Product Image Slot */}
+      {/* Product Image Slot: Slightly taller vertical ratio on mobile (aspect-[9/13] or aspect-[10/14.5]) */}
       <a
         href={productUrl}
         onClick={handleProductNavigation}
-        className="relative aspect-[3/4] bg-neutral-100 overflow-hidden cursor-pointer block"
+        className="relative aspect-[9/13] sm:aspect-[3/4] bg-neutral-100 overflow-hidden cursor-pointer block"
       >
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ease-out"
           loading="lazy"
           referrerPolicy="no-referrer"
         />
@@ -155,7 +160,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         )}
       </a>
 
-      {/* Card Content (Clean Title, Price, Add To Cart button) */}
+      {/* Card Content (Clean Title, Price, Order Now button) */}
       <div className="p-3 sm:p-3.5 flex flex-col flex-grow justify-between bg-white text-left">
         <div>
           {/* Product Title */}
@@ -181,19 +186,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
 
-        {/* Clean Rounded "Add To Cart" button (identical to user screenshot) */}
+        {/* Clean Rounded "Order Now" button */}
         <div className="mt-2.5">
           <button
             type="button"
-            onClick={handleAddToCartClick}
+            onClick={handleOrderNowClick}
             className={`w-full py-2 px-3 rounded-md text-xs font-semibold transition-all duration-200 shadow-xs flex items-center justify-center gap-1.5 cursor-pointer active:scale-98 ${
-              isAdded
+              isOrdered
                 ? 'bg-emerald-600 text-white border border-emerald-600'
                 : 'bg-white hover:bg-neutral-50 active:bg-neutral-100 text-neutral-800 border border-neutral-300/90 hover:border-neutral-400'
             }`}
           >
-            <ShoppingBag className="w-3.5 h-3.5 text-neutral-500" />
-            <span>{isAdded ? 'Added to Cart ✓' : 'Add To Cart'}</span>
+            <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+            <span>{isOrdered ? 'Processing...' : 'Order Now'}</span>
           </button>
         </div>
       </div>

@@ -302,7 +302,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Search className="w-5 h-5 stroke-[1.75]" />
             </button>
 
-            {/* Shopping Bag Primary Action */}
+            {/* Shopping Bag Primary Action (Icon only, no "Bag" text) */}
             <a
               href="/cart"
               onClick={(e) => {
@@ -311,15 +311,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onOpenCart();
                 }
               }}
-              className={`flex items-center gap-2.5 px-3.5 sm:px-4 py-2 text-white text-xs font-semibold tracking-wider uppercase rounded-xs transition-all duration-200 cursor-pointer shadow-sm active:scale-95 whitespace-nowrap shrink-0 ${
+              aria-label="Shopping Bag"
+              title="Shopping Bag"
+              className={`relative flex items-center justify-center p-2.5 text-white rounded-full transition-all duration-200 cursor-pointer shadow-sm active:scale-95 shrink-0 ${
                 activePage === 'cart' ? 'bg-[#E10613] ring-2 ring-red-300' : 'bg-[#141416] hover:bg-[#E10613]'
               }`}
             >
-              <ShoppingBag className="w-4 h-4" />
-              <span className="hidden sm:inline">Bag</span>
-              <span className="bg-white/20 px-1.5 py-0.5 rounded text-[11px] font-mono tabular-nums">
-                {cartCount}
-              </span>
+              <ShoppingBag className="w-5 h-5 stroke-[1.8]" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-[#E10613] border-2 border-white text-white text-[10px] font-bold min-w-5 h-5 rounded-full flex items-center justify-center px-1 font-mono tabular-nums shadow-sm">
+                  {cartCount}
+                </span>
+              )}
             </a>
 
             {/* Mobile Hamburger toggle */}

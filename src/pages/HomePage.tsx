@@ -6,7 +6,6 @@ import {
   Sparkles,
   Phone,
   MessageCircle,
-  RotateCcw,
   Search,
   X,
   ArrowRight,
@@ -131,7 +130,6 @@ export const HomePage: React.FC<HomePageProps> = ({
     onSelectCategory(cat);
   };
 
-  const currentCategoryInfo = CIRCLE_CATEGORIES.find((c) => c.id === selectedCategory) || CIRCLE_CATEGORIES[0];
 
   return (
     <div className="bg-[#FAF9F6] text-[#141416] pb-16">
@@ -255,9 +253,9 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 2. CIRCULAR-STYLE CATEGORY ICONS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 sm:pt-6 pb-2">
-        <div className="flex items-start justify-start sm:justify-center gap-3 sm:gap-6 lg:gap-8 overflow-x-auto pt-4 pb-4 px-3 no-scrollbar">
+      {/* 2. CIRCULAR-STYLE CATEGORY ICONS (No horizontal scroll: fits on single screen in neat rows) */}
+      <section className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-3">
+        <div className="flex flex-wrap items-start justify-center gap-x-2 sm:gap-x-6 gap-y-3 sm:gap-y-5 px-1">
           {CIRCLE_CATEGORIES.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             return (
@@ -265,14 +263,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                 key={cat.id}
                 type="button"
                 onClick={() => handleCategorySelect(cat.id)}
-                className="group flex flex-col items-center text-center shrink-0 w-20 sm:w-24 cursor-pointer focus:outline-none py-1"
+                className="group flex flex-col items-center text-center w-[74px] sm:w-22 cursor-pointer focus:outline-none py-0.5"
               >
                 {/* Circular Image Container */}
                 <div
-                  className={`relative w-18 h-18 sm:w-22 sm:h-22 rounded-full p-1 m-1.5 transition-all duration-200 ${
+                  className={`relative w-14 h-14 sm:w-20 sm:h-20 rounded-full p-1 transition-all duration-200 ${
                     isSelected
-                      ? 'ring-3 ring-[#E10613] ring-offset-2 shadow-md bg-[#FFE4E6]'
-                      : 'ring-1 ring-neutral-300 hover:ring-[#E10613] bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50 shadow-xs'
+                      ? 'ring-2.5 ring-[#E10613] ring-offset-2 shadow-md bg-[#FFE4E6]'
+                      : 'ring-1 ring-neutral-300 hover:ring-[#E10613] bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50 shadow-2xs'
                   }`}
                 >
                   <div className="w-full h-full rounded-full overflow-hidden bg-white">
@@ -287,13 +285,13 @@ export const HomePage: React.FC<HomePageProps> = ({
 
                 {/* Category Labels */}
                 <span
-                  className={`mt-1.5 text-xs font-bold leading-tight transition-colors ${
+                  className={`mt-1.5 text-[11px] sm:text-xs font-bold leading-tight transition-colors line-clamp-1 ${
                     isSelected ? 'text-[#E10613]' : 'text-neutral-800 group-hover:text-[#E10613]'
                   }`}
                 >
                   {cat.labelBn}
                 </span>
-                <span className="text-[10px] text-neutral-400 font-normal">
+                <span className="text-[9.5px] sm:text-[10px] text-neutral-400 font-normal leading-tight">
                   {cat.labelEn}
                 </span>
               </button>
@@ -302,39 +300,6 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 3. BREADCRUMB & CONTEXT HEADER */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-1 pb-2">
-        <div className="flex items-center justify-between text-xs sm:text-sm text-neutral-500 bg-white/70 px-3 py-2 rounded-xs border border-neutral-200">
-          <div className="flex items-center gap-1.5 font-medium">
-            <span
-              onClick={() => {
-                handleCategorySelect('all');
-                setSearchQuery('');
-              }}
-              className="hover:text-[#E10613] cursor-pointer"
-            >
-              হোম (Home)
-            </span>
-            <span>›</span>
-            <span className="text-neutral-900 font-bold">
-              {currentCategoryInfo.labelBn} ({currentCategoryInfo.labelEn})
-            </span>
-          </div>
-
-          {(selectedCategory !== 'all' || searchQuery) && (
-            <button
-              onClick={() => {
-                handleCategorySelect('all');
-                setSearchQuery('');
-              }}
-              className="text-xs text-[#E10613] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
-            >
-              <RotateCcw className="w-3 h-3" />
-              <span>সব দেখুন (Reset)</span>
-            </button>
-          )}
-        </div>
-      </div>
 
       {/* 4. SHOPPING TOOLBAR & PRODUCT GRID */}
       <section ref={productsSectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-3 scroll-mt-24">
