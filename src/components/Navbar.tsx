@@ -410,8 +410,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </a>
 
             <div className="pt-3 flex items-center justify-between text-xs text-neutral-500">
-              <a href="tel:+8801758976677" className="font-mono text-neutral-700">
-                +880 1758-976677
+              <a href="tel:+8801897684273" className="font-mono text-neutral-700">
+                +880 1897-684273
               </a>
               <a
                 href="https://www.facebook.com/share/1CAKiLxa7D/"

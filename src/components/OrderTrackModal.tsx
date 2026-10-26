@@ -203,7 +203,7 @@ export const OrderTrackModal: React.FC<OrderTrackModalProps> = ({
               <Package className="w-10 h-10 text-neutral-300 mx-auto mb-2" />
               <h4 className="text-sm font-semibold text-neutral-800">No active parcel found</h4>
               <p className="text-xs text-neutral-500 max-w-xs mx-auto mt-1">
-                We couldn't locate an order matching "{query}". Please verify the digits or contact Assiano WhatsApp care at +880 1758-976677.
+                We couldn't locate an order matching "{query}". Please verify the digits or contact Assiano WhatsApp care at +880 1897-684273.
               </p>
             </div>
           ) : (

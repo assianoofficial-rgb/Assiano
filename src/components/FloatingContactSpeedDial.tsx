@@ -8,8 +8,8 @@ interface FloatingContactSpeedDialProps {
 }
 
 export const FloatingContactSpeedDial: React.FC<FloatingContactSpeedDialProps> = ({
-  phoneHotline = '+880 1758-976677',
-  whatsappNumber = '+880 1758-976677',
+  phoneHotline = '+880 1897-684273',
+  whatsappNumber = '+880 1897-684273',
   facebookUrl = 'https://www.facebook.com/share/1CAKiLxa7D/',
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);

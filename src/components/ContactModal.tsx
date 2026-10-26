@@ -12,8 +12,8 @@ interface ContactModalProps {
 export const ContactModal: React.FC<ContactModalProps> = ({
   isOpen,
   onClose,
-  phoneHotline = '+880 1758-976677',
-  whatsappNumber = '+880 1758-976677',
+  phoneHotline = '+880 1897-684273',
+  whatsappNumber = '+880 1897-684273',
 }) => {
   const [name, setName] = React.useState('');
   const [phone, setPhone] = React.useState('');

@@ -20,9 +20,9 @@ import { CartItem, CategoryType, OrderDetails, PageType, Product } from './types
 import { parseCurrentUrl, navigateTo, updatePageTitle, getProductUrl } from './utils/navigation';
 import { MessageCircle } from 'lucide-react';
 
-// Contact hotline constants
-const ASSIANO_HOTLINE = '+880 1758-976677';
-const ASSIANO_WHATSAPP = '+880 1758-976677';
+// Contact hotline constants (Business Number: 01897684273, bKash: 01758976677)
+const ASSIANO_HOTLINE = '+880 1897-684273';
+const ASSIANO_WHATSAPP = '+880 1897-684273';
 
 export default function App() {
   // Initialize route from current browser URL

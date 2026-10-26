@@ -20,9 +20,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onInstantBuy,
   viewMode = 'grid',
 }) => {
-  const [selectedSize] = React.useState(product.sizes[0] || 'Free Size');
-  const [selectedColor] = React.useState(product.colors[0] || 'Default');
-  const [isOrdered, setIsOrdered] = React.useState(false);
   const productUrl = getProductUrl(product.id);
 
   const handleProductNavigation = (e: React.MouseEvent) => {
@@ -38,14 +35,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const handleOrderNowClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onInstantBuy) {
-      onInstantBuy(product, selectedSize, selectedColor);
-    } else {
-      onAddToCart(product, selectedSize, selectedColor);
-    }
-    setIsOrdered(true);
-    setTimeout(() => setIsOrdered(false), 1800);
+    // Navigate directly to product page so customer can select options (size, color, etc.)
+    handleProductNavigation(e);
   };
 
   if (viewMode === 'list') {
@@ -109,18 +100,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               )}
             </div>
 
-            <button
-              type="button"
+            <a
+              href={productUrl}
               onClick={handleOrderNowClick}
-              className={`px-5 py-2.5 rounded-md text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 active:scale-95 animate-order-glow ${
-                isOrdered
-                  ? 'bg-emerald-600 text-white border border-emerald-600'
-                  : 'bg-[#E10613] hover:bg-[#c40510] text-white border border-[#E10613]'
-              }`}
+              className="px-5 py-2.5 rounded-md text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 active:scale-95 animate-order-glow bg-[#E10613] hover:bg-[#c40510] text-white border border-[#E10613] select-none"
             >
               <Zap className="w-3.5 h-3.5 fill-white text-white" />
-              <span>{isOrdered ? 'Processing...' : 'Order Now'}</span>
-            </button>
+              <span>Order Now</span>
+            </a>
           </div>
         </div>
       </article>
@@ -186,20 +173,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
 
-        {/* Red Animated "Order Now" button */}
+        {/* Red Animated "Order Now" button: links directly to product page to select size/color */}
         <div className="mt-2.5">
-          <button
-            type="button"
+          <a
+            href={productUrl}
             onClick={handleOrderNowClick}
-            className={`w-full py-2 px-3 rounded-md text-xs font-bold transition-all duration-200 shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 animate-order-glow ${
-              isOrdered
-                ? 'bg-emerald-600 text-white border border-emerald-600'
-                : 'bg-[#E10613] hover:bg-[#c40510] text-white border border-[#E10613]'
-            }`}
+            className="w-full py-2 px-3 rounded-md text-xs font-bold transition-all duration-200 shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 animate-order-glow bg-[#E10613] hover:bg-[#c40510] text-white border border-[#E10613] select-none text-center"
           >
             <Zap className="w-3.5 h-3.5 text-white fill-white" />
-            <span>{isOrdered ? 'Processing...' : 'Order Now'}</span>
-          </button>
+            <span>Order Now</span>
+          </a>
         </div>
       </div>
     </article>

@@ -449,16 +449,16 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="md:col-span-5 flex flex-col sm:flex-row gap-3 justify-center md:justify-end">
               {/* Call Hotline */}
               <a
-                href="tel:+8801758976677"
+                href="tel:+8801897684273"
                 className="px-5 py-3 bg-[#141416] hover:bg-black text-white text-xs font-bold uppercase tracking-wider rounded-xs flex items-center justify-center gap-2 shadow-sm transition-colors"
               >
                 <Phone className="w-4 h-4 text-[#E10613]" />
-                <span>কল করুন: 01758-976677</span>
+                <span>কল করুন: 01897-684273</span>
               </a>
 
               {/* WhatsApp Direct Chat */}
               <a
-                href="https://wa.me/8801758976677?text=Hello%20Assiano,%20I%20would%20like%20to%20order%20from%20your%20collection."
+                href="https://wa.me/8801897684273?text=Hello%20Assiano,%20I%20would%20like%20to%20order%20from%20your%20collection."
                 target="_blank"
                 rel="noreferrer"
                 className="px-5 py-3 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider rounded-xs flex items-center justify-center gap-2 shadow-sm transition-colors"
