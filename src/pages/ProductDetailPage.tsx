@@ -29,13 +29,74 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const [quantity, setQuantity] = React.useState(1);
   const [activeImage, setActiveImage] = React.useState(product.image);
 
+  // Image Zoom In / Out State
+  const [zoomScale, setZoomScale] = React.useState(1);
+  const [zoomOrigin, setZoomOrigin] = React.useState({ x: 50, y: 50 });
+
   React.useEffect(() => {
     setSelectedSize(product.sizes[0] || 'Standard');
     setSelectedColor(product.colors[0] || 'Default');
     setQuantity(1);
     setActiveImage(product.image);
+    setZoomScale(1);
+    setZoomOrigin({ x: 50, y: 50 });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [product]);
+
+  // Reset zoom whenever image changes
+  React.useEffect(() => {
+    setZoomScale(1);
+    setZoomOrigin({ x: 50, y: 50 });
+  }, [activeImage]);
+
+  const handleZoomIn = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setZoomScale((prev) => Math.min(Number((prev + 0.5).toFixed(1)), 3));
+  };
+
+  const handleZoomOut = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setZoomScale((prev) => {
+      const next = Math.max(Number((prev - 0.5).toFixed(1)), 1);
+      if (next === 1) setZoomOrigin({ x: 50, y: 50 });
+      return next;
+    });
+  };
+
+  const handleResetZoom = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setZoomScale(1);
+    setZoomOrigin({ x: 50, y: 50 });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (zoomScale <= 1) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+    setZoomOrigin({ x, y });
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (zoomScale <= 1 || !e.touches[0]) return;
+    const touch = e.touches[0];
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((touch.clientY - rect.top) / rect.height) * 100));
+    setZoomOrigin({ x, y });
+  };
+
+  const handleImageDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (zoomScale > 1) {
+      handleResetZoom();
+    } else {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+      setZoomOrigin({ x, y });
+      setZoomScale(2);
+    }
+  };
 
   // Related products
   const related = allProducts
@@ -102,19 +163,99 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           
           {/* Left Column: Image Presentation */}
           <div className="lg:col-span-7 flex flex-col space-y-4">
-            <div className="relative aspect-[3/4] w-full rounded-sm overflow-hidden bg-neutral-100 border border-neutral-200 shadow-xs">
+            {/* Main Product Image Container with Zoom */}
+            <div
+              className={`relative aspect-[3/4] w-full rounded-sm overflow-hidden bg-neutral-100 border border-neutral-200 shadow-xs select-none transition-all ${
+                zoomScale > 1 ? 'cursor-move ring-2 ring-[#E10613]/30' : 'cursor-zoom-in'
+              }`}
+              onMouseMove={handleMouseMove}
+              onTouchMove={handleTouchMove}
+              onDoubleClick={handleImageDoubleClick}
+              title={zoomScale > 1 ? 'Move cursor or touch drag to inspect details • Double-click to reset' : 'Click + or double-click to zoom in'}
+            >
               <img
                 src={activeImage}
                 alt={product.name}
-                className="w-full h-full object-cover object-center"
+                style={{
+                  transform: `scale(${zoomScale})`,
+                  transformOrigin: `${zoomOrigin.x}% ${zoomOrigin.y}%`,
+                  transition: zoomScale === 1 ? 'transform 0.25s ease-out' : 'transform 0.12s ease-out',
+                }}
+                className="w-full h-full object-cover object-center pointer-events-none will-change-transform"
                 referrerPolicy="no-referrer"
               />
 
+              {/* Discount Tag */}
               {product.discountPercent > 0 && (
-                <div className="absolute top-4 left-4 bg-[#E10613] text-white text-xs font-bold tracking-wider px-2.5 py-1 uppercase rounded-xs shadow-sm">
+                <div className="absolute top-4 left-4 bg-[#E10613] text-white text-xs font-bold tracking-wider px-2.5 py-1 uppercase rounded-xs shadow-sm z-10 pointer-events-none">
                   {product.discountPercent}% OFF
                 </div>
               )}
+
+              {/* Active Zoom Indicator Pill */}
+              {zoomScale > 1 && (
+                <div className="absolute bottom-4 left-4 z-10 bg-black/80 backdrop-blur-md text-white text-[11px] font-medium px-2.5 py-1 rounded-xs shadow-md flex items-center gap-1.5 pointer-events-none animate-in fade-in duration-150">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Zoom: {zoomScale.toFixed(1)}x • ড্র্যাগ করে দেখুন</span>
+                </div>
+              )}
+
+              {/* Side Floating Zoom Controls (+ / -) */}
+              <div
+                className="absolute top-4 right-4 z-20 flex flex-col items-center bg-white/95 backdrop-blur-md border border-neutral-200/90 rounded-md shadow-lg p-1 space-y-1"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Zoom In (+) */}
+                <button
+                  type="button"
+                  onClick={handleZoomIn}
+                  disabled={zoomScale >= 3}
+                  className="w-8 h-8 flex items-center justify-center rounded-xs text-neutral-800 hover:text-white hover:bg-[#E10613] active:scale-95 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-neutral-800 disabled:cursor-not-allowed transition-all cursor-pointer font-bold shadow-2xs"
+                  title="Zoom In (+)"
+                  aria-label="Zoom In"
+                >
+                  <Plus className="w-4 h-4 stroke-[2.5]" />
+                </button>
+
+                {/* Current Zoom Level / Reset Indicator */}
+                <button
+                  type="button"
+                  onClick={handleResetZoom}
+                  className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-xs transition-colors cursor-pointer select-none ${
+                    zoomScale > 1
+                      ? 'text-[#E10613] bg-red-50 hover:bg-red-100 font-extrabold'
+                      : 'text-neutral-500 hover:text-black'
+                  }`}
+                  title={zoomScale > 1 ? 'Click to reset zoom (1.0x)' : 'Current zoom 1.0x'}
+                >
+                  {zoomScale.toFixed(1)}x
+                </button>
+
+                {/* Zoom Out (-) */}
+                <button
+                  type="button"
+                  onClick={handleZoomOut}
+                  disabled={zoomScale <= 1}
+                  className="w-8 h-8 flex items-center justify-center rounded-xs text-neutral-800 hover:text-white hover:bg-[#E10613] active:scale-95 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-neutral-800 disabled:cursor-not-allowed transition-all cursor-pointer font-bold shadow-2xs"
+                  title="Zoom Out (-)"
+                  aria-label="Zoom Out"
+                >
+                  <Minus className="w-4 h-4 stroke-[2.5]" />
+                </button>
+
+                {/* Reset button if zoomed */}
+                {zoomScale > 1 && (
+                  <button
+                    type="button"
+                    onClick={handleResetZoom}
+                    className="w-8 h-7 flex items-center justify-center rounded-xs text-neutral-500 hover:text-[#E10613] hover:bg-neutral-100 active:scale-95 transition-all cursor-pointer border-t border-neutral-200/60 mt-0.5 pt-0.5"
+                    title="Reset to 1.0x"
+                    aria-label="Reset to 1.0x"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Micro Trust Strip */}

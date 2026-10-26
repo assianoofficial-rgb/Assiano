@@ -26,14 +26,74 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   const [quantity, setQuantity] = React.useState(1);
   const [activeImage, setActiveImage] = React.useState(product.image);
 
+  // Zoom In / Out State
+  const [zoomScale, setZoomScale] = React.useState(1);
+  const [zoomOrigin, setZoomOrigin] = React.useState({ x: 50, y: 50 });
+
   React.useEffect(() => {
     if (product) {
       setSelectedSize(product.sizes[0] || 'Standard');
       setSelectedColor(product.colors[0] || 'Default');
       setQuantity(1);
       setActiveImage(product.image);
+      setZoomScale(1);
+      setZoomOrigin({ x: 50, y: 50 });
     }
   }, [product]);
+
+  React.useEffect(() => {
+    setZoomScale(1);
+    setZoomOrigin({ x: 50, y: 50 });
+  }, [activeImage]);
+
+  const handleZoomIn = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setZoomScale((prev) => Math.min(Number((prev + 0.5).toFixed(1)), 3));
+  };
+
+  const handleZoomOut = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setZoomScale((prev) => {
+      const next = Math.max(Number((prev - 0.5).toFixed(1)), 1);
+      if (next === 1) setZoomOrigin({ x: 50, y: 50 });
+      return next;
+    });
+  };
+
+  const handleResetZoom = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setZoomScale(1);
+    setZoomOrigin({ x: 50, y: 50 });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (zoomScale <= 1) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+    setZoomOrigin({ x, y });
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (zoomScale <= 1 || !e.touches[0]) return;
+    const touch = e.touches[0];
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((touch.clientY - rect.top) / rect.height) * 100));
+    setZoomOrigin({ x, y });
+  };
+
+  const handleImageDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (zoomScale > 1) {
+      handleResetZoom();
+    } else {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+      setZoomOrigin({ x, y });
+      setZoomScale(2);
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
@@ -50,19 +110,97 @@ export const ProductModal: React.FC<ProductModalProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-12 max-h-[90vh] overflow-y-auto">
           {/* Gallery View (Left) */}
           <div className="md:col-span-6 bg-neutral-100 flex flex-col justify-between p-6 border-b md:border-b-0 md:border-r border-neutral-200">
-            <div className="relative aspect-[3/4] w-full rounded-sm overflow-hidden bg-white shadow-inner">
+            <div
+              className={`relative aspect-[3/4] w-full rounded-sm overflow-hidden bg-white shadow-inner select-none transition-all ${
+                zoomScale > 1 ? 'cursor-move ring-2 ring-[#E10613]/30' : 'cursor-zoom-in'
+              }`}
+              onMouseMove={handleMouseMove}
+              onTouchMove={handleTouchMove}
+              onDoubleClick={handleImageDoubleClick}
+              title={zoomScale > 1 ? 'Move cursor or touch drag to inspect details • Double-click to reset' : 'Click + or double-click to zoom in'}
+            >
               <img
                 src={activeImage}
                 alt={product.name}
-                className="w-full h-full object-cover object-center"
+                style={{
+                  transform: `scale(${zoomScale})`,
+                  transformOrigin: `${zoomOrigin.x}% ${zoomOrigin.y}%`,
+                  transition: zoomScale === 1 ? 'transform 0.25s ease-out' : 'transform 0.12s ease-out',
+                }}
+                className="w-full h-full object-cover object-center pointer-events-none will-change-transform"
                 referrerPolicy="no-referrer"
               />
 
               {product.discountPercent > 0 && (
-                <span className="absolute top-3 left-3 bg-[#E10613] text-white text-xs font-bold px-2 py-0.5 rounded-xs uppercase">
+                <span className="absolute top-3 left-3 bg-[#E10613] text-white text-xs font-bold px-2 py-0.5 rounded-xs uppercase z-10 pointer-events-none">
                   {product.discountPercent}% OFF
                 </span>
               )}
+
+              {/* Active Zoom Indicator */}
+              {zoomScale > 1 && (
+                <div className="absolute bottom-3 left-3 z-10 bg-black/80 backdrop-blur-md text-white text-[10px] font-medium px-2 py-0.5 rounded-xs shadow-md flex items-center gap-1.5 pointer-events-none animate-in fade-in duration-150">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Zoom: {zoomScale.toFixed(1)}x</span>
+                </div>
+              )}
+
+              {/* Side Floating Zoom Controls (+ / -) */}
+              <div
+                className="absolute top-3 right-3 z-20 flex flex-col items-center bg-white/95 backdrop-blur-md border border-neutral-200/90 rounded-md shadow-md p-1 space-y-1"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Zoom In (+) */}
+                <button
+                  type="button"
+                  onClick={handleZoomIn}
+                  disabled={zoomScale >= 3}
+                  className="w-7 h-7 flex items-center justify-center rounded-xs text-neutral-800 hover:text-white hover:bg-[#E10613] active:scale-95 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-neutral-800 disabled:cursor-not-allowed transition-all cursor-pointer font-bold shadow-2xs"
+                  title="Zoom In (+)"
+                  aria-label="Zoom In"
+                >
+                  <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                </button>
+
+                {/* Scale Display */}
+                <button
+                  type="button"
+                  onClick={handleResetZoom}
+                  className={`text-[9px] font-mono font-bold px-1 py-0.5 rounded-xs transition-colors cursor-pointer select-none ${
+                    zoomScale > 1
+                      ? 'text-[#E10613] bg-red-50 hover:bg-red-100 font-extrabold'
+                      : 'text-neutral-500 hover:text-black'
+                  }`}
+                  title={zoomScale > 1 ? 'Click to reset zoom (1.0x)' : 'Current zoom 1.0x'}
+                >
+                  {zoomScale.toFixed(1)}x
+                </button>
+
+                {/* Zoom Out (-) */}
+                <button
+                  type="button"
+                  onClick={handleZoomOut}
+                  disabled={zoomScale <= 1}
+                  className="w-7 h-7 flex items-center justify-center rounded-xs text-neutral-800 hover:text-white hover:bg-[#E10613] active:scale-95 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-neutral-800 disabled:cursor-not-allowed transition-all cursor-pointer font-bold shadow-2xs"
+                  title="Zoom Out (-)"
+                  aria-label="Zoom Out"
+                >
+                  <Minus className="w-3.5 h-3.5 stroke-[2.5]" />
+                </button>
+
+                {/* Reset button if zoomed */}
+                {zoomScale > 1 && (
+                  <button
+                    type="button"
+                    onClick={handleResetZoom}
+                    className="w-7 h-6 flex items-center justify-center rounded-xs text-neutral-500 hover:text-[#E10613] hover:bg-neutral-100 active:scale-95 transition-all cursor-pointer border-t border-neutral-200/60 mt-0.5 pt-0.5"
+                    title="Reset to 1.0x"
+                    aria-label="Reset to 1.0x"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Micro badges below image */}
