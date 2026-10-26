@@ -4,6 +4,80 @@ export const ASSIANO_LOGO = '/assets/aistudio/702904207_122102589927317919_56546
 export const HERO_IMAGE = '/assets/images/assiano_hero_editorial_1792505196532.jpg';
 
 export const PRODUCTS: Product[] = [
+  // --- NEW VARIATION PRODUCT: ARABIAN ABAYA ---
+  {
+    id: 'asn-arabian-abaya',
+    name: 'Arabian Abaya',
+    subtitle: 'Solid Front Pleated Modest Abaya with Classic Round Neck & Long Sleeves',
+    category: 'abaya',
+    categoryLabel: 'Abayas & Borkas',
+    price: 890,
+    originalPrice: 1390,
+    discountPercent: 36,
+    soldCount: 88,
+    rating: 5.0,
+    reviewCount: 46,
+    image: '/assets/aistudio/Bottle_Green_890Tk_26b411c1.jpeg',
+    additionalImages: [
+      '/assets/aistudio/Bottle_Green_890Tk_26b411c1.jpeg',
+      '/assets/aistudio/Deep_Black_890_Tk_6d36c3e0.jpeg',
+      '/assets/aistudio/Onion_Pink__890_Tk_5577e1e0.jpeg',
+      '/assets/aistudio/Masterd-Brown_950_Tk_ea099d9e.jpeg'
+    ],
+    fabric: 'Soft, Lightweight & Breathable Flowy Fabric',
+    sleeveLength: 'Long Sleeves',
+    neckline: 'Round Neck',
+    pattern: 'Solid with Front Pleats',
+    occasion: 'Casual, Daily Wear',
+    colors: ['Bottle Green', 'Black', 'Onion Pink', 'Masterd Brown'],
+    sizes: ['M', 'L', 'XL'],
+    description: 'Elegant long-sleeve pleated Abaya dress in a sophisticated dark green shade, crafted from soft and breathable fabric for daily modest wear',
+    colorVariations: {
+      'Bottle Green': {
+        image: '/assets/aistudio/Bottle_Green_890Tk_26b411c1.jpeg',
+        price: 890,
+        originalPrice: 1390,
+        discountPercent: 36,
+        description: 'Elegant long-sleeve pleated Abaya dress in a sophisticated dark green shade, crafted from soft and breathable fabric for daily modest wear',
+        colorCode: '#244535'
+      },
+      'Black': {
+        image: '/assets/aistudio/Deep_Black_890_Tk_6d36c3e0.jpeg',
+        price: 890,
+        originalPrice: 1390,
+        discountPercent: 36,
+        description: 'Versatile black Abaya dress featuring a classic round neckline, front pleats, and comfortable long sleeves',
+        colorCode: '#181818'
+      },
+      'Onion Pink': {
+        image: '/assets/aistudio/Onion_Pink__890_Tk_5577e1e0.jpeg',
+        price: 890,
+        originalPrice: 1390,
+        discountPercent: 36,
+        description: 'Chic and vibrant onion pink Abaya dress designed with a graceful round neck and delicate front pleating for a fashionable look',
+        colorCode: '#98527a'
+      },
+      'Masterd Brown': {
+        image: '/assets/aistudio/Masterd-Brown_950_Tk_ea099d9e.jpeg',
+        price: 950,
+        originalPrice: 1490,
+        discountPercent: 36,
+        description: 'Bright mustard brown Abaya dress offering a blend of warmth, comfort, and modern modest style with its lightweight flowy fabric',
+        colorCode: '#b9882a'
+      }
+    },
+    features: [
+      'Sleeve Length: Long Sleeves',
+      'Neckline: Round Neck',
+      'Pattern: Solid with Front Pleats',
+      'Occasion: Casual, Daily Wear',
+      'Soft, lightweight & breathable fabric with graceful flow',
+      'Carefully tailored front pleats for an elegant modest drape'
+    ],
+    isNewArrival: true,
+    isBestSeller: true,
+    inStock: true
+  },
   // --- FEATURED DUBAI CHERRY BORKA ---
   {
     id: 'asn-000',

@@ -205,7 +205,17 @@ export default function App() {
   };
 
   // Add to Bag handler
-  const handleAddToCart = (product: Product, size: string, color: string, qty: number = 1) => {
+  const handleAddToCart = (
+    product: Product,
+    size: string,
+    color: string,
+    qty: number = 1,
+    customPrice?: number,
+    customImage?: string
+  ) => {
+    const finalPrice = customPrice ?? product.colorVariations?.[color]?.price ?? product.price;
+    const finalImage = customImage ?? product.colorVariations?.[color]?.image ?? product.image;
+
     setCartItems((prev) => {
       const existingIndex = prev.findIndex(
         (item) =>
@@ -217,22 +227,41 @@ export default function App() {
       if (existingIndex > -1) {
         const updated = [...prev];
         updated[existingIndex].quantity += qty;
+        updated[existingIndex].customPrice = finalPrice;
+        updated[existingIndex].customImage = finalImage;
         return updated;
       } else {
-        return [...prev, { product, selectedSize: size, selectedColor: color, quantity: qty }];
+        return [
+          ...prev,
+          {
+            product,
+            selectedSize: size,
+            selectedColor: color,
+            quantity: qty,
+            customPrice: finalPrice,
+            customImage: finalImage,
+          },
+        ];
       }
     });
 
     addToast(
       'cart',
       `Added to Bag (${qty})`,
-      `${product.name} · TK. ${product.price.toLocaleString()}`
+      `${product.name} (${color}) · TK. ${finalPrice.toLocaleString()}`
     );
   };
 
   // Instant Buy Now handler (adds to cart and navigates directly to separate checkout page)
-  const handleInstantBuy = (product: Product, size: string, color: string, qty: number = 1) => {
-    handleAddToCart(product, size, color, qty);
+  const handleInstantBuy = (
+    product: Product,
+    size: string,
+    color: string,
+    qty: number = 1,
+    customPrice?: number,
+    customImage?: string
+  ) => {
+    handleAddToCart(product, size, color, qty, customPrice, customImage);
     handleNavigate('checkout');
   };
 
@@ -259,8 +288,11 @@ export default function App() {
     setPromoError('');
     const cleanCode = code.trim().toUpperCase();
     if (cleanCode === 'ASSIANO10' || cleanCode === 'EID2026') {
-      const subtotal = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-      const discount = Math.round(subtotal * 0.1);
+      const currentSubtotal = cartItems.reduce(
+        (acc, item) => acc + (item.customPrice ?? item.product.price) * item.quantity,
+        0
+      );
+      const discount = Math.round(currentSubtotal * 0.1);
       setDiscountAmount(discount);
       setPromoCode(cleanCode);
       addToast('info', '10% Voucher Applied', `You saved TK. ${discount.toLocaleString()}`);
@@ -273,7 +305,10 @@ export default function App() {
   };
 
   // Order calculation
-  const subtotal = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + (item.customPrice ?? item.product.price) * item.quantity,
+    0
+  );
   const shippingFee = cartItems.length === 0 ? 0 : deliveryArea === 'dhaka' ? 60 : 120;
   const grandTotal = Math.max(0, subtotal - discountAmount + shippingFee);
 

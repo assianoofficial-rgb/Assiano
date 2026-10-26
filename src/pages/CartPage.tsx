@@ -89,7 +89,7 @@ export const CartPage: React.FC<CartPageProps> = ({
                   <div className="flex gap-4 items-center">
                     <div className="w-20 h-26 bg-neutral-100 rounded-xs overflow-hidden shrink-0 border border-neutral-200">
                       <img
-                        src={item.product.image}
+                        src={item.customImage || item.product.image}
                         alt={item.product.name}
                         className="w-full h-full object-cover object-center"
                         referrerPolicy="no-referrer"
@@ -109,7 +109,7 @@ export const CartPage: React.FC<CartPageProps> = ({
                         <span>Color: <strong className="text-neutral-800">{item.selectedColor}</strong></span>
                       </div>
                       <div className="text-xs font-mono font-semibold text-neutral-800 mt-1 sm:hidden">
-                        Tk {item.product.price.toLocaleString()} each
+                        Tk {(item.customPrice ?? item.product.price).toLocaleString()} each
                       </div>
                     </div>
                   </div>
@@ -140,10 +140,10 @@ export const CartPage: React.FC<CartPageProps> = ({
                     {/* Line total */}
                     <div className="text-right min-w-[90px]">
                       <span className="text-base font-bold font-mono text-neutral-900 tabular-nums block">
-                        Tk {(item.product.price * item.quantity).toLocaleString()}
+                        Tk {((item.customPrice ?? item.product.price) * item.quantity).toLocaleString()}
                       </span>
                       <span className="text-[11px] text-neutral-400 font-mono hidden sm:block">
-                        Tk {item.product.price.toLocaleString()} / pc
+                        Tk {(item.customPrice ?? item.product.price).toLocaleString()} / pc
                       </span>
                     </div>
 

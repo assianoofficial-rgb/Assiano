@@ -1,6 +1,15 @@
 export type CategoryType = 'all' | 'abaya' | 'three-piece' | 'kurti' | 'gown' | 'hijab' | 'shirt' | 'footwear';
 export type PageType = 'home' | 'shop' | 'about' | 'contact' | 'product' | 'cart' | 'checkout';
 
+export interface ColorVariation {
+  image: string;
+  price: number;
+  originalPrice?: number;
+  discountPercent?: number;
+  description: string;
+  colorCode?: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -23,6 +32,11 @@ export interface Product {
   isNewArrival?: boolean;
   isBestSeller?: boolean;
   inStock: boolean;
+  sleeveLength?: string;
+  neckline?: string;
+  pattern?: string;
+  occasion?: string;
+  colorVariations?: Record<string, ColorVariation>;
 }
 
 export interface CartItem {
@@ -30,6 +44,8 @@ export interface CartItem {
   selectedSize: string;
   selectedColor: string;
   quantity: number;
+  customPrice?: number;
+  customImage?: string;
 }
 
 export type PaymentMethod = 'cod' | 'bkash' | 'nagad' | 'card';

@@ -86,7 +86,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <div key={`${item.product.id}-${item.selectedSize}-${item.selectedColor}-${index}`} className="pt-4 first:pt-0 flex gap-4">
                 <div className="w-20 h-24 bg-neutral-100 rounded-xs overflow-hidden shrink-0 border border-neutral-200">
                   <img
-                    src={item.product.image}
+                    src={item.customImage || item.product.image}
                     alt={item.product.name}
                     className="w-full h-full object-cover object-center"
                     referrerPolicy="no-referrer"
@@ -136,7 +136,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     </div>
 
                     <span className="text-xs font-bold font-mono text-neutral-900 tabular-nums">
-                      Tk {(item.product.price * item.quantity).toLocaleString()}
+                      Tk {((item.customPrice ?? item.product.price) * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 </div>

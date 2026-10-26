@@ -200,7 +200,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       </span>
                     </div>
                     <span className="font-mono tabular-nums font-semibold text-neutral-900">
-                      Tk {(item.product.price * item.quantity).toLocaleString()}
+                      Tk {((item.customPrice ?? item.product.price) * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 ))}

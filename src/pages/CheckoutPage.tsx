@@ -179,7 +179,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                       </span>
                     </div>
                     <span className="font-mono tabular-nums font-bold text-neutral-900">
-                      Tk {(item.product.price * item.quantity).toLocaleString()}
+                      Tk {((item.customPrice ?? item.product.price) * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 ))}
@@ -516,17 +516,17 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 {items.map((item, idx) => (
                   <div key={idx} className="pt-3 first:pt-0 flex gap-3 text-xs">
                     <img
-                      src={item.product.image}
+                      src={item.customImage || item.product.image}
                       alt={item.product.name}
                       className="w-14 h-18 object-cover rounded-xs border border-neutral-200 shrink-0"
                     />
                     <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-neutral-900 truncate">{item.product.name}</h4>
                       <span className="text-[11px] text-neutral-500 block">
-                        Size: {item.selectedSize} · Qty: {item.quantity}
+                        Size: {item.selectedSize} · Color: {item.selectedColor} · Qty: {item.quantity}
                       </span>
                       <span className="font-mono tabular-nums font-bold text-neutral-900 block mt-1">
-                        Tk {(item.product.price * item.quantity).toLocaleString()}
+                        Tk {((item.customPrice ?? item.product.price) * item.quantity).toLocaleString()}
                       </span>
                     </div>
                   </div>

@@ -5,8 +5,8 @@ import { Product } from '../types';
 interface ProductModalProps {
   product: Product | null;
   onClose: () => void;
-  onAddToCart: (product: Product, size: string, color: string, qty?: number) => void;
-  onInstantBuy: (product: Product, size: string, color: string, qty: number) => void;
+  onAddToCart: (product: Product, size: string, color: string, qty?: number, customPrice?: number, customImage?: string) => void;
+  onInstantBuy: (product: Product, size: string, color: string, qty: number, customPrice?: number, customImage?: string) => void;
   onOpenSizeGuide: () => void;
   onViewFullPage?: (product: Product) => void;
 }
@@ -26,20 +26,40 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   const [quantity, setQuantity] = React.useState(1);
   const [activeImage, setActiveImage] = React.useState(product.image);
 
+  // Active variation details based on selected color
+  const activeVariation = product.colorVariations?.[selectedColor];
+  const activePrice = activeVariation?.price ?? product.price;
+  const activeOriginalPrice = activeVariation?.originalPrice ?? product.originalPrice;
+  const activeDiscountPercent = activeVariation?.discountPercent ?? (
+    activeOriginalPrice > activePrice
+      ? Math.round(((activeOriginalPrice - activePrice) / activeOriginalPrice) * 100)
+      : product.discountPercent
+  );
+  const activeDescription = activeVariation?.description ?? product.description;
+
   // Zoom In / Out State
   const [zoomScale, setZoomScale] = React.useState(1);
   const [zoomOrigin, setZoomOrigin] = React.useState({ x: 50, y: 50 });
 
   React.useEffect(() => {
     if (product) {
+      const defaultColor = product.colors[0] || 'Default';
       setSelectedSize(product.sizes[0] || 'Standard');
-      setSelectedColor(product.colors[0] || 'Default');
+      setSelectedColor(defaultColor);
       setQuantity(1);
-      setActiveImage(product.image);
+      const initialImg = product.colorVariations?.[defaultColor]?.image || product.image;
+      setActiveImage(initialImg);
       setZoomScale(1);
       setZoomOrigin({ x: 50, y: 50 });
     }
   }, [product]);
+
+  const handleSelectColor = (color: string) => {
+    setSelectedColor(color);
+    if (product.colorVariations?.[color]) {
+      setActiveImage(product.colorVariations[color].image);
+    }
+  };
 
   React.useEffect(() => {
     setZoomScale(1);
@@ -203,6 +223,44 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               </div>
             </div>
 
+            {/* Color Variation Thumbnails */}
+            {product.colorVariations && Object.keys(product.colorVariations).length > 0 && (
+              <div className="mt-3">
+                <div className="grid grid-cols-4 gap-2">
+                  {Object.entries(product.colorVariations).map(([colName, colData]) => {
+                    const isSelected = selectedColor === colName;
+                    return (
+                      <button
+                        key={colName}
+                        type="button"
+                        onClick={() => handleSelectColor(colName)}
+                        className={`group relative rounded-xs overflow-hidden aspect-[3/4] border-2 transition-all cursor-pointer bg-white ${
+                          isSelected
+                            ? 'border-[#E10613] ring-1 ring-[#E10613]/30 shadow-sm scale-102'
+                            : 'border-neutral-200 opacity-75 hover:opacity-100 hover:border-neutral-400'
+                        }`}
+                        title={`${colName} - Tk ${colData.price}`}
+                      >
+                        <img
+                          src={colData.image}
+                          alt={colName}
+                          className="w-full h-full object-cover object-center"
+                        />
+                        <div className="absolute inset-x-0 bottom-0 bg-black/80 p-0.5 text-center">
+                          <span className="block text-[8.5px] font-semibold text-white truncate leading-tight">
+                            {colName}
+                          </span>
+                          <span className="block text-[8px] font-mono font-bold text-amber-300">
+                            Tk {colData.price}
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Micro badges below image */}
             <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[11px] text-neutral-600">
               <div className="p-2 bg-white/70 rounded-xs border border-neutral-200/60">
@@ -237,20 +295,22 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               </h1>
               <p className="text-xs text-neutral-500 mt-1">{product.subtitle}</p>
 
-              {/* Pricing & Rating */}
+              {/* Pricing & Rating (Updates dynamically per variation) */}
               <div className="mt-4 flex items-baseline justify-between pb-4 border-b border-neutral-200">
                 <div className="flex items-baseline gap-3">
                   <span className="text-2xl font-bold font-mono text-[#141416] tabular-nums">
-                    Tk {product.price.toLocaleString()}
+                    Tk {activePrice.toLocaleString()}
                   </span>
-                  {product.originalPrice > product.price && (
+                  {activeOriginalPrice > activePrice && (
                     <span className="text-sm text-neutral-400 line-through font-mono tabular-nums">
-                      Tk {product.originalPrice.toLocaleString()}
+                      Tk {activeOriginalPrice.toLocaleString()}
                     </span>
                   )}
-                  <span className="text-xs text-emerald-700 font-medium">
-                    Save Tk {(product.originalPrice - product.price).toLocaleString()}
-                  </span>
+                  {activeOriginalPrice > activePrice && (
+                    <span className="text-xs text-emerald-700 font-medium">
+                      Save Tk {(activeOriginalPrice - activePrice).toLocaleString()} ({activeDiscountPercent}% OFF)
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-1 text-xs">
@@ -264,23 +324,46 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <div className="mt-4">
                 <div className="flex items-center justify-between text-xs mb-2">
                   <span className="font-semibold text-neutral-800">
-                    Selected Color: <span className="font-normal text-neutral-600">{selectedColor}</span>
+                    Selected Color: <span className="font-bold text-neutral-900">{selectedColor}</span>
                   </span>
+                  {product.colorVariations?.[selectedColor] && (
+                    <span className="text-[11px] font-mono font-bold text-[#E10613]">
+                      Tk {product.colorVariations[selectedColor].price.toLocaleString()}
+                    </span>
+                  )}
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {product.colors.map((color) => (
-                    <button
-                      key={color}
-                      onClick={() => setSelectedColor(color)}
-                      className={`px-3 py-1.5 text-xs rounded-xs border transition-colors cursor-pointer ${
-                        selectedColor === color
-                          ? 'border-[#141416] bg-[#141416] text-white'
-                          : 'border-neutral-300 bg-white text-neutral-700 hover:border-black'
-                      }`}
-                    >
-                      {color}
-                    </button>
-                  ))}
+                  {product.colors.map((color) => {
+                    const varInfo = product.colorVariations?.[color];
+                    const isSelected = selectedColor === color;
+                    return (
+                      <button
+                        key={color}
+                        type="button"
+                        onClick={() => handleSelectColor(color)}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-xs border transition-all cursor-pointer ${
+                          isSelected
+                            ? 'border-[#E10613] bg-red-50/50 text-neutral-900 font-bold ring-1 ring-[#E10613]'
+                            : 'border-neutral-300 bg-white text-neutral-700 hover:border-black'
+                        }`}
+                      >
+                        {varInfo?.colorCode && (
+                          <span
+                            className="w-3 h-3 rounded-full border border-black/20 shrink-0"
+                            style={{ backgroundColor: varInfo.colorCode }}
+                          />
+                        )}
+                        <span>{color}</span>
+                        {varInfo && (
+                          <span className={`text-[9.5px] font-mono font-semibold px-1 py-0.2 rounded-2xs ${
+                            isSelected ? 'bg-[#E10613] text-white' : 'bg-neutral-100 text-neutral-600'
+                          }`}>
+                            Tk {varInfo.price}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -288,7 +371,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <div className="mt-5">
                 <div className="flex items-center justify-between text-xs mb-2">
                   <span className="font-semibold text-neutral-800">
-                    Size: <span className="font-normal text-neutral-600">{selectedSize}</span>
+                    Size: <span className="font-bold text-neutral-900">{selectedSize}</span>
                   </span>
                   <button
                     onClick={onOpenSizeGuide}
@@ -315,11 +398,51 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 </div>
               </div>
 
+              {/* Product Specifications (Sleeve, Neckline, Pattern, Occasion) */}
+              {(product.sleeveLength || product.neckline || product.pattern || product.occasion) && (
+                <div className="mt-4 p-3 bg-neutral-50 rounded-xs border border-neutral-200/80 space-y-1.5">
+                  <span className="text-[10.5px] font-bold text-neutral-900 uppercase tracking-wider block">
+                    Product Details
+                  </span>
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs">
+                    {product.sleeveLength && (
+                      <div>
+                        <span className="text-neutral-500 block text-[10px]">Sleeve Length:</span>
+                        <span className="font-semibold text-neutral-900 text-[11px]">{product.sleeveLength}</span>
+                      </div>
+                    )}
+                    {product.neckline && (
+                      <div>
+                        <span className="text-neutral-500 block text-[10px]">Neckline:</span>
+                        <span className="font-semibold text-neutral-900 text-[11px]">{product.neckline}</span>
+                      </div>
+                    )}
+                    {product.pattern && (
+                      <div>
+                        <span className="text-neutral-500 block text-[10px]">Pattern:</span>
+                        <span className="font-semibold text-neutral-900 text-[11px]">{product.pattern}</span>
+                      </div>
+                    )}
+                    {product.occasion && (
+                      <div>
+                        <span className="text-neutral-500 block text-[10px]">Occasion:</span>
+                        <span className="font-semibold text-neutral-900 text-[11px]">{product.occasion}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Description & Key Fabric Details */}
               <div className="mt-5 pt-4 border-t border-neutral-100">
-                <p className="text-xs text-neutral-600 leading-relaxed">
-                  {product.description}
-                </p>
+                <div className="space-y-1">
+                  <span className="text-[10.5px] font-bold text-neutral-900 uppercase tracking-wider block">
+                    Description ({selectedColor}):
+                  </span>
+                  <p className="text-xs text-neutral-600 leading-relaxed">
+                    {activeDescription}
+                  </p>
+                </div>
 
                 <div className="mt-3 space-y-1.5">
                   <div className="text-[11px] text-neutral-700">
@@ -361,26 +484,26 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 {/* Add to Bag Button */}
                 <button
                   onClick={() => {
-                    onAddToCart(product, selectedSize, selectedColor, quantity);
+                    onAddToCart(product, selectedSize, selectedColor, quantity, activePrice, activeImage);
                     onClose();
                   }}
                   className="flex-1 py-3 px-4 bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-100 text-xs font-semibold tracking-wider uppercase rounded-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  <span>Add to Bag</span>
+                  <span>Add to Bag (Tk {(activePrice * quantity).toLocaleString()})</span>
                 </button>
               </div>
 
               {/* Direct Instant Cash on Delivery Checkout Button */}
               <button
                 onClick={() => {
-                  onInstantBuy(product, selectedSize, selectedColor, quantity);
+                  onInstantBuy(product, selectedSize, selectedColor, quantity, activePrice, activeImage);
                   onClose();
                 }}
                 className="w-full py-3.5 px-4 bg-[#E10613] hover:bg-[#C80511] text-white text-xs font-bold tracking-widest uppercase rounded-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 animate-order-glow hover:scale-[1.01]"
               >
                 <Zap className="w-4 h-4 fill-white" />
-                <span>Order Now (Cash on Delivery)</span>
+                <span>Order Now • Tk {(activePrice * quantity).toLocaleString()} (Cash on Delivery)</span>
               </button>
 
               {onViewFullPage && (

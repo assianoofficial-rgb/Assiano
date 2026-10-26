@@ -21,6 +21,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   viewMode = 'grid',
 }) => {
   const productUrl = getProductUrl(product.id);
+  const [cardColor, setCardColor] = React.useState<string>(product.colors[0] || '');
+  const activeVar = product.colorVariations?.[cardColor];
+  const displayImage = activeVar?.image || product.image;
+  const displayPrice = activeVar?.price || product.price;
+  const displayOriginalPrice = activeVar?.originalPrice || product.originalPrice;
+  const displayDiscount = activeVar?.discountPercent || product.discountPercent;
+
+  React.useEffect(() => {
+    setCardColor(product.colors[0] || '');
+  }, [product]);
 
   const handleProductNavigation = (e: React.MouseEvent) => {
     // Only intercept regular primary button clicks without modifiers
@@ -48,7 +58,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           className="relative w-full sm:w-48 sm:min-w-[192px] aspect-[9/13] sm:aspect-[3/4] bg-neutral-100 overflow-hidden cursor-pointer block"
         >
           <img
-            src={product.image}
+            src={displayImage}
             alt={product.name}
             className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ease-out"
             loading="lazy"
@@ -62,9 +72,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <span className="text-neutral-600">{product.soldCount} Sold</span>
           </div>
 
-          {product.discountPercent > 0 && (
+          {displayDiscount > 0 && (
             <div className="absolute top-2 left-2 bg-[#E10613] text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 uppercase rounded-xs shadow-sm">
-              {product.discountPercent}% OFF
+              {displayDiscount}% OFF
             </div>
           )}
         </a>
@@ -117,21 +127,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   // Exact mobile-first design matching Glam Touch screenshot:
   return (
     <article className="group relative bg-white border border-neutral-200/80 rounded-xl overflow-hidden flex flex-col shadow-xs transition-all duration-300 hover:shadow-md hover:border-neutral-300">
-      {/* Product Image Slot: Slightly taller vertical ratio on mobile (aspect-[9/13] or aspect-[10/14.5]) */}
+      {/* Product Image Slot: Slightly taller vertical ratio on mobile */}
       <a
         href={productUrl}
         onClick={handleProductNavigation}
         className="relative aspect-[9/13] sm:aspect-[3/4] bg-neutral-100 overflow-hidden cursor-pointer block"
       >
         <img
-          src={product.image}
+          src={displayImage}
           alt={product.name}
           className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ease-out"
           loading="lazy"
           referrerPolicy="no-referrer"
         />
 
-        {/* Translucent Rating / Sold Badge in Bottom-Left of Image (exact screenshot style) */}
+        {/* Translucent Rating / Sold Badge in Bottom-Left of Image */}
         <div className="absolute bottom-2.5 left-2.5 bg-white/90 backdrop-blur-xs text-neutral-800 text-[10.5px] font-medium px-2 py-0.5 rounded-sm shadow-xs flex items-center gap-1 tracking-tight">
           <span>{product.rating > 0 ? product.rating.toFixed(1) : '5.0'}</span>
           <span className="text-amber-500 text-[11px] leading-none">★</span>
@@ -140,16 +150,43 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Subtle Discount Tag if on sale */}
-        {product.discountPercent > 0 && (
+        {displayDiscount > 0 && (
           <div className="absolute top-2 right-2 bg-[#E10613] text-white text-[9.5px] font-bold px-1.5 py-0.5 rounded-xs shadow-xs">
-            {product.discountPercent}% OFF
+            {displayDiscount}% OFF
           </div>
         )}
       </a>
 
-      {/* Card Content (Clean Title, Price, Order Now button) */}
+      {/* Card Content (Clean Title, Color Dots, Price, Order Now button) */}
       <div className="p-3 sm:p-3.5 flex flex-col flex-grow justify-between bg-white text-left">
         <div>
+          {/* Color Variation Dots if present */}
+          {product.colorVariations && Object.keys(product.colorVariations).length > 1 && (
+            <div className="flex items-center gap-1.5 mb-1.5">
+              {Object.entries(product.colorVariations).map(([colName, colData]) => (
+                <button
+                  key={colName}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setCardColor(colName);
+                  }}
+                  className={`w-3.5 h-3.5 rounded-full border transition-all cursor-pointer ${
+                    cardColor === colName
+                      ? 'ring-2 ring-[#E10613] ring-offset-1 scale-110 border-black/30'
+                      : 'border-black/20 opacity-75 hover:opacity-100'
+                  }`}
+                  style={{ backgroundColor: colData.colorCode || '#888' }}
+                  title={`${colName} - Tk ${colData.price}`}
+                />
+              ))}
+              <span className="text-[10px] text-neutral-500 font-medium ml-1 truncate max-w-[120px]">
+                {cardColor}
+              </span>
+            </div>
+          )}
+
           {/* Product Title */}
           <a
             href={productUrl}
@@ -160,14 +197,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {product.name}
           </a>
 
-          {/* Clean Price Display: TK. 3300 */}
+          {/* Clean Price Display */}
           <div className="mt-1 flex items-baseline gap-1.5">
             <span className="text-[14px] sm:text-[15px] font-bold text-neutral-900 tabular-nums">
-              TK. {product.price.toLocaleString()}
+              TK. {displayPrice.toLocaleString()}
             </span>
-            {product.originalPrice > product.price && (
+            {displayOriginalPrice > displayPrice && (
               <span className="text-[11px] text-neutral-400 line-through tabular-nums">
-                TK. {product.originalPrice.toLocaleString()}
+                TK. {displayOriginalPrice.toLocaleString()}
               </span>
             )}
           </div>
