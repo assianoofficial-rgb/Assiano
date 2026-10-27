@@ -443,16 +443,13 @@ export default function App() {
         whatsappNumber={ASSIANO_WHATSAPP}
       />
 
-      {/* Mobile Bottom Navigation Tabs (Home, Category, Search, Cart, Wishlist) */}
+      {/* Mobile Bottom Navigation Bar (Home, Category, Call, WhatsApp, Messenger, Cart) */}
       <MobileBottomBar
         activePage={activePage}
         onNavigate={handleNavigate}
         cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-        onOpenSearch={() => setIsSearchOpen(true)}
-        onOpenTrack={() => {
-          setActiveTrackingId('');
-          setIsTrackOpen(true);
-        }}
+        phoneHotline={ASSIANO_HOTLINE}
+        whatsappNumber={ASSIANO_WHATSAPP}
       />
 
       {/* Modals: Quick View, Order Tracking, Sizing & Search */}

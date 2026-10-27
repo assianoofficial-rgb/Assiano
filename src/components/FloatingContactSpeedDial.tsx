@@ -56,11 +56,7 @@ export const FloatingContactSpeedDial: React.FC<FloatingContactSpeedDialProps> =
       ref={containerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="fixed bottom-20 lg:bottom-6 right-6 sm:right-7 lg:right-8 z-50 flex flex-col items-center select-none pointer-events-auto"
-      style={{
-        right: 'max(1.5rem, calc(1rem + env(safe-area-inset-right, 0px)))',
-        bottom: 'max(4.75rem, calc(4.25rem + env(safe-area-inset-bottom, 0px)))',
-      }}
+      className="hidden lg:flex fixed bottom-6 right-6 lg:right-8 z-50 flex-col items-center select-none pointer-events-auto"
       aria-label="Contact channels"
     >
       {/* 3 Rising Pure Circular Buttons (Call, Messenger, WhatsApp) */}

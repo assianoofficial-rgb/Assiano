@@ -125,12 +125,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
     .slice(0, 4);
 
   return (
-    <div className="bg-[#FAFAF8] py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#FAFAF8] py-0 sm:py-12">
+      <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
         
-        {/* Breadcrumb Navigation */}
         {/* Breadcrumb Navigation & Share Button */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <div className="flex flex-wrap items-center justify-between gap-3 px-4 sm:px-0 py-3 sm:py-0 mb-0 sm:mb-8 bg-white sm:bg-transparent border-b sm:border-b-0 border-neutral-200/80">
           <div className="flex items-center gap-2 text-xs text-neutral-500 font-medium">
             <a
               href="/shop"
@@ -155,7 +154,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               {product.categoryLabel}
             </a>
             <span>/</span>
-            <span className="text-neutral-900 font-semibold truncate max-w-xs">{product.name}</span>
+            <span className="text-neutral-900 font-semibold truncate max-w-[150px] sm:max-w-xs">{product.name}</span>
           </div>
 
           <button
@@ -169,24 +168,24 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 setTimeout(() => el.classList.add('opacity-0'), 2500);
               }
             }}
-            className="flex items-center gap-2 text-xs font-semibold text-neutral-700 hover:text-[#E10613] bg-white border border-neutral-200 px-3 py-1.5 rounded-xs transition-colors cursor-pointer shadow-xs"
+            className="flex items-center gap-2 text-xs font-semibold text-neutral-700 hover:text-[#E10613] bg-neutral-50 sm:bg-white border border-neutral-200 px-3 py-1.5 rounded-xs transition-colors cursor-pointer shadow-xs ml-auto"
             title="Copy direct product link"
           >
-            <span className="text-[11px]">🔗 কপি লিংক (Copy Link)</span>
+            <span className="text-[11px]">🔗 কপি লিংক</span>
             <span id="copied-badge" className="text-[10px] text-emerald-600 font-bold opacity-0 transition-opacity">
               ✓ Copied!
             </span>
           </button>
         </div>
 
-        {/* Product Purchase Section Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 bg-white p-6 sm:p-10 border border-neutral-200 rounded-sm mb-16">
+        {/* Product Purchase Section Grid: borderless & padless on mobile for full-bleed image */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 bg-white p-0 sm:p-10 border-0 sm:border border-neutral-200 rounded-none sm:rounded-sm mb-10 sm:mb-16">
           
           {/* Left Column: Image Presentation */}
           <div className="lg:col-span-7 flex flex-col space-y-4">
-            {/* Main Product Image Container with Zoom */}
+            {/* Main Product Image Container with Zoom: Full width edge-to-edge without padding/border on mobile */}
             <div
-              className={`relative aspect-[3/4] w-full rounded-sm overflow-hidden bg-neutral-100 border border-neutral-200 shadow-xs select-none transition-all ${
+              className={`relative aspect-[3/4] w-full rounded-none sm:rounded-sm overflow-hidden bg-neutral-100 border-0 sm:border border-neutral-200 shadow-none sm:shadow-xs select-none transition-all ${
                 zoomScale > 1 ? 'cursor-move ring-2 ring-[#E10613]/30' : 'cursor-zoom-in'
               }`}
               onMouseMove={handleMouseMove}
@@ -281,7 +280,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             {/* Color Variation Image Thumbnails */}
             {product.colorVariations && Object.keys(product.colorVariations).length > 0 && (
-              <div className="pt-2">
+              <div className="pt-2 px-4 sm:px-0">
                 <div className="flex items-center justify-between text-xs mb-2">
                   <span className="font-semibold text-neutral-800">
                     Color Variants: <strong className="text-[#E10613]">{selectedColor}</strong>
@@ -331,7 +330,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             )}
 
             {/* Micro Trust Strip */}
-            <div className="grid grid-cols-3 gap-3 pt-2 text-center text-xs text-neutral-600">
+            <div className="grid grid-cols-3 gap-2.5 pt-2 px-4 sm:px-0 text-center text-xs text-neutral-600">
               <div className="p-3 bg-neutral-50 rounded-xs border border-neutral-200/80">
                 <Shield className="w-4 h-4 text-[#E10613] mx-auto mb-1" />
                 <span className="font-semibold text-neutral-900 block text-[11px]">100% Authentic</span>
@@ -351,7 +350,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           </div>
 
           {/* Right Column: Contiguous Purchase Module */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-6 px-4 sm:px-0 pt-4 sm:pt-0 pb-6 sm:pb-0">
             <div>
               {/* Category & Code */}
               <div className="flex items-center justify-between text-xs text-neutral-400 mb-1.5">
@@ -585,7 +584,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
         {/* Related Products Grid */}
         {related.length > 0 && (
-          <div className="pt-6">
+          <div className="pt-6 px-4 sm:px-0">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <span className="text-xs uppercase tracking-[0.25em] text-[#E10613] font-semibold block mb-1">
