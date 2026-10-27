@@ -127,7 +127,7 @@ export default function App() {
         updatePageTitle(selectedCategory !== 'all' ? `${selectedCategory.toUpperCase()} Collection` : 'Shop All Designs');
         break;
       case 'product':
-        updatePageTitle(`${selectedProduct.name} (TK. ${selectedProduct.price.toLocaleString()})`);
+        updatePageTitle(`${selectedProduct.name} (TK. ${selectedProduct.price})`);
         break;
       case 'cart':
         updatePageTitle('Shopping Bag');
@@ -443,13 +443,16 @@ export default function App() {
         whatsappNumber={ASSIANO_WHATSAPP}
       />
 
-      {/* Mobile Bottom Navigation Bar (Home, Category, Call, WhatsApp, Messenger, Cart) */}
+      {/* Mobile Bottom Navigation Bar (Home, Category, Search, Cart, Wishlist) */}
       <MobileBottomBar
         activePage={activePage}
         onNavigate={handleNavigate}
         cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-        phoneHotline={ASSIANO_HOTLINE}
-        whatsappNumber={ASSIANO_WHATSAPP}
+        onOpenSearch={() => setIsSearchOpen(true)}
+        onOpenTrack={() => {
+          setActiveTrackingId('');
+          setIsTrackOpen(true);
+        }}
       />
 
       {/* Modals: Quick View, Order Tracking, Sizing & Search */}

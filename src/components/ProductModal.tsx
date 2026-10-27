@@ -299,16 +299,16 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <div className="mt-4 flex items-baseline justify-between pb-4 border-b border-neutral-200">
                 <div className="flex items-baseline gap-3">
                   <span className="text-2xl font-bold font-mono text-[#141416] tabular-nums">
-                    Tk {activePrice.toLocaleString()}
+                    Tk {activePrice}
                   </span>
                   {activeOriginalPrice > activePrice && (
                     <span className="text-sm text-neutral-400 line-through font-mono tabular-nums">
-                      Tk {activeOriginalPrice.toLocaleString()}
+                      Tk {activeOriginalPrice}
                     </span>
                   )}
                   {activeOriginalPrice > activePrice && (
                     <span className="text-xs text-emerald-700 font-medium">
-                      Save Tk {(activeOriginalPrice - activePrice).toLocaleString()} ({activeDiscountPercent}% OFF)
+                      Save Tk {activeOriginalPrice - activePrice} ({activeDiscountPercent}% OFF)
                     </span>
                   )}
                 </div>
@@ -328,7 +328,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   </span>
                   {product.colorVariations?.[selectedColor] && (
                     <span className="text-[11px] font-mono font-bold text-[#E10613]">
-                      Tk {product.colorVariations[selectedColor].price.toLocaleString()}
+                      Price: Tk {product.colorVariations[selectedColor].price}
                     </span>
                   )}
                 </div>
@@ -490,7 +490,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   className="flex-1 py-3 px-4 bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-100 text-xs font-semibold tracking-wider uppercase rounded-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  <span>Add to Bag (Tk {(activePrice * quantity).toLocaleString()})</span>
+                  <span>Add to Bag (Tk {activePrice * quantity})</span>
                 </button>
               </div>
 
@@ -503,7 +503,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 className="w-full py-3.5 px-4 bg-[#E10613] hover:bg-[#C80511] text-white text-xs font-bold tracking-widest uppercase rounded-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 animate-order-glow hover:scale-[1.01]"
               >
                 <Zap className="w-4 h-4 fill-white" />
-                <span>Order Now • Tk {(activePrice * quantity).toLocaleString()} (Cash on Delivery)</span>
+                <span>Order Now • Tk {activePrice * quantity} (Cash on Delivery)</span>
               </button>
 
               {onViewFullPage && (

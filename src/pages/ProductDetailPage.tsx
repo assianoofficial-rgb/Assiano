@@ -286,7 +286,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     Color Variants: <strong className="text-[#E10613]">{selectedColor}</strong>
                   </span>
                   <span className="text-[11px] text-neutral-500 font-mono">
-                    Tk {activePrice.toLocaleString()}
+                    Tk {activePrice}
                   </span>
                 </div>
                 <div className="grid grid-cols-4 gap-2 sm:gap-3">
@@ -370,16 +370,16 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <div className="mt-5 flex items-baseline justify-between pb-5 border-b border-neutral-200">
                 <div className="flex items-baseline gap-3">
                   <span className="text-3xl font-bold font-mono text-[#141416] tabular-nums">
-                    Tk {activePrice.toLocaleString()}
+                    Tk {activePrice}
                   </span>
                   {activeOriginalPrice > activePrice && (
                     <span className="text-base text-neutral-400 line-through font-mono tabular-nums">
-                      Tk {activeOriginalPrice.toLocaleString()}
+                      Tk {activeOriginalPrice}
                     </span>
                   )}
                   {activeOriginalPrice > activePrice && (
                     <span className="text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-xs border border-emerald-200/60">
-                      Save Tk {(activeOriginalPrice - activePrice).toLocaleString()} ({activeDiscountPercent}% OFF)
+                      Save Tk {activeOriginalPrice - activePrice} ({activeDiscountPercent}% OFF)
                     </span>
                   )}
                 </div>
@@ -399,7 +399,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   </span>
                   {product.colorVariations?.[selectedColor] && (
                     <span className="text-[11px] font-mono font-bold text-[#E10613]">
-                      Price: Tk {product.colorVariations[selectedColor].price.toLocaleString()}
+                      Price: Tk {product.colorVariations[selectedColor].price}
                     </span>
                   )}
                 </div>
@@ -560,7 +560,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   className="flex-1 py-3.5 px-4 bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-100 text-xs font-semibold tracking-wider uppercase rounded-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs active:scale-98"
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  <span>Add to Bag (Tk {(activePrice * quantity).toLocaleString()})</span>
+                  <span>Add to Bag (Tk {activePrice * quantity})</span>
                 </button>
               </div>
 
@@ -570,7 +570,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 className="w-full py-4 px-4 bg-[#E10613] hover:bg-[#C80511] text-white text-xs font-bold tracking-widest uppercase rounded-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 animate-order-glow hover:scale-[1.01]"
               >
                 <Zap className="w-4 h-4 fill-white" />
-                <span>Order Now • Tk {(activePrice * quantity).toLocaleString()} (Cash on Delivery)</span>
+                <span>Order Now • Tk {activePrice * quantity} (Cash on Delivery)</span>
               </button>
 
               <div className="text-[11px] text-center text-neutral-500 space-y-0.5 pt-1">
