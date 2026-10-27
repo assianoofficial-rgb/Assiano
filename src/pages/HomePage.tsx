@@ -27,58 +27,49 @@ interface HomePageProps {
 
 interface CircleCategory {
   id: CategoryType;
-  labelEn: string;
-  labelBn: string;
+  label: string;
   image: string;
 }
 
 const CIRCLE_CATEGORIES: CircleCategory[] = [
   {
     id: 'all',
-    labelEn: 'All Designs',
-    labelBn: 'সব কালেকশন',
+    label: 'All Designs',
     image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
   },
   {
     id: 'abaya',
-    labelEn: 'Abayas',
-    labelBn: 'আবায়া ও বোরকা',
+    label: 'Abayas',
     image: '/assets/aistudio/image_78204c97.png',
   },
   {
     id: 'three-piece',
-    labelEn: 'Three-Piece',
-    labelBn: 'থ্রি-পিস সেট',
+    label: 'Three-Piece',
     image: '/assets/images/assiano_three_piece_suit_1792505198277.jpg',
   },
   {
     id: 'kurti',
-    labelEn: 'Kurtis',
-    labelBn: 'ডিজাইনার কুর্তি',
+    label: 'Kurtis',
     image: '/assets/images/assiano_designer_kurti_1792505198620.jpg',
   },
   {
     id: 'gown',
-    labelEn: 'Gowns',
-    labelBn: 'পার্টি গাউন',
+    label: 'Gowns',
     image: '/assets/images/assiano_evening_gown_1792505198775.jpg',
   },
   {
     id: 'hijab',
-    labelEn: 'Hijabs',
-    labelBn: 'হিজাব ও স্কার্ফ',
+    label: 'Hijabs',
     image: '/assets/images/assiano_luxury_abaya_1792505197814.jpg',
   },
   {
     id: 'shirt',
-    labelEn: 'Shirts',
-    labelBn: 'কিউবান শার্ট',
+    label: 'Shirts',
     image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
   },
   {
     id: 'footwear',
-    labelEn: 'Footwear',
-    labelBn: 'জুতো ও হিল',
+    label: 'Footwear',
     image: '/assets/aistudio/image_fdd18a03.png',
   },
 ];
@@ -95,6 +86,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [searchQuery, setSearchQuery] = React.useState('');
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = React.useState<'featured' | 'price-asc' | 'price-desc' | 'bestseller'>('bestseller');
+  const [isFilterOpen, setIsFilterOpen] = React.useState(false);
 
   const productsSectionRef = React.useRef<HTMLDivElement>(null);
 
@@ -282,23 +274,20 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <div className="w-full h-full rounded-full overflow-hidden bg-white">
                     <img
                       src={cat.image}
-                      alt={cat.labelEn}
+                      alt={cat.label}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
                     />
                   </div>
                 </div>
 
-                {/* Category Labels */}
+                {/* Category Label (English Only) */}
                 <span
-                  className={`mt-1.5 text-[11px] sm:text-xs font-bold leading-tight transition-colors line-clamp-1 ${
+                  className={`mt-1.5 text-[11px] sm:text-xs font-semibold tracking-tight leading-tight transition-colors line-clamp-1 ${
                     isSelected ? 'text-[#E10613]' : 'text-neutral-800 group-hover:text-[#E10613]'
                   }`}
                 >
-                  {cat.labelBn}
-                </span>
-                <span className="text-[9.5px] sm:text-[10px] text-neutral-400 font-normal leading-tight">
-                  {cat.labelEn}
+                  {cat.label}
                 </span>
               </button>
             );
@@ -310,80 +299,125 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* 4. SHOPPING TOOLBAR & PRODUCT GRID */}
       <section ref={productsSectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-3 scroll-mt-24">
         
-        {/* Toolbar Header (Layout switch, Sort Dropdown, Count & Quick Search) */}
-        <div className="bg-white p-3 sm:p-4 rounded-sm border border-neutral-200 mb-6 flex flex-wrap items-center justify-between gap-3 shadow-2xs">
-          
-          {/* Left: View Mode Toggle & Count */}
-          <div className="flex items-center gap-2">
+        {/* Toolbar Header (Jeem 3-segment style: FILTER | SORT BY | View Switch) */}
+        <div className="bg-white border-y sm:border border-neutral-200/80 mb-6 shadow-2xs">
+          <div className="grid grid-cols-3 divide-x divide-neutral-200/80 items-stretch text-center">
+            
+            {/* 1. FILTER */}
             <button
               type="button"
-              onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-xs border text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
-                viewMode === 'grid'
-                  ? 'bg-neutral-900 text-white border-neutral-900'
-                  : 'bg-white text-neutral-600 border-neutral-300 hover:bg-neutral-50'
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              className={`py-3 px-2 flex items-center justify-center gap-1.5 text-xs uppercase tracking-[0.16em] font-medium transition-colors cursor-pointer ${
+                isFilterOpen || searchQuery.trim() || selectedCategory !== 'all'
+                  ? 'bg-neutral-50 text-neutral-900 font-semibold'
+                  : 'text-neutral-700 hover:text-black hover:bg-neutral-50/50'
               }`}
-              title="Grid View (গ্রিড)"
             >
-              <LayoutGrid className="w-4 h-4" />
-              <span className="hidden sm:inline">গ্রিড</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setViewMode('list')}
-              className={`p-2 rounded-xs border text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
-                viewMode === 'list'
-                  ? 'bg-neutral-900 text-white border-neutral-900'
-                  : 'bg-white text-neutral-600 border-neutral-300 hover:bg-neutral-50'
-              }`}
-              title="List View (তালিকা)"
-            >
-              <List className="w-4 h-4" />
-              <span className="hidden sm:inline">লিস্ট</span>
-            </button>
-
-            <span className="text-xs text-neutral-500 ml-2 hidden sm:inline">
-              মোট <strong className="text-neutral-900">{filteredProducts.length}</strong> টি পণ্য
-            </span>
-          </div>
-
-          {/* Center/Right: Quick Search & Sort by Dropdown */}
-          <div className="flex items-center gap-2.5 flex-1 sm:flex-initial justify-end">
-            <div className="relative max-w-[190px] sm:max-w-[220px] w-full">
-              <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="খুঁজুন (Search)..."
-                className="w-full pl-8 pr-7 py-1.5 bg-neutral-50 hover:bg-white focus:bg-white border border-neutral-300 focus:border-[#E10613] rounded-xs text-xs text-neutral-900 outline-none transition-all"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700 cursor-pointer p-0.5"
-                  title="Clear"
-                >
-                  <X className="w-3 h-3" />
-                </button>
+              <span>FILTER</span>
+              {(selectedCategory !== 'all' || searchQuery.trim()) && (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E10613]" />
               )}
-            </div>
+            </button>
 
-            <div className="relative shrink-0">
+            {/* 2. SORT BY */}
+            <div className="relative flex items-center justify-center py-3 px-2 text-xs uppercase tracking-[0.16em] font-medium text-neutral-700 hover:text-black cursor-pointer group">
+              <span className="pointer-events-none flex items-center gap-1">
+                <span>SORT BY</span>
+                <ChevronDown className="w-3.5 h-3.5 text-neutral-500" />
+              </span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="appearance-none bg-neutral-50 hover:bg-white border border-neutral-300 focus:border-[#E10613] text-xs font-semibold text-neutral-800 py-1.5 pl-2.5 pr-7 rounded-xs cursor-pointer outline-none"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer text-xs"
+                title="Sort Products"
               >
-                <option value="bestseller">জনপ্রিয় পণ্য (Best Seller)</option>
-                <option value="price-asc">দাম: কম থেকে বেশি</option>
-                <option value="price-desc">দাম: বেশি থেকে কম</option>
-                <option value="featured">নতুন কালেকশন</option>
+                <option value="bestseller">Best Selling / জনপ্রিয়</option>
+                <option value="featured">New Arrivals / নতুন কালেকশন</option>
+                <option value="price-asc">Price: Low to High / দাম: কম</option>
+                <option value="price-desc">Price: High to Low / দাম: বেশি</option>
               </select>
-              <ChevronDown className="w-3.5 h-3.5 text-neutral-400 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
+
+            {/* 3. VIEW TOGGLE (1-col vs 2-col matching reference icons) */}
+            <div className="flex items-center justify-center gap-3 py-3 px-2">
+              {/* Single Column Icon */}
+              <button
+                type="button"
+                onClick={() => setViewMode('list')}
+                className={`transition-opacity cursor-pointer p-0.5 ${
+                  viewMode === 'list' ? 'opacity-100' : 'opacity-35 hover:opacity-75'
+                }`}
+                title="Single Column View"
+                aria-label="Single Column View"
+              >
+                <div className="w-4 h-4 bg-neutral-800 rounded-[1px]" />
+              </button>
+
+              {/* 2x2 Grid Icon */}
+              <button
+                type="button"
+                onClick={() => setViewMode('grid')}
+                className={`transition-opacity cursor-pointer p-0.5 ${
+                  viewMode === 'grid' ? 'opacity-100' : 'opacity-35 hover:opacity-75'
+                }`}
+                title="Two Column Grid View"
+                aria-label="Two Column Grid View"
+              >
+                <div className="grid grid-cols-2 gap-0.5 w-4 h-4">
+                  <div className="w-1.5 h-1.5 bg-neutral-800 rounded-[0.5px]" />
+                  <div className="w-1.5 h-1.5 bg-neutral-800 rounded-[0.5px]" />
+                  <div className="w-1.5 h-1.5 bg-neutral-800 rounded-[0.5px]" />
+                  <div className="w-1.5 h-1.5 bg-neutral-800 rounded-[0.5px]" />
+                </div>
+              </button>
+            </div>
+
           </div>
+
+          {/* Expandable Filter / Search Panel */}
+          {isFilterOpen && (
+            <div className="p-4 border-t border-neutral-200/80 bg-neutral-50/70 space-y-3.5 transition-all">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                {/* Search input */}
+                <div className="relative flex-1 max-w-md">
+                  <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="পণ্য বা ডিজাইনের নাম খুঁজুন..."
+                    className="w-full pl-8 pr-8 py-2 bg-white border border-neutral-300 focus:border-neutral-900 rounded-none text-xs text-neutral-900 outline-none"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700 cursor-pointer p-0.5"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Reset / Count info */}
+                <div className="flex items-center justify-between sm:justify-end gap-3 text-xs text-neutral-500">
+                  <span>
+                    Showing <strong className="text-neutral-900 font-mono">{filteredProducts.length}</strong> items
+                  </span>
+                  {(selectedCategory !== 'all' || searchQuery.trim()) && (
+                    <button
+                      onClick={() => {
+                        handleCategorySelect('all');
+                        setSearchQuery('');
+                      }}
+                      className="text-[#E10613] hover:underline font-semibold cursor-pointer"
+                    >
+                      Clear All
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* 5. PRODUCT GRID / LIST (Clean, user-friendly 2-col on mobile) */}
@@ -409,8 +443,8 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div
             className={
               viewMode === 'grid'
-                ? 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5'
-                : 'flex flex-col gap-4'
+                ? 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 sm:gap-x-6 gap-y-7 sm:gap-y-10'
+                : 'flex flex-col gap-6 max-w-3xl mx-auto'
             }
           >
             {filteredProducts.map((product) => (

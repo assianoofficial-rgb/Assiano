@@ -159,7 +159,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
 
         {/* Product Cards Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-6 gap-y-7 sm:gap-y-10">
             {filteredProducts.map((product) => (
               <ProductCard
                 key={product.id}

@@ -56,7 +56,11 @@ export const FloatingContactSpeedDial: React.FC<FloatingContactSpeedDialProps> =
       ref={containerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="fixed bottom-18 lg:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end select-none pointer-events-auto"
+      className="fixed bottom-20 lg:bottom-6 right-6 sm:right-7 lg:right-8 z-50 flex flex-col items-center select-none pointer-events-auto"
+      style={{
+        right: 'max(1.5rem, calc(1rem + env(safe-area-inset-right, 0px)))',
+        bottom: 'max(4.75rem, calc(4.25rem + env(safe-area-inset-bottom, 0px)))',
+      }}
       aria-label="Contact channels"
     >
       {/* 3 Rising Pure Circular Buttons (Call, Messenger, WhatsApp) */}
@@ -146,10 +150,10 @@ export const FloatingContactSpeedDial: React.FC<FloatingContactSpeedDialProps> =
             <X className="w-6 h-6 stroke-[2.5]" />
           ) : (
             <div className="relative flex items-center justify-center">
-              {/* Online Green Pulsing Indicator Dot */}
-              <span className="absolute -top-2.5 -right-2.5 flex h-3.5 w-3.5">
+              {/* Online Green Pulsing Indicator Dot: safely inside top-right corner without horizontal clipping */}
+              <span className="absolute top-0 right-0 flex h-3 w-3 pointer-events-none">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80"></span>
-                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white shadow-xs"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-white shadow-xs"></span>
               </span>
 
               {/* Call Support Icon */}
