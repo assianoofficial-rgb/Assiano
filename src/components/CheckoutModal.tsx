@@ -2,6 +2,7 @@ import React from 'react';
 import { X, CheckCircle2, ShieldCheck, Truck, CreditCard, Banknote, Phone, MapPin, User, FileText, ArrowRight, Copy, Check } from 'lucide-react';
 import { CartItem, OrderDetails, PaymentMethod } from '../types';
 import { BANGLADESH_DISTRICTS, ASSIANO_LOGO } from '../data/products';
+import { sendOrderNotification } from '../services/splitforms';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -54,7 +55,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
   };
 
-  const handleSubmitOrder = (e: React.FormEvent) => {
+  const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setValidationError('');
 
@@ -78,34 +79,35 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const orderNum = Math.floor(100000 + Math.random() * 900000);
-      const generatedOrderId = `ASN-${orderNum}`;
-      const estimatedDelivery = deliveryArea === 'dhaka' ? 'Within 24 to 48 Hours' : 'Within 2 to 3 Business Days';
+    const orderNum = Math.floor(100000 + Math.random() * 900000);
+    const generatedOrderId = `ASN-${orderNum}`;
+    const estimatedDelivery = deliveryArea === 'dhaka' ? 'Within 24 to 48 Hours' : 'Within 2 to 3 Business Days';
 
-      const newOrder: OrderDetails = {
-        orderId: generatedOrderId,
-        createdAt: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-        customerName: customerName.trim(),
-        customerPhone: cleanPhone,
-        district,
-        deliveryAddress: address.trim(),
-        deliveryArea,
-        paymentMethod,
-        bkashTrxId: bkashTrxId.trim() || undefined,
-        items: [...items],
-        subtotal,
-        shippingFee,
-        discount,
-        total,
-        status: 'confirmed',
-        estimatedDelivery
-      };
+    const newOrder: OrderDetails = {
+      orderId: generatedOrderId,
+      createdAt: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+      customerName: customerName.trim(),
+      customerPhone: cleanPhone,
+      district,
+      deliveryAddress: address.trim(),
+      deliveryArea,
+      paymentMethod,
+      bkashTrxId: bkashTrxId.trim() || undefined,
+      items: [...items],
+      subtotal,
+      shippingFee,
+      discount,
+      total,
+      status: 'confirmed',
+      estimatedDelivery
+    };
 
-      setConfirmedOrder(newOrder);
-      onOrderSuccess(newOrder);
-      setIsSubmitting(false);
-    }, 800);
+    // Send order details to Web3Forms
+    await sendOrderNotification(newOrder, deliveryNote.trim());
+
+    setConfirmedOrder(newOrder);
+    onOrderSuccess(newOrder);
+    setIsSubmitting(false);
   };
 
   const handleCopyOrderId = () => {

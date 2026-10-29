@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mail, Phone, MapPin, ExternalLink, Send, CheckCircle2, MessageCircle, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import { ASSIANO_LOGO } from '../data/products';
+import { sendContactInquiry } from '../services/splitforms';
 
 interface ContactPageProps {
   phoneHotline?: string;
@@ -15,14 +16,23 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   const [phone, setPhone] = React.useState('');
   const [subject, setSubject] = React.useState('Order Inquiry');
   const [message, setMessage] = React.useState('');
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
   const [openFaq, setOpenFaq] = React.useState<number | null>(0);
 
   const cleanWaNumber = whatsappNumber.replace(/[^0-9]/g, '');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone) return;
+    setIsSubmitting(true);
+    await sendContactInquiry({
+      name: name.trim(),
+      phone: phone.trim(),
+      subject,
+      message: message.trim(),
+    });
+    setIsSubmitting(false);
     setSubmitted(true);
   };
 
