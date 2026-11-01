@@ -20,15 +20,87 @@ export const PRODUCTS: Product[] = [
     image: '/assets/aistudio/Black_9259dc10.jpg',
     additionalImages: [
       '/assets/aistudio/Black_9259dc10.jpg',
+      '/assets/aistudio/Red_ffd4f75f.jpg',
+      '/assets/aistudio/Blue_c986a74c.jpg'
+    ],
+    fabric: 'Soft Silk & Cotton Blend with Zari Weft',
+    pattern: 'Woven Silver Floral & Lotus Motifs',
+    occasion: 'Festive, Cultural Events, Daily Wear',
+    colors: ['Black', 'Red', 'Blue'],
+    sizes: ['Free Size (12 Haat)', '12 Haat with Blouse Piece'],
+    description: 'Exquisite traditional Bengali saree featuring contrasting silver and red floral motifs along the aanchal, crafted with soft breathable fabric for festive elegance and daily comfort.',
+    colorVariations: {
+      'Black': {
+        image: '/assets/aistudio/Black_9259dc10.jpg',
+        price: 990,
+        originalPrice: 1450,
+        discountPercent: 32,
+        description: 'Exquisite black traditional Bengali saree featuring contrasting silver and red lotus floral motifs along the aanchal/pallu, crafted with soft breathable fabric for festive and casual elegance.',
+        colorCode: '#1A1A1A'
+      },
+      'Red': {
+        image: '/assets/aistudio/Red_ffd4f75f.jpg',
+        price: 990,
+        originalPrice: 1450,
+        discountPercent: 32,
+        description: 'Stunning crimson red traditional Bengali saree designed with regal silver floral woven motifs and elaborate pallu detailing, offering a lightweight flowy drape for celebrations.',
+        colorCode: '#8B1E28'
+      },
+      'Blue': {
+        image: '/assets/aistudio/Blue_c986a74c.jpg',
+        price: 990,
+        originalPrice: 1450,
+        discountPercent: 32,
+        description: 'Royal midnight blue traditional Bengali saree featuring contrasting silver and red lotus floral motifs along the aanchal/pallu, crafted with soft breathable fabric for festive elegance and daily comfort.',
+        colorCode: '#1E3A8A'
+      }
+    },
+    features: [
+      'Traditional Bengali Saree with woven lotus & floral pallu',
+      'Soft silk & cotton blend fabric with graceful, effortless fall',
+      'Contrasting silver zari inspired woven border',
+      'Breathable, lightweight and comfortable for Bangladesh climate',
+      'Full standard 12 haat length with running blouse piece option',
+      'Guaranteed colorfast and long-lasting fabric quality'
+    ],
+    isNewArrival: true,
+    isBestSeller: true,
+    inStock: true
+  },
+  // --- BLUE SHARE VARIATION PRODUCT IN SHARE CATEGORY ---
+  {
+    id: 'asn-banglai-share-blue',
+    name: 'Banglai Share - Royal Blue',
+    subtitle: 'Traditional Bengali Saree with Woven Silver Lotus Motifs & Elaborate Pallu',
+    category: 'share',
+    categoryLabel: 'Share',
+    price: 990,
+    originalPrice: 1450,
+    discountPercent: 32,
+    soldCount: 41,
+    rating: 5.0,
+    reviewCount: 32,
+    image: '/assets/aistudio/Blue_c986a74c.jpg',
+    additionalImages: [
+      '/assets/aistudio/Blue_c986a74c.jpg',
+      '/assets/aistudio/Black_9259dc10.jpg',
       '/assets/aistudio/Red_ffd4f75f.jpg'
     ],
     fabric: 'Soft Silk & Cotton Blend with Zari Weft',
     pattern: 'Woven Silver Floral & Lotus Motifs',
     occasion: 'Festive, Cultural Events, Daily Wear',
-    colors: ['Black', 'Red'],
+    colors: ['Blue', 'Black', 'Red'],
     sizes: ['Free Size (12 Haat)', '12 Haat with Blouse Piece'],
-    description: 'Exquisite traditional Bengali saree featuring contrasting silver and red floral motifs along the aanchal, crafted with soft breathable fabric for festive elegance and daily comfort.',
+    description: 'Royal midnight blue traditional Bengali saree featuring contrasting silver and red lotus floral motifs along the aanchal/pallu, crafted with soft breathable fabric for festive elegance and daily comfort.',
     colorVariations: {
+      'Blue': {
+        image: '/assets/aistudio/Blue_c986a74c.jpg',
+        price: 990,
+        originalPrice: 1450,
+        discountPercent: 32,
+        description: 'Royal midnight blue traditional Bengali saree featuring contrasting silver and red lotus floral motifs along the aanchal/pallu, crafted with soft breathable fabric for festive elegance and daily comfort.',
+        colorCode: '#1E3A8A'
+      },
       'Black': {
         image: '/assets/aistudio/Black_9259dc10.jpg',
         price: 990,
@@ -1029,8 +1101,8 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const CATEGORIES = [
-  { id: 'all', name: 'All Collection', count: 31 },
-  { id: 'share', name: 'Share', count: 1 },
+  { id: 'all', name: 'All Collection', count: 32 },
+  { id: 'share', name: 'Share', count: 2 },
   { id: 'abaya', name: 'Abayas & Borkas', count: 8 },
   { id: 'three-piece', name: 'Three-Piece Sets', count: 6 },
   { id: 'kurti', name: 'Designer Kurtis', count: 6 },
