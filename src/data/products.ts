@@ -493,34 +493,6 @@ export const PRODUCTS: Product[] = [
     inStock: true
   },
   {
-    id: 'asn-007',
-    name: 'Assiano Relaxed Cuban Collar Linen Shirt',
-    subtitle: 'Contemporary Drop-Shoulder Relaxed Fit',
-    category: 'shirt',
-    categoryLabel: 'Contemporary Shirts',
-    price: 1250,
-    originalPrice: 1750,
-    discountPercent: 29,
-    soldCount: 71,
-    rating: 4.8,
-    reviewCount: 22,
-    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
-    fabric: 'Pure Flax Linen & Fine Cotton Blend',
-    colors: ['Muted Olive', 'Iced Espresso', 'Marshmallow White'],
-    sizes: ['M (Chest 40")', 'L (Chest 42")', 'XL (Chest 44")', 'XXL (Chest 46")'],
-    description: 'A contemporary wardrobe essential featuring a boxy Cuban camp collar, clean drop shoulders, and mother-of-pearl buttons. Tailored from pre-washed linen blend that feels breezy on the skin and drapes naturally.',
-    features: [
-      'Camp cuban open collar with clean seam detailing',
-      'Pre-shrunk enzyme-washed natural linen fabric',
-      'Straight hem with side venting for casual untucked styling',
-      'Breathable, moisture-wicking and ultra-durable',
-      'Unisex modern minimalist aesthetic'
-    ],
-    isNewArrival: false,
-    isBestSeller: true,
-    inStock: true
-  },
-  {
     id: 'asn-008',
     name: 'Strappy Crystal Stiletto Occasion Heels',
     subtitle: 'Cushioned Footbed 3-Inch Elegant Party Heel',
@@ -989,61 +961,7 @@ export const PRODUCTS: Product[] = [
     inStock: true
   },
 
-  // --- ROW 7 ---
-  {
-    id: 'asn-025',
-    name: 'Striped Coastal Relaxed Fit Camp Shirt',
-    subtitle: 'Breathable Cotton Linen Cuban Collar Top',
-    category: 'shirt',
-    categoryLabel: 'Contemporary Shirts',
-    price: 1150,
-    originalPrice: 1650,
-    discountPercent: 30,
-    soldCount: 58,
-    rating: 4.8,
-    reviewCount: 21,
-    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
-    fabric: 'Linen Cotton Slub Blend',
-    colors: ['Beige & White Stripe', 'Blue & White Stripe', 'Sage Stripe'],
-    sizes: ['M (Chest 40")', 'L (Chest 42")', 'XL (Chest 44")', 'XXL (Chest 46")'],
-    description: 'Casual resort-style striped camp shirt tailored in pre-washed linen-cotton slub. Cut in a modern relaxed boxy fit with flat camp collar and natural horn buttons.',
-    features: [
-      'Breezy breathable summer slub texture',
-      'Camp cuban collar and chest patch pocket',
-      'Straight hem with side slits for untucked comfort',
-      'Pre-washed to eliminate shrinkage'
-    ],
-    isNewArrival: false,
-    isBestSeller: true,
-    inStock: true
-  },
-  {
-    id: 'asn-026',
-    name: 'Pure Linen Drop-Shoulder Minimalist Shirt',
-    subtitle: 'Raw Hem Contemporary Unisex Summer Linen',
-    category: 'shirt',
-    categoryLabel: 'Contemporary Shirts',
-    price: 1350,
-    originalPrice: 1950,
-    discountPercent: 31,
-    soldCount: 44,
-    rating: 4.8,
-    reviewCount: 16,
-    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
-    fabric: '100% Pure Normandy Flax Linen',
-    colors: ['Raw Oatmeal', 'Onyx Black', 'Sea Salt White'],
-    sizes: ['M (Chest 40")', 'L (Chest 42")', 'XL (Chest 44")'],
-    description: 'Crafted from 100% Normandy flax linen, this minimalist shirt features clean dropped shoulders, French seams, and a fluid silhouette that softens with age.',
-    features: [
-      '100% natural pure flax linen with cooling properties',
-      'Reinforced seams and mother-of-pearl buttons',
-      'Clean minimalist tailoring without chest logos',
-      'Dries quickly and handles heat with ease'
-    ],
-    isNewArrival: true,
-    isBestSeller: false,
-    inStock: true
-  },
+  // --- FOOTWEAR & SHOES ---
   {
     id: 'asn-027',
     name: 'Artisan Hand-Embroidered Velvet Nagra Mojari',
@@ -1101,14 +1019,13 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const CATEGORIES = [
-  { id: 'all', name: 'All Collection', count: 32 },
+  { id: 'all', name: 'All Collection', count: 29 },
   { id: 'share', name: 'Share', count: 2 },
   { id: 'abaya', name: 'Abayas & Borkas', count: 8 },
   { id: 'three-piece', name: 'Three-Piece Sets', count: 6 },
   { id: 'kurti', name: 'Designer Kurtis', count: 6 },
   { id: 'gown', name: 'Occasion Gowns', count: 4 },
   { id: 'hijab', name: 'Hijabs & Scarves', count: 2 },
-  { id: 'shirt', name: 'Cuban Shirts', count: 3 },
   { id: 'footwear', name: 'Footwear & Heels', count: 3 },
 ];
 

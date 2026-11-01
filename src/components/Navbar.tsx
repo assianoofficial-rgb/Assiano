@@ -62,7 +62,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'kurti', label: 'Designer Kurtis', desc: 'Hand-embroidered tunics' },
     { id: 'gown', label: 'Occasion Gowns', desc: 'Shimmer Georgette dresses' },
     { id: 'hijab', label: 'Hijabs & Scarves', desc: 'Turkish Chiffon & Georgette' },
-    { id: 'shirt', label: 'Cuban Shirts', desc: 'Relaxed linen & cotton' },
     { id: 'footwear', label: 'Footwear & Heels', desc: 'Cushioned party stilettos' },
   ];
 

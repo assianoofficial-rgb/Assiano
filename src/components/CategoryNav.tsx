@@ -51,12 +51,6 @@ const CATEGORY_ITEMS: CategoryItem[] = [
     tag: 'Shimmer Georgette'
   },
   {
-    id: 'shirt',
-    label: 'Cuban Shirts',
-    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
-    tag: 'Linen Blend'
-  },
-  {
     id: 'footwear',
     label: 'Footwear & Heels',
     image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',

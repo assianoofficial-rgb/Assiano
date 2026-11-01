@@ -68,11 +68,6 @@ const CIRCLE_CATEGORIES: CircleCategory[] = [
     image: '/assets/images/assiano_luxury_abaya_1792505197814.jpg',
   },
   {
-    id: 'shirt',
-    label: 'Shirts',
-    image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
-  },
-  {
     id: 'footwear',
     label: 'Footwear',
     image: '/assets/aistudio/image_fdd18a03.png',
