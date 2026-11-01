@@ -21,6 +21,12 @@ const CATEGORY_ITEMS: CategoryItem[] = [
     tag: 'Full Catalog'
   },
   {
+    id: 'share',
+    label: 'Share',
+    image: '/assets/aistudio/Black_9259dc10.jpg',
+    tag: 'Traditional Wear'
+  },
+  {
     id: 'abaya',
     label: 'Abaya & Borka',
     image: '/assets/images/assiano_luxury_abaya_1792505197814.jpg',

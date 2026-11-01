@@ -38,6 +38,11 @@ const CIRCLE_CATEGORIES: CircleCategory[] = [
     image: '/assets/images/assiano_hero_editorial_1792505196532.jpg',
   },
   {
+    id: 'share',
+    label: 'Share',
+    image: '/assets/aistudio/Black_9259dc10.jpg',
+  },
+  {
     id: 'abaya',
     label: 'Abayas',
     image: '/assets/aistudio/image_78204c97.png',

@@ -35,6 +35,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
 
   const categories: { id: CategoryType; label: string; count?: number }[] = [
     { id: 'all', label: 'All Catalog' },
+    { id: 'share', label: 'Share' },
     { id: 'abaya', label: 'Abayas & Borkas' },
     { id: 'three-piece', label: 'Three-Piece Sets' },
     { id: 'kurti', label: 'Designer Kurtis' },

@@ -56,6 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const categories: { id: CategoryType; label: string; desc: string }[] = [
     { id: 'all', label: 'All Designs', desc: 'Browse complete catalog' },
+    { id: 'share', label: 'Share', desc: 'Bengali Handloom Saree' },
     { id: 'abaya', label: 'Abayas & Borkas', desc: 'Korean Nida & Zoom Crepe' },
     { id: 'three-piece', label: 'Three-Piece Sets', desc: 'Pure Cotton & Organza' },
     { id: 'kurti', label: 'Designer Kurtis', desc: 'Hand-embroidered tunics' },
@@ -229,10 +230,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                         </h4>
                         <div className="flex items-baseline gap-2 mt-0.5">
                           <span className="font-mono font-bold text-xs text-[#141416]">
-                            Tk {featuredProduct.price.toLocaleString()}
+                            Tk {featuredProduct.price}
                           </span>
                           <span className="font-mono text-[11px] text-neutral-400 line-through">
-                            Tk {featuredProduct.originalPrice.toLocaleString()}
+                            Tk {featuredProduct.originalPrice}
                           </span>
                         </div>
                       </div>

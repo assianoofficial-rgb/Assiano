@@ -1,4 +1,4 @@
-export type CategoryType = 'all' | 'abaya' | 'three-piece' | 'kurti' | 'gown' | 'hijab' | 'shirt' | 'footwear';
+export type CategoryType = 'all' | 'abaya' | 'three-piece' | 'kurti' | 'gown' | 'hijab' | 'shirt' | 'footwear' | 'share';
 export type PageType = 'home' | 'shop' | 'about' | 'contact' | 'product' | 'cart' | 'checkout';
 
 export interface ColorVariation {

@@ -94,10 +94,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </a>
 
             <div className="mt-1.5 flex items-baseline gap-2 text-xs text-neutral-500 font-normal tracking-wide">
-              <span>TK {displayPrice.toLocaleString()}</span>
+              <span>TK {displayPrice}</span>
               {displayOriginalPrice > displayPrice && (
                 <span className="text-[11px] text-neutral-400 line-through">
-                  TK {displayOriginalPrice.toLocaleString()}
+                  TK {displayOriginalPrice}
                 </span>
               )}
             </div>
@@ -194,10 +194,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Price Centered below title */}
         <div className="mt-1 flex items-baseline justify-center gap-1.5 text-[11.5px] sm:text-xs text-neutral-500 font-normal tracking-wide tabular-nums">
-          <span>TK {displayPrice.toLocaleString()}</span>
+          <span>TK {displayPrice}</span>
           {displayOriginalPrice > displayPrice && (
             <span className="text-[10.5px] sm:text-[11px] text-neutral-400 line-through">
-              TK {displayOriginalPrice.toLocaleString()}
+              TK {displayOriginalPrice}
             </span>
           )}
         </div>

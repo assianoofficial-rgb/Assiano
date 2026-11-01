@@ -4,6 +4,60 @@ export const ASSIANO_LOGO = '/assets/aistudio/702904207_122102589927317919_56546
 export const HERO_IMAGE = '/assets/images/assiano_hero_editorial_1792505196532.jpg';
 
 export const PRODUCTS: Product[] = [
+  // --- NEW VARIATION PRODUCT: BANGLAI SHARE ---
+  {
+    id: 'asn-banglai-share',
+    name: 'Banglai Share',
+    subtitle: 'Traditional Bengali Saree with Woven Silver Lotus Motifs & Elaborate Pallu',
+    category: 'share',
+    categoryLabel: 'Share',
+    price: 990,
+    originalPrice: 1450,
+    discountPercent: 32,
+    soldCount: 48,
+    rating: 5.0,
+    reviewCount: 38,
+    image: '/assets/aistudio/Black_9259dc10.jpg',
+    additionalImages: [
+      '/assets/aistudio/Black_9259dc10.jpg',
+      '/assets/aistudio/Red_ffd4f75f.jpg'
+    ],
+    fabric: 'Soft Silk & Cotton Blend with Zari Weft',
+    pattern: 'Woven Silver Floral & Lotus Motifs',
+    occasion: 'Festive, Cultural Events, Daily Wear',
+    colors: ['Black', 'Red'],
+    sizes: ['Free Size (12 Haat)', '12 Haat with Blouse Piece'],
+    description: 'Exquisite traditional Bengali saree featuring contrasting silver and red floral motifs along the aanchal, crafted with soft breathable fabric for festive elegance and daily comfort.',
+    colorVariations: {
+      'Black': {
+        image: '/assets/aistudio/Black_9259dc10.jpg',
+        price: 990,
+        originalPrice: 1450,
+        discountPercent: 32,
+        description: 'Exquisite black traditional Bengali saree featuring contrasting silver and red lotus floral motifs along the aanchal/pallu, crafted with soft breathable fabric for festive and casual elegance.',
+        colorCode: '#1A1A1A'
+      },
+      'Red': {
+        image: '/assets/aistudio/Red_ffd4f75f.jpg',
+        price: 990,
+        originalPrice: 1450,
+        discountPercent: 32,
+        description: 'Stunning crimson red traditional Bengali saree designed with regal silver floral woven motifs and elaborate pallu detailing, offering a lightweight flowy drape for celebrations.',
+        colorCode: '#8B1E28'
+      }
+    },
+    features: [
+      'Traditional Bengali Saree with woven lotus & floral pallu',
+      'Soft silk & cotton blend fabric with graceful, effortless fall',
+      'Contrasting silver zari inspired woven border',
+      'Breathable, lightweight and comfortable for Bangladesh climate',
+      'Full standard 12 haat length with running blouse piece option',
+      'Guaranteed colorfast and long-lasting fabric quality'
+    ],
+    isNewArrival: true,
+    isBestSeller: true,
+    inStock: true
+  },
   // --- NEW VARIATION PRODUCT: ARABIAN ABAYA ---
   {
     id: 'asn-arabian-abaya',
@@ -975,11 +1029,13 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const CATEGORIES = [
-  { id: 'all', name: 'All Collection', count: 30 },
+  { id: 'all', name: 'All Collection', count: 31 },
+  { id: 'share', name: 'Share', count: 1 },
   { id: 'abaya', name: 'Abayas & Borkas', count: 8 },
   { id: 'three-piece', name: 'Three-Piece Sets', count: 6 },
   { id: 'kurti', name: 'Designer Kurtis', count: 6 },
   { id: 'gown', name: 'Occasion Gowns', count: 4 },
+  { id: 'hijab', name: 'Hijabs & Scarves', count: 2 },
   { id: 'shirt', name: 'Cuban Shirts', count: 3 },
   { id: 'footwear', name: 'Footwear & Heels', count: 3 },
 ];
